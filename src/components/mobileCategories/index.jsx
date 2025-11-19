@@ -1,0 +1,95 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { TbChevronRight } from "react-icons/tb";
+import { FaCheck } from "react-icons/fa6";
+import Image from 'next/image';
+import Link from "next/link";
+import ProductBanner from "../../../public/deals-product3.avif";
+
+const MobileCategories = ({ onClose, categories }) => {
+    const [activeCategory, setActiveCategory] = useState(categories?.[0] || null);
+
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, []);
+
+    return (
+
+        <>
+            <div className="mobile-cat-sec bg-white w-full h-[100vh] lg:h-screen fixed block xl:hidden z-[99999999999]">
+                <div className="cat-top-strip bg-[#FEEFE1] px-2 py-2 flex justify-between items-center">
+                    <p className='flex items-center gap-1 text-[#000000] text-sm'>
+                        <FaCheck className='text-[#0b8802] text-lg' />
+                        <span className='font-semibold'> Free shipping for you</span>
+                    </p>
+                    <p className='flex items-center gap-1 text-[#4B4743] text-[12px] font-semibold'>
+                        Limited-time offer
+                        <TbChevronRight className='text-lg' />
+                    </p>
+                </div>
+
+                <div className="cat-list h-full flex">
+                    {/* Left Side Categories */}
+                    <div className="left-side bg-[#f6f6f6] w-[36%] h-full overflow-y-scroll pb-12">
+                        <ul className="mobile-cat-list text-[13px] font-semibold">
+                        
+                            {categories?.length > 0 &&
+                                categories.map((cat) => (
+                                    <li
+                                        key={cat.id}
+                                        onClick={() => setActiveCategory(cat)}
+                                        className={`py-2 px-2 border-l-3 cursor-pointer ${activeCategory.id === cat.id
+                                            ? "border-l-[#fb7701] bg-white text-black"
+                                            : "border-l-transparent hover:border-l-[#fb7701] hover:bg-white text-[#555]"
+                                            }`}
+                                    >
+                                        {cat.name}
+                                    </li>
+                                ))}
+                        </ul>
+                    </div>
+
+                    {/* Right Side Subcategories */}
+                    <div className="right-side w-full px-2 pt-2 overflow-y-scroll pb-30">
+                        <p className="text-[14px] font-semibold text-black">
+                            {activeCategory.name}
+                        </p>
+                        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 pt-3">
+                           
+
+                            {activeCategory?.sub_categories?.length > 0 &&
+                                activeCategory.sub_categories.map((sub) => (
+                                    <Link
+                                        key={sub.id}
+                                        href={`/c/${activeCategory.name
+                                            .toLowerCase()
+                                            .replace(/&/g, "and")
+                                            .replace(/\s+/g, "-")}/${sub.name
+                                                .toLowerCase()
+                                                .replace(/&/g, "and")
+                                                .replace(/\s+/g, "-")}`}
+                                        className="flex flex-col items-center text-center cursor-pointer group hover:scale-[1.06] transition-all duration-500 ease-in-out"
+                                    >
+                                        <Image
+                                            src={ProductBanner}
+                                            alt={sub.name}
+                                            width={80}
+                                            height={80}
+                                           className="w-[90%] h-auto rounded-full"
+                                        />
+                                         <p className="text-[13px] font-normal text-center mt-1">{sub.name}</p>
+                                    </Link>
+                                ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+
+    )
+}
+
+export default MobileCategories;

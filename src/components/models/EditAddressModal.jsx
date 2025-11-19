@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { BsCheckLg } from "react-icons/bs";
 import { CgClose } from "react-icons/cg";
 import { MdLock } from "react-icons/md";
+import EditAddressMobileModelSidebar from "./editAddressMobileModelSidebar";
 
 const countries = [
     "Pakistan",
@@ -53,6 +54,7 @@ const EditAddressModal = ({ isOpen, onClose, address }) => {
     if (!isOpen) return null;
 
     return (
+        <>
         <AnimatePresence>
             <motion.div
                 className="fixed inset-0 bg-black/60 flex justify-center items-center z-[999999999999999999]"
@@ -182,6 +184,10 @@ const EditAddressModal = ({ isOpen, onClose, address }) => {
                 </motion.div>
             </motion.div>
         </AnimatePresence>
+
+      
+
+        </>
     );
 };
 

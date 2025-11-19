@@ -11,6 +11,8 @@ import { BsCheckLg } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import toast, { Toaster } from 'react-hot-toast';
+import EditAddressMobileModelSidebar from "./editAddressMobileModelSidebar";
+import AddNewAddressMobileModel from "./AddNewAddressMobileModel";
 
 const notify = () =>
   toast.success("Copied successfully!", {
@@ -27,11 +29,6 @@ const notify = () =>
 const MobileChekoutAddressList = ({
   isOpen,
   onClose,
-  cartItems,
-  toggleQtyDropdown,
-  updateQty,
-  qtyOptions,
-  setIsModalOpen
 }) => {
   // Disable scroll when modal is open
   useEffect(() => {
@@ -43,8 +40,9 @@ const MobileChekoutAddressList = ({
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [defaultAddress, setDefaultAddress] = useState(1);
   const [editingAddress, setEditingAddress] = useState(null);
-  const [addingAddress, setAddingAddress] = useState(false);
   const [deletingAddress, setDeletingAddress] = useState(null);
+  const [addingAddress, setAddingAddress] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
 
   const addresses = [
@@ -189,7 +187,8 @@ const MobileChekoutAddressList = ({
 
                 <div className="fixed left-0 right-0 w-full bottom-0 border-t border-t-gray-100 py-3 px-1 md:px-6 z-[99999] bg-white block xl:hidden">
                   <div className="pt-3 flex justify-center items-center">
-                    <button className="hover:bg-[#fb7701] hover:scale-[1.03] text-lg transition-all duration-300 ease-in-out w-full md:w-[50%] mx-auto py-[10px] px-4 rounded-full border border-transparent text-white bg-[#fb5d01] text-md font-semibold">
+                    <button onClick={() => setIsAddModalOpen(true)}
+                      className="hover:bg-[#fb7701] hover:scale-[1.03] text-lg transition-all duration-300 ease-in-out w-full md:w-[50%] mx-auto py-[10px] px-4 rounded-full border border-transparent text-white bg-[#fb5d01] text-md font-semibold">
                       Add a new address
                     </button>
                   </div>
@@ -250,6 +249,27 @@ const MobileChekoutAddressList = ({
               </motion.div>
             )}
           </AnimatePresence>
+
+
+          <EditAddressMobileModelSidebar
+            isOpen={!!editingAddress}
+            onClose={() => setEditingAddress(null)}
+            address={editingAddress}
+            onSave={(updated) => {
+              console.log("Updated address:", updated);
+              setEditingAddress(null);
+
+            }}
+          />
+
+          <AddNewAddressMobileModel
+            isOpen={isAddModalOpen}
+            onClose={() => setIsAddModalOpen(false)}
+            onSave={(newAddress) => {
+              console.log("New Address Added →", newAddress);
+              // you can push to API or list state here
+            }}
+          />
         </>
       )}
     </AnimatePresence>

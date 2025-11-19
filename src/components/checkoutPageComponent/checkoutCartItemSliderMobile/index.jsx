@@ -8,12 +8,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import CartItemsDetailCheckoutMobile from '@/components/models/cartItemsDetailCheckoutMobile';
 
 const CheckoutCartItemSliderMobile = () => {
       const { isCartOpen, closeCart } = useCart();
+          const [isModalOpen, setIsModalOpen] = useState(false);
+      
         const [openQty, setOpenQty] = useState(false);
         const [selectedQty, setSelectedQty] = useState(1);
         const qtyOptions = [0, 1, 2, 3, 4, 5];
+        const [showCartItemsModel, setShowCartItemsModel] = useState(false);
     
         const [cartItems, setCartItems] = useState([
             { id: 1, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
@@ -73,7 +77,12 @@ const CheckoutCartItemSliderMobile = () => {
             <div className="cart-items-list">
                 <div className="flex justify-between items-center py-3">
                     <p className='text-[#222] font-[600] text-[16px] md:text-xl'>Item details (<span className=''>17</span>)</p>
-                    <button className='flex items-center text-[#817c7c] font-[500] text-[13px] md:text-md hover:underline'>View details <FiChevronRight /></button>
+                    <button 
+                     onClick={(e) => {
+                        e.stopPropagation();
+                        setShowCartItemsModel(true);
+                    }}
+                    className='flex items-center text-[#817c7c] font-[500] text-[13px] md:text-md hover:underline'>View details <FiChevronRight /></button>
                 </div>
                 <div className="checkout-items-slider">
                     <Swiper
@@ -123,6 +132,15 @@ const CheckoutCartItemSliderMobile = () => {
                     </Swiper>
                 </div>
             </div>
+            <CartItemsDetailCheckoutMobile
+             isOpen={showCartItemsModel}
+             onClose={() => setShowCartItemsModel(false)}
+             cartItems={cartItems}
+             toggleQtyDropdown={toggleQtyDropdown}
+             updateQty={updateQty}
+             qtyOptions={qtyOptions}
+             setIsModalOpen={setShowCartItemsModel}
+            />
         </>
     )
 }

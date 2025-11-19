@@ -8,10 +8,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import CartItemsDetailcheckoutDisktopModel from '@/components/models/cartItemsDetailcheckoutDisktopModel';
 
 const CheckoutCartItemSlider = () => {
       const { isCartOpen, closeCart } = useCart();
         const [openQty, setOpenQty] = useState(false);
+            const [showCartItemsModel, setShowCartItemsModel] = useState(false);
+        
         const [selectedQty, setSelectedQty] = useState(1);
         const qtyOptions = [0, 1, 2, 3, 4, 5];
     
@@ -73,7 +76,12 @@ const CheckoutCartItemSlider = () => {
             <div className="cart-items-list">
                 <div className="flex justify-between items-center py-3">
                     <p className='text-[#222] font-[600] text-[16px]'>Item details (<span className='text-[#FB7701]'>17</span>)</p>
-                    <button className='flex items-center text-[#222] font-[500] text-[14px] hover:underline'>View all <FiChevronRight /></button>
+                    <button
+                     onClick={(e) => {
+                        e.stopPropagation();
+                        setShowCartItemsModel(true);
+                    }}
+                    className='flex items-center text-[#222] font-[500] text-[14px] hover:underline'>View all <FiChevronRight /></button>
                 </div>
                 <div className="checkout-items-slider product-detail-main">
                     <Swiper
@@ -104,6 +112,11 @@ const CheckoutCartItemSlider = () => {
                     </Swiper>
                 </div>
             </div>
+
+            <CartItemsDetailcheckoutDisktopModel
+             isOpen={showCartItemsModel}
+             onClose={() => setShowCartItemsModel(false)}
+            />
         </>
     )
 }

@@ -13,6 +13,7 @@ import CheckoutCartItemSliderMobile from '../checkoutCartItemSliderMobile';
 import { FaChevronRight, FaChevronUp } from 'react-icons/fa6';
 import MobileChekoutListBottomModal from '@/components/models/MobileChekoutListBottomModal';
 import MobileChekoutAddressList from '@/components/models/MobileChekoutAddressList';
+import CartItemsDetailCheckoutMobile from '@/components/models/cartItemsDetailCheckoutMobile';
 
 const paymentMethods = [
     {
@@ -62,6 +63,7 @@ const CheckOutMainMobileView = () => {
     const [isManageModalOpen, setIsManageModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const [showMobileAddressModel, setShowMobileAddressModel] = useState(false);
+    const [showCartItemsModel, setShowCartItemsModel] = useState(false);
 
     const [cartItems, setCartItems] = useState([
         { id: 1, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
@@ -343,6 +345,8 @@ const CheckOutMainMobileView = () => {
 
             />
 
+
+          
         </>
     )
 }

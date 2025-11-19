@@ -168,6 +168,7 @@ const SingleProduct = ({ product }) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         product={product}
+        productSku={product.sku}
       />
     </>
   );

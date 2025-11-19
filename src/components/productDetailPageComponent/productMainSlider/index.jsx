@@ -15,19 +15,13 @@ import { ProductReviews } from "../ProductReviews";
 import ProductStoreInfo from "../productStoreInfo";
 import ProductDetails from "../productDetails";
 
-const ProductMainSlider = () => {
+const ProductMainSlider = ({sliderImages}) => {
     const { slug } = useParams();
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+console.log(sliderImages , "sliderImagessliderImagessliderImages")
 
-    const productImages = [
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-    ];
+const productImages = sliderImages.images?.map(img => img.image) || [];
+   
 
     return (
         <>

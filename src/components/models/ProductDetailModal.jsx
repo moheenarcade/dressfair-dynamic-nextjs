@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { GoChevronRight } from "react-icons/go";
@@ -18,23 +18,33 @@ import PriceSection from "../../../public/priceicons.avif";
 import ProductColorSize from "../productDetailPageComponent/productColorSize";
 import { FaChevronRight } from "react-icons/fa6";
 import { useCart } from "@/context/CartContext";
+import { getProductDetails } from "@/lib/api";
 
-
-export default function ProductDetailModal({ isOpen, onClose, product }) {
-    console.log(product , "product lsit in model ")
+export default function ProductDetailModal({ isOpen, onClose, productSku }) {
     const { openCart } = useCart();
     const { slug } = useParams();
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [productDetail, setProductDetail] = useState(null);
 
-    const productImages = [
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-        "/deals-product3.avif",
-    ];
+    console.log(productDetail , "productDetailproductDetailproductDetailproductDetailproductDetail")
+    useEffect(() => {
+        if (!isOpen || !productSku) return;
+        if (productDetail?.sku === productSku) return; // ⚠ already loaded
+      
+        const fetchProduct = async () => {
+          setLoading(true);
+          const res = await getProductDetails(productSku);
+          if (res?.success) setProductDetail(res.data);
+          setLoading(false);
+        };
+      
+        fetchProduct();
+      }, [isOpen, productSku]);
+      
+
+    const productImages = productDetail?.images?.map(img => img.image) || [];
+
 
     return (
         <AnimatePresence>
@@ -121,7 +131,7 @@ export default function ProductDetailModal({ isOpen, onClose, product }) {
                                 </div>
                                 <div className="w-full md:w-[50%] pr-4 ">
                                     <p className="text-[#222] text-[16px] line-clamp-3">
-                                        Men&apos;s Slip- High-Top Sneakers - All-Season Lightweight Outdoor Shoes with Cushioned Arch Support, White Upper & Traction Tread for Hiking, Running, Casual Wear - Durable All-Terrain Design, Hiking Footwear, Sporty Look, Sturdy Construction, Breathable Fabric Lining, Supportive Footwear, Active Lifestyle
+                                        {productDetail?.name}
                                     </p>
 
                                     <div className="text-[#aaa] text-[14px] flex items-center gap-1 font-semibold pt-3">
@@ -130,20 +140,28 @@ export default function ProductDetailModal({ isOpen, onClose, product }) {
                                         <p className="bg-[#0000000a] rounded-full w-6 h-6 flex items-center justify-center text-center text-[#dd2c2a] p-1 text-[13px]">TH</p>
                                     </div>
 
-
                                     <div className="prices-sec flex items-center flex-wrap gap-2 pb-3 px-2 lg:px-0">
-                                        <p className="text-[#000000] text-[20px] font-semibold relative">
-                                            <span className="absolute top-[15px] bg-[#FB7701] w-full h-[2.5px]"></span>
-                                            27452
-                                        </p>
+                                        {productDetail?.sale_price && (
+                                            <p className="text-[#000000] text-[20px] font-semibold relative line-through">
+                                                Rs. {productDetail?.price}
+                                            </p>
+                                        )}
+
                                         <div className="flex items-end text-[#FB7701]">
-                                            <Image className="w-4 h-4" src={PriceSection} alt="promotional content" />
-                                            <p className="text-[20px] font-semibold leading-[20px]">Rs. <span className="text-[28px]">13,661</span></p>
+                                            <p className="text-[20px] font-semibold leading-[20px]">
+                                                Rs. <span className="text-[28px]">
+                                                    {productDetail?.sale_price || productDetail?.price}
+                                                </span>
+                                            </p>
                                         </div>
-                                        <p className="text-[#FB7701] text-[15px] font-bold border border-[#FB7701] rounded-sm px-1 leading-[18px]">
-                                            50% OFF
-                                        </p>
+
+                                        {productDetail?.sale_price && (
+                                            <p className="text-[#FB7701] text-[15px] font-bold border border-[#FB7701] rounded-sm px-1 leading-[18px]">
+                                                {Math.round(((productDetail?.price - productDetail?.sale_price) / productDetail?.price) * 100)}% OFF
+                                            </p>
+                                        )}
                                     </div>
+
                                     <ProductColorSize />
 
                                     <div className="bg-white px-3 w-[50%] right-4 py-4 fixed bottom-[0px]">
@@ -152,7 +170,7 @@ export default function ProductDetailModal({ isOpen, onClose, product }) {
                                         }} className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">Add to cart!</button>
 
                                         <div className="pt-2 text-[15px]">
-                                            <Link href="#" className="flex hover:underline items-center gap-1">
+                                            <Link href={`/p/${productDetail?.sku}`} className="flex hover:underline items-center gap-1">
                                                 All details <FaChevronRight className="text-[13px]" />
                                             </Link>
                                         </div>

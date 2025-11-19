@@ -3,20 +3,42 @@ import axios from "axios";
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // Get catalogue list
-export const getCatalogue = async (page = 1) => {
+// export const getCatalogue = async (page = 1) => {
+//   try {
+//     const res = await axios.get(`${API}/catalogue?page=${page}`, {
+//       headers: {
+//         "spa-merchant-id": "v6eJxZKeRs8RmL0AfgtDwnQ",
+//         "spa-store-id": "1",
+//       },
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log("Catalogue API Error:", error);
+//     return { success: false, data: [] };
+//   }
+// };
+
+export const getCatalogue = async (page = 1, categoryId = '') => {
   try {
-    const res = await axios.get(`${API}/catalogue?page=${page}`, {
+    let url = `${API}/catalogue?page=${page}`;
+    if (categoryId) {
+      url += `&category=${categoryId}`;
+    }
+
+    const res = await axios.get(url, {
       headers: {
         "spa-merchant-id": "v6eJxZKeRs8RmL0AfgtDwnQ",
         "spa-store-id": "1",
       },
     });
+
     return res.data;
   } catch (error) {
     console.log("Catalogue API Error:", error);
     return { success: false, data: [] };
   }
 };
+
 
 // Get category list
 export const getCategories = async () => {

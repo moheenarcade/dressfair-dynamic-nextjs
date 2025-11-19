@@ -48,8 +48,8 @@ const Header = () => {
     const mobileCategoriesContainerRef = useRef(null);
     const [categories, setCategories] = useState([]);
     const [activeCategory, setActiveCategory] = useState(categories?.[0] || null);
-    
-    console.log(categories , "category list");
+
+    console.log(categories, "category list");
 
     const handleLogout = () => {
         logout();
@@ -222,17 +222,27 @@ const Header = () => {
                                                 <ul>
                                                     {categories?.length > 0 &&
                                                         categories.map((cat) => (
-                                                            <li
+                                                            <Link
                                                                 key={cat.id}
-                                                                onMouseEnter={() => setActiveCategory(cat)}
-                                                                className={`py-3 px-4 flex justify-between items-center cursor-pointer text-sm font-semibold ${activeCategory?.id === cat.id
-                                                                    ? "bg-white text-black border-l-4 border-[#fb7701]"
-                                                                    : "text-gray-600 hover:bg-white hover:text-black border-l-4 border-l-transparent"
-                                                                    }`}
+                                                                onClick={() => sessionStorage.setItem("selectedCategoryId", cat.id)}
+                                                                href={`/c/${cat.name.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-")}`}
                                                             >
-                                                                {cat.name}
-                                                                <GoChevronRight className="text-[14px] text-gray-400" />
-                                                            </li>
+                                                                <li
+                                                                    key={cat.id}
+                                                                    onMouseEnter={() => setActiveCategory(cat)}
+                                                                    onClick={() => {
+
+                                                                        sessionStorage.setItem('selectedCategoryId', cat.id);
+                                                                    }}
+                                                                    className={`py-3 px-4 flex justify-between items-center cursor-pointer text-sm font-semibold ${activeCategory?.id === cat.id
+                                                                        ? "bg-white text-black border-l-4 border-[#fb7701]"
+                                                                        : "text-gray-600 hover:bg-white hover:text-black border-l-4 border-l-transparent"
+                                                                        }`}
+                                                                >
+                                                                    {cat.name}
+                                                                    <GoChevronRight className="text-[14px] text-gray-400" />
+                                                                </li>
+                                                            </Link>
                                                         ))}
                                                 </ul>
                                             </div>
@@ -245,6 +255,9 @@ const Header = () => {
                                                         activeCategory.sub_categories.map((sub) => (
                                                             <Link
                                                                 key={sub.id}
+                                                                onClick={() => {
+                                                                    sessionStorage.setItem('selectedCategoryId', sub.id);
+                                                                }}
                                                                 href={`/c/${activeCategory.name
                                                                     .toLowerCase()
                                                                     .replace(/&/g, "and")

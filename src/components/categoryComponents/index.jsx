@@ -10,6 +10,9 @@ import ProductImage2 from "../../../public/deals-product3.avif";
 import { LuChevronRight } from 'react-icons/lu';
 import CategoryFilters from '@/utils/CategoryFilters';
 import ProductCardMobile from '@/components/homePageMobile/productCardMobile';
+import { fetchAndSaveCategories, getCatalogue, getLocalCategories } from '@/lib/api';
+import Loader from '../loader';
+import { FaChevronDown } from 'react-icons/fa6';
 
 const categoriesData = [
   {
@@ -119,40 +122,64 @@ const categoriesData = [
 
 ];
 
-const products = [
-  { id: 1, title: "Men's Jacket - Milano Italia", sold: '2k', rating: 5, price: 1899, oldPrice: 3944, image: ProductImage, category: "Men's Fashion" },
-  { id: 2, title: "Wireless Earbuds Pro 5.0", sold: '2k', rating: 4.5, price: 2999, oldPrice: 4999, image: ProductImage2, category: "Electronics" },
-  { id: 3, title: "Smart Watch Series 8", sold: '2k', rating: 4.3, price: 8499, oldPrice: 10999, image: ProductImage, category: "Electronics" },
-  { id: 4, title: "Stylish Handbag for Women", sold: '2k', rating: 5, price: 2499, oldPrice: 3299, image: ProductImage2, category: "Women's Fashion" },
-  { id: 5, title: "Casual Sneakers for Men", sold: '2k', rating: 5, price: 3599, oldPrice: 4599, image: ProductImage, category: "Footwear" },
-  { id: 6, title: "Hair Dryer Pro 2200W", sold: '2k', rating: 5, price: 1999, oldPrice: 2899, image: ProductImage, category: "Beauty & Health" },
-  { id: 7, title: "Smart Home Security Camera", sold: '2k', rating: 5, price: 5499, oldPrice: 6999, image: ProductImage2, category: "Smart Home" },
-  { id: 8, title: "Toy Car Set for Kids", sold: '112k', rating: 5, price: 1499, oldPrice: 2299, image: ProductImage, category: "Toys" },
-  { id: 9, title: "Laptop Backpack", sold: '32k', rating: 5, price: 2299, oldPrice: 2999, image: ProductImage, category: "Accessories" },
-  { id: 10, title: "Running Shoes", sold: '3k', rating: 5, price: 4999, oldPrice: 5999, image: ProductImage2, category: "Fitness" },
-  { id: 11, title: "Men's Jacket - Milano Italia", sold: '12k', rating: 5, price: 1899, oldPrice: 3944, image: ProductImage, category: "Men's Fashion" },
-  { id: 12, title: "Wireless Earbuds Pro 5.0", sold: '42k', rating: 5, price: 2999, oldPrice: 4999, image: ProductImage2, category: "Electronics" },
-  { id: 13, title: "Smart Watch Series 8", sold: '1k', rating: 5, price: 8499, oldPrice: 10999, image: ProductImage, category: "Electronics" },
-  { id: 14, title: "Stylish Handbag for Women", sold: '2k', rating: 5, price: 2499, oldPrice: 3299, image: ProductImage, category: "Women's Fashion" },
-  { id: 15, title: "Casual Sneakers for Men", sold: '22k', rating: 5, price: 3599, oldPrice: 4599, image: ProductImage2, category: "Footwear" },
-  { id: 16, title: "Hair Dryer Pro 2200W", sold: '3222k', rating: 5, price: 1999, oldPrice: 2899, image: ProductImage2, category: "Beauty & Health" },
-  { id: 17, title: "Smart Home Security Camera", sold: '122k', rating: 5, price: 5499, oldPrice: 6999, image: ProductImage, category: "Smart Home" },
-  { id: 18, title: "Toy Car Set for Kids", sold: '222k', rating: 5, price: 1499, oldPrice: 2299, image: ProductImage2, category: "Toys" },
-  { id: 19, title: "Laptop Backpack", sold: '2k', rating: 5, price: 2299, oldPrice: 2999, image: ProductImage, category: "Accessories" },
-  { id: 20, title: "Running Shoes", sold: '32k', rating: 5, price: 4999, oldPrice: 5999, image: ProductImage2, category: "Fitness" },
-
-];
-
-
 const CategroyComponents = () => {
   const params = useParams();
   const slug = params.slug || [];
+  const [products, setProducts] = useState([]);
   const swiperRef = useRef(null);
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  console.log(filteredProducts, "filteredProductsfilteredProductsfilteredProducts")
   const [category, setCategory] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [subcategory, setSubcategory] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(categories?.[0] || null);
+
   const toSlug = (name) =>
     name.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-");
+
+  useEffect(() => {
+    setFilteredProducts(products); // sync whenever products change
+  }, [products]);
+
+  // Fetch categories from API and save in localStorage
+  useEffect(() => {
+    const loadCategories = async () => {
+      const apiData = await fetchAndSaveCategories(); // fetch & save
+      const localCats = getLocalCategories(); // get localStorage data
+      setCategories(localCats);
+      setActiveCategory(localCats[0] || null); // first category active by default
+    };
+    loadCategories();
+  }, []);
+
+  useEffect(() => {
+    loadProducts(page);
+  }, [page]);
+
+  const loadProducts = async (pageNumber) => {
+    if (pageNumber === 1) setLoading(true);
+    if (pageNumber > 1) setLoadingMore(true);
+
+    const categoryId = sessionStorage.getItem("selectedCategoryId") || '';
+
+    const res = await getCatalogue(pageNumber, categoryId);
+
+    if (res?.success) {
+      setProducts(prev =>
+        pageNumber === 1 ? res.data : [...prev, ...res.data]
+      );
+
+      setHasMore(res.pagination.current_page < res.pagination.last_page);
+    }
+
+    setLoading(false);
+    setLoadingMore(false);
+  };
+
 
   useEffect(() => {
     if (slug.length === 0) return;
@@ -186,27 +213,21 @@ const CategroyComponents = () => {
     if (subcategory) {
       filtered = products.filter(
         (p) =>
-          p.category.toLowerCase() === subcategory.name.toLowerCase() ||
-          p.category.toLowerCase() === category.name.toLowerCase()
+          p.category &&
+          (p.category.toLowerCase() === subcategory.name.toLowerCase() ||
+            p.category.toLowerCase() === category.name.toLowerCase())
       );
     } else {
-      // Filter by main category
-      filtered = products.filter((p) =>
-        p.category.toLowerCase().includes(category.name.toLowerCase())
+      filtered = products.filter(
+        (p) =>
+          p.category &&
+          p.category.toLowerCase().includes(category.name.toLowerCase())
       );
     }
 
-    // Fallback if nothing found
     setFilteredProducts(filtered.length > 0 ? filtered : products);
-  }, [category, subcategory]);
+  }, [category, subcategory, products]);
 
-  if (!category) {
-    return (
-      <div className="container mx-auto px-4 xl:px-22 py-8">
-        {/* <h1 className="text-2xl font-bold">Category Not Found</h1> */}
-      </div>
-    );
-  }
 
   return (
     <>
@@ -235,7 +256,7 @@ const CategroyComponents = () => {
         )}
       </div>
 
-      <div className="block xl:hidden">
+      {/* <div className="block xl:hidden">
         {subcategory && (
           <nav className="flex items-center text-center justify-center space-x-2 text-sm text-gray-500 pb-3 px-2">
             {subcategory && (
@@ -247,9 +268,9 @@ const CategroyComponents = () => {
             )}
           </nav>
         )}
-      </div>
+      </div> */}
 
-      {!subcategory && (
+      {/* {!subcategory && (
         <div className="grid grid-cols-4 md:grid-cols-7 lg:grid-cols-12 gap-4 pt-6 pb-6 mb-6 border-b border-b-gray-300 px-2">
           {category.subcategories.map((sub, index) => (
             <Link
@@ -269,17 +290,73 @@ const CategroyComponents = () => {
             </Link>
           ))}
         </div>
-      )}
+      )} */}
 
       {/* Category Filters Section */}
       <CategoryFilters
       />
       <div className="pt-6 hidden xl:block">
         <ProductCard products={filteredProducts} />
+
+
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <ProductCard products={filteredProducts} />
+            {filteredProducts.length > 0 && hasMore && (
+              <div className="flex justify-center mt-6">
+                {loadingMore ? (
+                  <button
+                    className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
+                    disabled
+                  >
+                    <div className="smallloader mx-auto"></div>
+                    loading...
+                  </button>
+                ) : (
+                  <button
+                    className="flex items-center gap-2 justify-center py-2 lg:py-3 px-6 lg:px-12 font-semibold text-md transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-[#fb6d01] bg-[#fb7701] text-white rounded-full"
+                    onClick={() => setPage(page + 1)}
+                  >
+                    See More <FaChevronDown />
+                  </button>
+                )}
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       <div className="block xl:hidden px-2 pt-3">
-        <ProductCardMobile products={filteredProducts} />
+        {/* <ProductCardMobile products={filteredProducts} /> */}
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <ProductCardMobile products={filteredProducts} />
+            {filteredProducts.length > 0 && hasMore && (
+              <div className="flex justify-center my-6">
+                {loadingMore ? (
+                  <button
+                    className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
+                    disabled
+                  >
+                    <div className="smallloader mx-auto"></div>
+
+                  </button>
+                ) : (
+                  <button
+                    className="flex items-center gap-2 text-black border border-gray-500 justify-center py-[6px] lg:py-3 px-5 lg:px-12 font-semibold text-sm transition-all duration-300 ease-in-out hover:scale-[1.02] bg-transparent rounded-full"
+                    onClick={() => setPage(page + 1)}
+                  >
+                    See More
+                  </button>
+                )}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </>
   );

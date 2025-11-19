@@ -15,7 +15,7 @@ import { ProductReviews } from "../ProductReviews";
 import ProductStoreInfo from "../productStoreInfo";
 import ProductDetails from "../productDetails";
 
-const ProductMainSlider = ({sliderImages}) => {
+const ProductMainSlider = ({sliderImages , productDescription}) => {
     const { slug } = useParams();
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
 console.log(sliderImages , "sliderImagessliderImagessliderImages")
@@ -109,7 +109,7 @@ const productImages = sliderImages.images?.map(img => img.image) || [];
                 <ProductStoreInfo />
             </div>
             <div className="product-detail-sec hidden lg:block">
-                <ProductDetails />
+                <ProductDetails productDescription={productDescription}/>
             </div>
         </>
     )

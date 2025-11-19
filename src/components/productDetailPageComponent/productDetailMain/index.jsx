@@ -50,7 +50,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 <li className="text-black">Mens winter clothing</li>
                             </ul>
                         </div>
-                        <ProductMainSlider sliderImages={productDetail}/>
+                        <ProductMainSlider productDescription={productDetail.product_description} sliderImages={productDetail}/>
                     </div>
 
                     <div className="w-full lg:w-[44%] lg:pt-8 self-start lg:sticky top-4 h-fit">
@@ -96,23 +96,7 @@ const ProductDetailMain = ({ productDetail }) => {
                             </div>
                         </div>
 
-                        {/* <div className="prices-sec flex items-center flex-wrap gap-2 pt-3 pb-4 px-2 lg:px-0">
-                            <p className="text-[#000000] text-[20px] font-semibold relative">
-                                <span className="absolute top-[15px] bg-[#FB7701] w-full h-[2.5px]"></span>
-                                27452
-                            </p>
-                            <div className="flex items-end text-[#FB7701]">
-                                <Image className="w-4 h-4" src={PriceSection} alt="promotional content" />
-                                <p className="text-[20px] font-semibold leading-[20px]">Rs. <span className="text-[28px]">13,661</span></p>
-                            </div>
-                            <p className="text-[#FB7701] text-[15px] font-bold border border-[#FB7701] rounded-sm px-1 leading-[18px]">
-                                50% OFF limited time
-                            </p>
-                            <p className="text-[#FB7701] flex items-center gap-2 text-[15px] font-bold border border-[#FB7701] rounded-sm px-1 leading-[18px]">
-                                ALMOST SOLD OUT <HiQuestionMarkCircle />
-                            </p>
-                            
-                        </div> */}
+                      
 
                         <div className="prices-sec flex items-center flex-wrap gap-2 pt-3 pb-4 px-2 lg:px-0">
 
@@ -164,7 +148,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 </div>
                             </div>
                         </div>
-                        <ProductColorSize />
+                        <ProductColorSize sizes={productDetail?.sizes || []}/>
                         <div className="px-2">
                             <div className="pt-6 flex items-center justify-start gap-2 lg:gap-4">
                                 <button onClick={() => {
@@ -234,7 +218,7 @@ const ProductDetailMain = ({ productDetail }) => {
                     <ProductStoreInfo />
                 </div>
                 <div className="product-detail-sec block lg:hidden">
-                    <ProductDetails />
+                    <ProductDetails productDescription={productDetail.product_description}/>
                 </div>
                 <div className="block: xl:hidden">
                     <ProductListingMobile />

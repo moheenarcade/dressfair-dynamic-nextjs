@@ -19,6 +19,7 @@ import ProductColorSize from "../productDetailPageComponent/productColorSize";
 import { FaChevronRight } from "react-icons/fa6";
 import { useCart } from "@/context/CartContext";
 import { getProductDetails } from "@/lib/api";
+import Loader from "../loader";
 
 export default function ProductDetailModal({ isOpen, onClose, productSku }) {
     const { openCart } = useCart();
@@ -27,21 +28,21 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
     const [loading, setLoading] = useState(true);
     const [productDetail, setProductDetail] = useState(null);
 
-    console.log(productDetail , "productDetailproductDetailproductDetailproductDetailproductDetail")
+    console.log(productDetail, "productDetailproductDetailproductDetailproductDetailproductDetail")
     useEffect(() => {
         if (!isOpen || !productSku) return;
-        if (productDetail?.sku === productSku) return; // ⚠ already loaded
-      
+        if (productDetail?.sku === productSku) return;
+
         const fetchProduct = async () => {
-          setLoading(true);
-          const res = await getProductDetails(productSku);
-          if (res?.success) setProductDetail(res.data);
-          setLoading(false);
+            setLoading(true);
+            const res = await getProductDetails(productSku);
+            if (res?.success) setProductDetail(res.data);
+            setLoading(false);
         };
-      
+
         fetchProduct();
-      }, [isOpen, productSku]);
-      
+    }, [isOpen, productSku]);
+
 
     const productImages = productDetail?.images?.map(img => img.image) || [];
 
@@ -75,109 +76,117 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                             </button>
                         </div>
 
-                        <div className="relative">
-                            <div className="flex flex-wrap max-h-[600px] pb-28 overflow-y-auto">
-                                <div className="w-full md:w-[50%]">
-                                    <div className="flex flex-col pr-4 product-detail-main">
-                                        {/* Main Image Swiper */}
-                                        <div className="">
-                                            <Swiper
-                                                spaceBetween={10}
-                                                navigation={true}
-                                                thumbs={{ swiper: thumbsSwiper }}
-                                                modules={[FreeMode, Navigation, Thumbs]}
-                                                className="product-main-swiper overflow-hidden"
-                                            >
-                                                {productImages.map((img, index) => (
-                                                    <SwiperSlide key={index}>
-                                                        <Image
-                                                            src={img}
-                                                            alt={`main-${index}`}
-                                                            width={600}
-                                                            height={700}
-                                                            className="object-contain w-full h-auto "
-                                                        />
-                                                    </SwiperSlide>
-                                                ))}
-                                            </Swiper>
-                                        </div>
-                                        {/* Thumbnail Gallery (Left Side) */}
-                                        <div className="pt-2">
-                                            <Swiper
-                                                onSwiper={setThumbsSwiper}
-                                                spaceBetween={10}
-                                                slidesPerView={7}
-                                                freeMode={true}
-                                                direction="horizontal"
+                        {loading ? (
+                            // Loader Section
+                            <div className="flex justify-center items-center h-[400px]">
+                                <Loader/>
+                                {/* <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div> */}
+                            </div>
+                        ) : (
+                            <div className="relative">
+                                <div className="flex flex-wrap max-h-[600px] pb-28 overflow-y-auto">
+                                    <div className="w-full md:w-[50%] z-[-1]">
+                                        <div className="flex flex-col pr-4 product-detail-main">
+                                            {/* Main Image Swiper */}
+                                            <div className="">
+                                                <Swiper
+                                                    spaceBetween={10}
+                                                    navigation={true}
+                                                    thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined} 
+                                                    modules={[FreeMode, Navigation, Thumbs]}
+                                                    className="product-main-swiper overflow-hidden"
+                                                >
+                                                    {productImages.map((img, index) => (
+                                                        <SwiperSlide key={index}>
+                                                            <Image
+                                                                src={img}
+                                                                alt={`main-${index}`}
+                                                                width={600}
+                                                                height={700}
+                                                                className="object-contain w-full h-auto "
+                                                            />
+                                                        </SwiperSlide>
+                                                    ))}
+                                                </Swiper>
+                                            </div>
+                                            {/* Thumbnail Gallery (Left Side) */}
+                                            <div className="pt-2">
+                                                <Swiper
+                                                    onSwiper={setThumbsSwiper}
+                                                    spaceBetween={10}
+                                                    slidesPerView={7}
+                                                    freeMode={true}
+                                                    direction="horizontal"
 
-                                                watchSlidesProgress={true}
-                                                modules={[FreeMode, Navigation, Thumbs]}
-                                                className="product-thumbs-swiper "
-                                            >
-                                                {productImages.map((img, index) => (
-                                                    <SwiperSlide key={index}>
-                                                        <Image
-                                                            src={img}
-                                                            alt={`thumb-${index}`}
-                                                            width={80}
-                                                            height={100}
-                                                            className="cursor-pointer object-cover w-full h-full rounded-lg border hover:border-gray-400 transition-all"
-                                                        />
-                                                    </SwiperSlide>
-                                                ))}
-                                            </Swiper>
+                                                    watchSlidesProgress={true}
+                                                    modules={[FreeMode, Navigation, Thumbs]}
+                                                    className="product-thumbs-swiper "
+                                                >
+                                                    {productImages.map((img, index) => (
+                                                        <SwiperSlide key={index}>
+                                                            <Image
+                                                                src={img}
+                                                                alt={`thumb-${index}`}
+                                                                width={80}
+                                                                height={100}
+                                                                className="cursor-pointer object-cover w-full h-full rounded-lg border hover:border-gray-400 transition-all"
+                                                            />
+                                                        </SwiperSlide>
+                                                    ))}
+                                                </Swiper>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="w-full md:w-[50%] pr-4 ">
-                                    <p className="text-[#222] text-[16px] line-clamp-3">
-                                        {productDetail?.name}
-                                    </p>
+                                    <div className="w-full md:w-[50%] pr-4 ">
+                                        <p className="text-[#222] text-[16px] line-clamp-3">
+                                            {productDetail?.name}
+                                        </p>
 
-                                    <div className="text-[#aaa] text-[14px] flex items-center gap-1 font-semibold pt-3">
-                                        <p>691 sold</p>
-                                        <p>Sold by</p>
-                                        <p className="bg-[#0000000a] rounded-full w-6 h-6 flex items-center justify-center text-center text-[#dd2c2a] p-1 text-[13px]">TH</p>
-                                    </div>
-
-                                    <div className="prices-sec flex items-center flex-wrap gap-2 pb-3 px-2 lg:px-0">
-                                        {productDetail?.sale_price && (
-                                            <p className="text-[#000000] text-[20px] font-semibold relative line-through">
-                                                Rs. {productDetail?.price}
-                                            </p>
-                                        )}
-
-                                        <div className="flex items-end text-[#FB7701]">
-                                            <p className="text-[20px] font-semibold leading-[20px]">
-                                                Rs. <span className="text-[28px]">
-                                                    {productDetail?.sale_price || productDetail?.price}
-                                                </span>
-                                            </p>
+                                        <div className="text-[#aaa] text-[14px] flex items-center gap-1 font-semibold pt-3">
+                                            <p>691 sold</p>
+                                            <p>Sold by</p>
+                                            <p className="bg-[#0000000a] rounded-full w-6 h-6 flex items-center justify-center text-center text-[#dd2c2a] p-1 text-[13px]">TH</p>
                                         </div>
 
-                                        {productDetail?.sale_price && (
-                                            <p className="text-[#FB7701] text-[15px] font-bold border border-[#FB7701] rounded-sm px-1 leading-[18px]">
-                                                {Math.round(((productDetail?.price - productDetail?.sale_price) / productDetail?.price) * 100)}% OFF
-                                            </p>
-                                        )}
-                                    </div>
+                                        <div className="prices-sec flex items-center flex-wrap gap-2 pb-3 px-2 lg:px-0">
+                                            {productDetail?.sale_price && (
+                                                <p className="text-[#000000] text-[20px] font-semibold relative line-through">
+                                                    Rs. {productDetail?.price}
+                                                </p>
+                                            )}
 
-                                    <ProductColorSize />
+                                            <div className="flex items-end text-[#FB7701]">
+                                                <p className="text-[20px] font-semibold leading-[20px]">
+                                                    Rs. <span className="text-[28px]">
+                                                        {productDetail?.sale_price || productDetail?.price}
+                                                    </span>
+                                                </p>
+                                            </div>
 
-                                    <div className="bg-white px-3 w-[50%] right-4 py-4 fixed bottom-[0px]">
-                                        <button onClick={() => {
-                                            openCart();
-                                        }} className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">Add to cart!</button>
+                                            {productDetail?.sale_price && (
+                                                <p className="text-[#FB7701] text-[15px] font-bold border border-[#FB7701] rounded-sm px-1 leading-[18px]">
+                                                    {Math.round(((productDetail?.price - productDetail?.sale_price) / productDetail?.price) * 100)}% OFF
+                                                </p>
+                                            )}
+                                        </div>
 
-                                        <div className="pt-2 text-[15px]">
-                                            <Link href={`/p/${productDetail?.sku}`} className="flex hover:underline items-center gap-1">
-                                                All details <FaChevronRight className="text-[13px]" />
-                                            </Link>
+                                        <ProductColorSize sizes={productDetail?.sizes || []} />
+
+                                        <div className="bg-white px-3 w-[50%] right-4 py-4 fixed bottom-[0px]">
+                                            <button onClick={() => {
+                                                openCart();
+                                            }} className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">Add to cart!</button>
+
+                                            <div className="pt-2 text-[15px]">
+                                                <Link href={`/p/${productDetail?.sku}`} className="flex hover:underline items-center gap-1">
+                                                    All details <FaChevronRight className="text-[13px]" />
+                                                </Link>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </motion.div>
                 </>
             )}

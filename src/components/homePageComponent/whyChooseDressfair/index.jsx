@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import { BsBellFill } from "react-icons/bs";
 import Link from "next/link";
+import SecurityReminderModel from "@/components/models/securityReminderModel";
 
 const mainItems = [
     {
@@ -68,68 +69,7 @@ const mainItems = [
         ],
     },
 
-    // {
-    //     title: "Why choose Temu?",
-    //     icon: (
-    //         <svg
-    //             className="WPHi-Fur"
-    //             xmlns="http://www.w3.org/2000/svg"
-    //             viewBox="0 0 1024 1024"
-    //             width="1.4rem"
-    //             height="1.4rem"
-    //             fill="#fff"
-    //         >
-    //             <path d="M549.7 128.9l284.8 111.9c27.3 10.7 44.8 37.6 43.5 66.9l-6.9 165.7c-5.7 135.5-73.3 260.9-183.4 340l-58.7 42.2c-72 51.7-168.9 51.7-240.9 0.1l-57.5-41.3c-109.9-79-176.5-204.7-180.2-340l-4.6-167c-0.8-28.6 16.3-54.7 42.8-65.6l275.3-112.3c27.5-11.2 58.2-11.4 85.8-0.6z m139.8 268.7c-11.7-12.8-31-13.3-43.3-1l-163.6 165.1-84.5-78.5c-12.7-11.8-32-10.5-43.2 2.9-11.2 13.3-9.9 33.7 2.8 45.4l105.6 98.1c11.9 11.1 29.9 10.7 41.4-1l183.8-185.5c12.2-12.3 12.6-32.7 1-45.5z"></path>
-    //         </svg>
-    //     ),
-    //     features: [
-    //         {
-    //             text: "Secure privacy",
-    //             icon: (
-    //                 <svg
-    //                     className="WPHi-Fur"
-    //                     xmlns="http://www.w3.org/2000/svg"
-    //                     viewBox="0 0 1024 1024"
-    //                     width="1.4rem"
-    //                     height="1.4rem"
-    //                     fill="#fff"
-    //                 >
-    //                     <path d="M512 61.6c127 0 230 103 230 229.9l-0.1 64 38 0c60.2 0 109.1 48.8 109 109.1l0 388.7c0 60.2-48.8 109.1-109 109.1l-535.8 0c-60.2 0-109.1-48.8-109-109.1l0-388.7c0-60.2 48.8-109.1 109-109.1l37.9 0 0-64c0-127 103-230 230-229.9z m267.9 361.9l-535.8 0c-22.7 0-41.1 18.4-41.1 41.1l0 388.7c0 22.7 18.4 41.1 41.1 41.2l535.8 0c22.7 0 41.1-18.4 41.1-41.2l0-388.7c0-22.7-18.4-41.1-41.1-41.1z m-271.4 113c18.4 0 33.2 14.9 33.2 33.2l0 178.5c0 18.4-14.9 33.2-33.2 33.3-18.4 0-33.2-14.9-33.2-33.3l0-178.5c0-18.4 14.9-33.2 33.2-33.2z m3.5-407c-89.5 0-162 72.5-162 162l0 64 324 0 0-64c0-86.5-67.8-157.1-153.1-161.7l-8.9-0.3z"></path>
-    //                 </svg>
-    //             ),
-    //         },
-    //         {
-    //             text: "Safe payments",
-    //             icon: (
-    //                 <svg
-    //                     className="WPHi-Fur"
-    //                     xmlns="http://www.w3.org/2000/svg"
-    //                     viewBox="0 0 1024 1024"
-    //                     width="1.4rem"
-    //                     height="1.4rem"
-    //                     fill="#fff"
-    //                 >
-    //                     <path d="M860.5 169.4c44 0 79.7 36.5 79.7 81.4l0 522.4c0 44.9-35.7 81.4-79.7 81.4l-697 0c-44 0-79.7-36.5-79.7-81.4l0-522.4c0-44.9 35.7-81.4 79.7-81.4l697 0z m0 64.3l-697 0c-8.3 0-15.5 7.4-15.5 17.1l0 522.4c0 9.8 7.3 17.2 15.5 17.1l697 0c8.3 0 15.5-7.4 15.5-17.1l0-522.4c0-9.8-7.3-17.2-15.5-17.1z m-109.8 420.1c19.2 0 34.7 15.9 34.7 35.4 0 19.6-15.6 35.4-34.7 35.4l-115.7 0c-19.2 0-34.7-15.9-34.7-35.4 0-19.6 15.6-35.4 34.7-35.4l115.7 0z m27.6-307.2c19.9 0 36 16.1 36 36 0 19.9-16.1 36-36 36l-528.5 0c-19.9 0-36-16.1-36-36 0-19.9 16.1-36 36-36l528.5 0z"></path>
-    //                 </svg>
-    //             ),
-    //         },
-    //         {
-    //             text: "Delivery guarantee",
-    //             icon: (
-    //                 <svg
-    //                     className="WPHi-Fur"
-    //                     xmlns="http://www.w3.org/2000/svg"
-    //                     viewBox="0 0 1024 1024"
-    //                     width="1.4rem"
-    //                     height="1.4rem"
-    //                     fill="#fff"
-    //                 >
-    //                     <path d="M671 154.7c53.4 0 96.8 43.3 96.8 96.9l0 55.1 153.5 59.1c37.4 14.4 62 50.3 61.9 90.3l0 226.9c0 49.9-37.8 91-86.3 96.3l0.2-4.8c0 65.2-54.3 117.5-120.7 117.4-64.5 0-117.6-49.4-120.5-112l-275.9 0 0 1c-3.4 62.1-56.3 111-120.6 111-64.5 0-117.6-49.4-120.4-112l-1.4 0c-53.4 0-96.8-43.3-96.8-96.9l0-431.4c0-53.4 43.3-96.8 96.8-96.9l533.4 0 0 0z m-360.2 625.2l-102.8 0c2.9 24 24.6 43.1 51.4 43 26.8 0 48.5-19.1 51.4-43z m422.5 0l-8.3 0c2.9 24 24.6 43.1 51.4 43 26.8 0 48.5-19.1 51.4-43l-94.5 0z m-62.3-556.2l-533.4 0c-15.4 0-27.9 12.5-27.9 27.9l0 431.4c0 15.4 12.5 27.9 27.9 27.9l561.3 0 0-459.3c0-14.2-10.7-26-24.4-27.7l-3.5-0.2z m96.8 156.8l0 330.4 118.6 0c14.2 0 26-10.7 27.7-24.3l0.2-3.6 0-226.9c0-11.5-7.1-21.9-17.9-26l-128.6-49.6 0 0z m-196.5-16.1c12.6 12.3 13.9 31.8 3.6 45.5l-2.8 3.3-177.2 182.9c-12 12.3-30.9 13.9-44.6 4.2l-3.2-2.7-114-103.1c-14.1-12.8-15.2-34.6-2.4-48.6 11.7-13 31.2-15 45.3-5.2l3.4 2.7 89.2 80.8 154-159c13.2-13.7 35.1-14 48.7-0.8l0 0z"></path>
-    //                 </svg>
-    //             ),
-    //         },
-    //     ],
-    // },
+
 ];
 
 const reminderItems = [
@@ -141,47 +81,58 @@ const reminderItems = [
 ];
 
 const WhyChooseDressfair = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
-        <div className="why-choose-dressfair container mx-auto px-2 2xl:px-22 py-8">
-            <div className="border-[#0A8800] rounded-lg border overflow-hidden mb-4">
-                {mainItems.map((item, idx) => (
-                    <Link href="#" key={idx} >
-                        <div className="bg-[#0A8800] hover:bg-[#0A6803] cursor-pointer transition-ll duration-500 ease-in-out flex items-center justify-between py-2 px-6 text-white font-semibold text-[15px]">
-                            <p className="flex items-center gap-2">
-                                {item.icon} {item.title}
-                            </p>
-                            <div className="flex items-center gap-4">
+        <>
+            <div className="why-choose-dressfair container mx-auto px-2 2xl:px-22 py-8">
+                <div className="border-[#0A8800] rounded-lg border overflow-hidden mb-4">
+                    {mainItems.map((item, idx) => (
+                        <Link href="#" key={idx} >
+                            <div className="bg-[#0A8800] hover:bg-[#0A6803] cursor-pointer transition-ll duration-500 ease-in-out flex items-center justify-between py-2 px-6 text-white font-semibold text-[15px]">
+                                <p className="flex items-center gap-2">
+                                    {item.icon} {item.title}
+                                </p>
                                 <div className="flex items-center gap-4">
-                                    {item.features.map((f, i) => (
-                                        <React.Fragment key={i}>
-                                            <p className="flex items-center gap-1">{f.icon} {f.text}</p>
-                                            {i < item.features.length - 1 && <div className="h-4 w-px bg-white"></div>}
-                                        </React.Fragment>
-                                    ))}
+                                    <div className="flex items-center gap-4">
+                                        {item.features.map((f, i) => (
+                                            <React.Fragment key={i}>
+                                                <p className="flex items-center gap-1">{f.icon} {f.text}</p>
+                                                {i < item.features.length - 1 && <div className="h-4 w-px bg-white"></div>}
+                                            </React.Fragment>
+                                        ))}
+                                    </div>
+                                    <FaChevronRight />
                                 </div>
-                                <FaChevronRight />
                             </div>
+                        </Link>
+                    ))}
+                    {reminderItems.map((item, idx) => (
+                        <div
+                            key={idx}
+                            className="flex justify-between items-center px-6 py-2 transition-ll duration-500 ease-in-out hover:bg-gray-200 cursor-pointer text-[#0A8800] font-[500]"
+                        >
+                            <p className="flex items-center gap-2 text-[15px]">
+                                {item.icon} {item.text}
+                            </p>
+                            <button onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setIsModalOpen(true);
+                            }} className="flex items-center gap-4">
+                                <p >{item.linkText}</p>
+                                <FaChevronRight />
+                            </button>
                         </div>
-                    </Link>
-                ))}
-                {reminderItems.map((item, idx) => (
-                    <div
-                        key={idx}
-                        className="flex justify-between items-center px-6 py-2 transition-ll duration-500 ease-in-out hover:bg-gray-200 cursor-pointer text-[#0A8800] font-[500]"
-                    >
-                        <p className="flex items-center gap-2 text-[15px]">
-                            {item.icon} {item.text}
-                        </p>
-                        <div className="flex items-center gap-4">
-                            <p>{item.linkText}</p>
-                            <FaChevronRight />
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
 
+            <SecurityReminderModel
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
+        </>
     );
 };
 

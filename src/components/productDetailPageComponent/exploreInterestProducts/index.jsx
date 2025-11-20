@@ -53,8 +53,9 @@ const ExploreInterestProducts = () => {
     // 🔹 Filter products based on selected category
     const filteredProducts =
         selectedCategory === "Recommended"
-            ? products // Show all
+            ? products
             : products.filter((p) => p.category === selectedCategory);
+
 
     return (
         <>
@@ -63,7 +64,7 @@ const ExploreInterestProducts = () => {
                 ) : (
                     <>
                         <ProductCard products={filteredProducts} />
-                        {filteredProducts.length > 0 && hasMore && (
+                        {/* {filteredProducts.length > 0 && hasMore && ( */}
                             <div className="flex justify-center mt-6">
                                 {loadingMore ? (
                                     <button
@@ -82,7 +83,7 @@ const ExploreInterestProducts = () => {
                                     </button>
                                 )}
                             </div>
-                        )}
+                        {/* )} */}
                     </>
                 )}
         </>

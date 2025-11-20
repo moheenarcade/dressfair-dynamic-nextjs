@@ -88,7 +88,7 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
                 <div className="flex justify-between pb-3">
                   <div className="flex gap-2">
                     <Image className="w-18 h-18 rounded-sm" width={100} height={100}
-                      src={productImages[0] || "/placeholder.png"}
+                      src={productImages[0] || "/Placeholder_view_vector.png"}
                       alt={productDetail?.name || "product image"}
                     />
                     <div className="pr-4">

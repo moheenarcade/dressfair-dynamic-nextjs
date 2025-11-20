@@ -27,14 +27,34 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [loading, setLoading] = useState(true);
     const [productDetail, setProductDetail] = useState(null);
+    const [currentProductSku, setCurrentProductSku] = useState(productSku);
 
     console.log(productDetail, "productDetailproductDetailproductDetailproductDetailproductDetail")
+     // Function to handle color change
+    const handleColorChange = async (newColorSku) => {
+        setLoading(true);
+        setCurrentProductSku(newColorSku);
+        
+        try {
+            const res = await getProductDetails(newColorSku);
+            if (res?.success) {
+                setProductDetail(res.data);
+            }
+        } catch (error) {
+            console.error("Error fetching product details:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Update when productSku prop changes (when modal opens with different product)
     useEffect(() => {
         if (!isOpen || !productSku) return;
-        if (productDetail?.sku === productSku) return;
+        if (currentProductSku === productSku && productDetail) return;
 
         const fetchProduct = async () => {
             setLoading(true);
+            setCurrentProductSku(productSku);
             const res = await getProductDetails(productSku);
             if (res?.success) setProductDetail(res.data);
             setLoading(false);
@@ -43,6 +63,9 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
         fetchProduct();
     }, [isOpen, productSku]);
 
+    useEffect(() => {
+        setThumbsSwiper(null);
+      }, [productDetail]);
 
     const productImages = productDetail?.images?.map(img => img.image) || [];
 
@@ -92,7 +115,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                                 <Swiper
                                                     spaceBetween={10}
                                                     navigation={true}
-                                                    thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined} 
+                                                    thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
                                                     modules={[FreeMode, Navigation, Thumbs]}
                                                     className="product-main-swiper overflow-hidden"
                                                 >
@@ -169,9 +192,12 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                                 </p>
                                             )}
                                         </div>
-
-                                        <ProductColorSize sizes={productDetail?.sizes || []} />
-
+                                        <ProductColorSize 
+                                        colors={productDetail?.colors || []} 
+                                        sizes={productDetail?.sizes || []} 
+                                        onColorChange={handleColorChange} // Pass the callback
+                                        selectedColor={currentProductSku} // Pass current selected color
+                                    />
                                         <div className="bg-white px-3 w-[50%] right-4 py-4 fixed bottom-[0px]">
                                             <button onClick={() => {
                                                 openCart();

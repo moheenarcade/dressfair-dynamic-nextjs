@@ -22,6 +22,9 @@ import MobileAddToCartBottomModal from "../../../components/models/MobileAddToCa
 import { CgClose } from "react-icons/cg";
 import BuyNowModel from "../../../components/models/BuyNowModel";
 import { useCart } from "@/context/CartContext";
+import { getProductDetails } from "@/lib/api";
+import Loader from "@/components/loader";
+import WhiteLoader from "@/components/whiteLoader";
 
 const product = {
     title: "Men's Winter Casual PU Leather Jacket",
@@ -34,9 +37,33 @@ const ProductDetailMain = ({ productDetail }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isBuyNowOpen, setIsBuyNowOpen] = useState(false);
     const { openCart } = useCart();
-
+    const [currentProduct, setCurrentProduct] = useState(productDetail);
+    const [loading, setLoading] = useState(false);
+    const [selectedColor, setSelectedColor] = useState(
+        productDetail?.colors?.[0]?.sku || null
+    );
+    
+    const handleColorChange = async (sku) => {
+        setSelectedColor(sku);
+        setLoading(true);
+        try {
+            const res = await getProductDetails(sku);
+            if (res?.success) {
+                setCurrentProduct(res.data);
+            }
+        } catch (err) {
+            console.error("Error fetching product for selected color:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <>
+            {loading && (
+                <div className="fixed inset-0 z-[9999] bg-black/60 flex items-center justify-center">
+                    <WhiteLoader/>
+                </div>
+            )}
             <div className="product-detail-main relative lg:pt-3 pb-12">
                 <div className="flex flex-col lg:flex-row lg:gap-12 items-start">
 
@@ -50,7 +77,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 <li className="text-black">Mens winter clothing</li>
                             </ul>
                         </div>
-                        <ProductMainSlider productDescription={productDetail.product_description} sliderImages={productDetail}/>
+                        <ProductMainSlider productDescription={currentProduct.product_description} sliderImages={currentProduct} />
                     </div>
 
                     <div className="w-full lg:w-[44%] lg:pt-8 self-start lg:sticky top-4 h-fit">
@@ -66,7 +93,7 @@ const ProductDetailMain = ({ productDetail }) => {
                         </div>
                         <div className="flex items-start justify-between gap-4 px-2 lg:px-0">
                             <h1 className="text-[16px] text-[#222] font-[500] mb-2">
-                                {productDetail?.name}
+                                {currentProduct?.name}
                             </h1>
                             <button className="hover:scale-[1.04] transition-all duration-300 ease-in-out">
                                 <svg className="product-share" alt="" aria-label="" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" aria-hidden="true"><path d="M320 380.6c16 0 29 13 29 29 0 16-13 29-29 29l-42.7 0c-31.1 0-56.3 25.2-56.3 56.3l0 298.7c0 31.1 25.2 56.3 56.3 56.3l469.4 0c31.1 0 56.3-25.2 56.3-56.3l0-298.7c0-31.1-25.2-56.3-56.3-56.3l-42.7 0c-16 0-29-13-29-29 0-16 13-29 29-29l42.7 0c63.2 0 114.3 51.2 114.3 114.3l0 298.7c0 63.2-51.2 114.3-114.3 114.3l-469.4 0c-63.2 0-114.3-51.2-114.3-114.3l0-298.7c0-63.2 51.2-114.3 114.3-114.3l42.7 0z m213.7-251.8l120.7 120.7c11.3 11.3 11.3 29.7 0 41-11.3 11.3-29.7 11.3-41 0l-72.4-72.3 0 340.7c0 16-13 29-29 29-16 0-29-13-29-29l0-338.4-70 70c-10.5 10.5-26.9 11.3-38.2 2.4l-2.8-2.4c-11.3-11.3-11.3-29.7 0-41l120.7-120.7c11.3-11.3 29.7-11.3 41 0z"></path></svg>
@@ -96,38 +123,38 @@ const ProductDetailMain = ({ productDetail }) => {
                             </div>
                         </div>
 
-                      
+
 
                         <div className="prices-sec flex items-center flex-wrap gap-2 pt-3 pb-4 px-2 lg:px-0">
 
                             {/* If sale_price exists show old price with line-through */}
-                            {productDetail.sale_price ? (
+                            {currentProduct.sale_price ? (
                                 <p className="text-[#000000] text-[20px] font-semibold relative">
                                     <span className="absolute top-[15px] bg-[#FB7701] w-full h-[2.5px]"></span>
-                                    {productDetail.price}
+                                    {currentProduct.price}
                                 </p>
                             ) : (
                                 // If sale_price does NOT exist, show price normally
                                 <p className="text-[#000000] text-[24px] font-semibold">
-                                    Rs. {productDetail.price}
+                                    Rs. {currentProduct.price}
                                 </p>
                             )}
 
                             {/* Sale price block (only if sale_price exists) */}
-                            {productDetail.sale_price && (
+                            {currentProduct.sale_price && (
                                 <div className="flex items-end text-[#FB7701]">
                                     <Image className="w-4 h-4" src={PriceSection} alt="promotional content" />
                                     <p className="text-[20px] font-semibold leading-[20px]">
-                                        Rs. <span className="text-[28px]">{productDetail.sale_price}</span>
+                                        Rs. <span className="text-[28px]">{currentProduct.sale_price}</span>
                                     </p>
                                 </div>
                             )}
 
                             {/* Discount badge (only when sale price exists) */}
-                            {productDetail.sale_price && (
+                            {currentProduct.sale_price && (
                                 <p className="text-[#FB7701] text-[15px] font-bold border border-[#FB7701] rounded-sm px-1 leading-[18px]">
                                     {Math.round(
-                                        ((productDetail.price - productDetail.sale_price) / productDetail.price) * 100
+                                        ((currentProduct.price - currentProduct.sale_price) / currentProduct.price) * 100
                                     )}% OFF limited time
                                 </p>
                             )}
@@ -148,7 +175,12 @@ const ProductDetailMain = ({ productDetail }) => {
                                 </div>
                             </div>
                         </div>
-                        <ProductColorSize sizes={productDetail?.sizes || []}/>
+                        <ProductColorSize
+                            colors={currentProduct?.colors || []}
+                            sizes={currentProduct?.sizes || []}
+                            onColorChange={handleColorChange}
+                            selectedColor={selectedColor || currentProduct?.colors?.[0]?.sku}
+                        />
                         <div className="px-2">
                             <div className="pt-6 flex items-center justify-start gap-2 lg:gap-4">
                                 <button onClick={() => {
@@ -218,7 +250,7 @@ const ProductDetailMain = ({ productDetail }) => {
                     <ProductStoreInfo />
                 </div>
                 <div className="product-detail-sec block lg:hidden">
-                    <ProductDetails productDescription={productDetail.product_description}/>
+                    <ProductDetails productDescription={currentProduct.product_description} />
                 </div>
                 <div className="block: xl:hidden">
                     <ProductListingMobile />

@@ -1,26 +1,36 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
 
-const ProductColorSize = ({ sizes = [] }) => {
+const ProductColorSize = ({ 
+    colors = [], 
+    sizes = [] ,
+    onColorChange, 
+    selectedColor: propSelectedColor 
+}) => {
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedQty, setSelectedQty] = useState(1);
     const [openQty, setOpenQty] = useState(false);
     const [hoveredSizeId, setHoveredSizeId] = useState(null);
-    // Only show sizes with quantity > 0
     const availableSizes = sizes.filter(size => Number(size.available_quantity) > 0);
-
-    const colors = [
-        { name: "Red", image: "/deals-product3.avif" },
-        { name: "Black", image: "/deals-product3.avif" },
-        { name: "Blue", image: "/deals-product3.avif" },
-        { name: "Green", image: "/deals-product3.avif" },
-    ];
-
     const qtyOptions = [1, 2, 3, 4, 5];
+
+     // Sync with parent's selected color
+     useEffect(() => {
+        setSelectedColor(propSelectedColor);
+    }, [propSelectedColor]);
+
+    // Handle color selection
+    const handleColorSelect = (colorSku) => {
+        setSelectedColor(colorSku);
+        if (onColorChange) {
+            onColorChange(colorSku); // Notify parent
+        }
+    };
+
 
     return (
         <div className="product-color-size px-2 lg:px-0">
@@ -29,27 +39,26 @@ const ProductColorSize = ({ sizes = [] }) => {
                 <p className="text-[#222] font-semibold">
                     Color:{" "}
                     <span className="capitalize">
-                        {selectedColor ? selectedColor : ""}
-                    </span>
+                        {selectedColor
+                            ? colors.find(c => c.sku === selectedColor)?.name || selectedColor
+                            : ""}                    </span>
                 </p>
 
                 <div className="colors flex gap-2 flex-wrap pt-2">
                     {colors.map((color, index) => (
                         <div
                             key={index}
-                            onClick={() => setSelectedColor(color.name)}
+                           onClick={() => handleColorSelect(color.sku)}
                             className={`single-color cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col justify-center items-center w-fit border rounded-md overflow-hidden
-                ${selectedColor === color.name
-                                    ? "border-black"
-                                    : "border-[#aaa]"
-                                }`}
+                    ${selectedColor === color.sku ? "border-black" : "border-[#aaa]"}
+                `}
                         >
                             <Image
                                 className="w-18 xl:w-22 h-auto"
                                 width={50}
                                 height={50}
                                 src={color.image}
-                                alt={color.name}
+                                alt={color.sku}
                             />
                             <p className="px-1 py-1 xl:py-2 text-[#222] text-[12px] font-bold">
                                 {color.name}

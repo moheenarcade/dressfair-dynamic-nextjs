@@ -103,7 +103,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                             // Loader Section
                             <div className="flex justify-center items-center h-[400px]">
                                 <Loader/>
-                                {/* <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div> */}
+                               
                             </div>
                         ) : (
                             <div className="relative">

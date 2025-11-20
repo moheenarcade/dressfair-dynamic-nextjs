@@ -5,6 +5,7 @@ import ProductColorSize from "../productDetailPageComponent/productColorSize";
 import { CgClose } from "react-icons/cg";
 import Image from "next/image";
 import { getProductDetails } from "@/lib/api";
+import WhiteLoader from "../whiteLoader";
 
 const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
   console.log(productSku, "productSkuproductSkuin mobile bootm model")
@@ -68,7 +69,7 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
 
           {/* Bottom sheet modal */}
           <motion.div
-            className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg z-[99999] p-4"
+            className="fixed overflow-hidden bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg z-[99999] p-4"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
@@ -77,6 +78,11 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
 
             {/* Modal Content */}
             <div className="max-h-[80vh] overflow-y-auto">
+            {loading && (
+                <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
+                    <WhiteLoader/>
+                </div>
+            )}
               <div className="">
                 <div className="flex justify-between pb-3">
                   <div className="flex gap-2">

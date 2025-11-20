@@ -29,22 +29,25 @@ const NewInFilters = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
 
+
     useEffect(() => {
         loadProducts(page);
     }, [page]);
 
     const loadProducts = async (pageNumber) => {
-        if (pageNumber === 1) setLoading(true);
         if (pageNumber > 1) setLoadingMore(true);
 
         const res = await getCatalogue(pageNumber);
-
         if (res?.success) {
-            setProducts(prev =>
-                pageNumber === 1 ? res.data : [...prev, ...res.data]
-            );
+            if (pageNumber === 1) {
+                setProducts(res.data);
+            } else {
+                setProducts(prev => [...prev, ...res.data]);
+            }
 
-            setHasMore(res.pagination.current_page < res.pagination.last_page);
+            if (res.pagination.current_page >= res.pagination.last_page) {
+                setHasMore(false);
+            }
         }
 
         setLoading(false);
@@ -52,10 +55,9 @@ const NewInFilters = () => {
     };
 
 
-    // 🔹 Filter products based on selected category
     const filteredProducts =
         selectedCategory === "Recommended"
-            ? products // Show all
+            ? products
             : products.filter((p) => p.category === selectedCategory);
 
 

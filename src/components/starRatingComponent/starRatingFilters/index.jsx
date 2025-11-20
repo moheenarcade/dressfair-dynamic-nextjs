@@ -32,34 +32,37 @@ const StarRatingFilters = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
 
-    useEffect(() => {
-        loadProducts(page);
-    }, [page]);
-
-    const loadProducts = async (pageNumber) => {
-        if (pageNumber === 1) setLoading(true);
-        if (pageNumber > 1) setLoadingMore(true);
-
-        const res = await getCatalogue(pageNumber);
-
-        if (res?.success) {
-            setProducts(prev =>
-                pageNumber === 1 ? res.data : [...prev, ...res.data]
-            );
-
-            setHasMore(res.pagination.current_page < res.pagination.last_page);
-        }
-
-        setLoading(false);
-        setLoadingMore(false);
-    };
-
-    // 🔹 Filter products based on selected category
-    const filteredProducts =
-        selectedCategory === "Recommended"
-            ? products // Show all
-            : products.filter((p) => p.category === selectedCategory);
-
+   
+       useEffect(() => {
+           loadProducts(page);
+       }, [page]);
+   
+       const loadProducts = async (pageNumber) => {
+           if (pageNumber > 1) setLoadingMore(true);
+   
+           const res = await getCatalogue(pageNumber);
+           if (res?.success) {
+               if (pageNumber === 1) {
+                   setProducts(res.data);
+               } else {
+                   setProducts(prev => [...prev, ...res.data]);
+               }
+   
+               if (res.pagination.current_page >= res.pagination.last_page) {
+                   setHasMore(false);
+               }
+           }
+   
+           setLoading(false);
+           setLoadingMore(false);
+       };
+   
+   
+       const filteredProducts =
+           selectedCategory === "Recommended"
+               ? products
+               : products.filter((p) => p.category === selectedCategory);
+   
 
     return (
         <div className='pt-4 xl:pt-0'>

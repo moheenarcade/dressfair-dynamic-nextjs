@@ -114,6 +114,14 @@ const Header = () => {
         };
     }, [showMobileCategory]);
 
+    useEffect(() => {
+        setShowMegaMenu(false);
+    }, [pathname]);
+
+    const handleMegaMenuLinkClick = () => {
+        setShowMegaMenu(false);
+    };
+
 
     return (
         <>
@@ -224,7 +232,10 @@ const Header = () => {
                                                         categories.map((cat) => (
                                                             <Link
                                                                 key={cat.id}
-                                                                onClick={() => sessionStorage.setItem("selectedCategoryId", cat.id)}
+                                                                onClick={() => {
+                                                                    sessionStorage.setItem("selectedCategoryId", cat.id);
+                                                                    handleMegaMenuLinkClick();
+                                                                }}
                                                                 href={`/c/${cat.name.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-")}`}
                                                             >
                                                                 <li
@@ -255,9 +266,7 @@ const Header = () => {
                                                         activeCategory.sub_categories.map((sub) => (
                                                             <Link
                                                                 key={sub.id}
-                                                                onClick={() => {
-                                                                    sessionStorage.setItem('selectedCategoryId', sub.id);
-                                                                }}
+                                                              
                                                                 href={`/c/${activeCategory.name
                                                                     .toLowerCase()
                                                                     .replace(/&/g, "and")
@@ -265,6 +274,12 @@ const Header = () => {
                                                                         .toLowerCase()
                                                                         .replace(/&/g, "and")
                                                                         .replace(/\s+/g, "-")}`}
+                                                                onClick={() => {
+                                                                    // Save selected category
+                                                                    sessionStorage.setItem("selectedCategoryId", sub.id);
+                                                                    // Close mega menu
+                                                                    handleMegaMenuLinkClick();
+                                                                }}
                                                                 className="flex flex-col items-center text-center cursor-pointer group hover:scale-[1.06] transition-all duration-500 ease-in-out"
                                                             >
                                                                 <Image

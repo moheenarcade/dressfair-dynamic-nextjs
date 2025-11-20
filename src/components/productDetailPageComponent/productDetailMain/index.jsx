@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { GoChevronRight } from "react-icons/go";
@@ -36,15 +36,24 @@ const product = {
 const ProductDetailMain = ({ productDetail }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isBuyNowOpen, setIsBuyNowOpen] = useState(false);
-    const { openCart } = useCart();
+    const { addToCart, openCart } = useCart();
     const [currentProduct, setCurrentProduct] = useState(productDetail);
     const [loading, setLoading] = useState(false);
-        const [selectedProductSku, setSelectedProductSku] = useState(null);
+    const [selectedProductSku, setSelectedProductSku] = useState(null);
     const [selectedColor, setSelectedColor] = useState(
         productDetail?.colors?.[0]?.sku || null
     );
+    const [selectedSizeObj, setSelectedSizeObj] = useState(
+        currentProduct?.sizes?.[0] || null
+      );
+      const [quantity, setQuantity] = useState(1); 
 
-    console.log(productDetail , "productDetail in proeuctc detail page here")
+      useEffect(() => {
+        setSelectedSizeObj(currentProduct?.sizes?.[0] || null);
+      }, [currentProduct]);
+      
+
+    console.log(productDetail, "productDetail in proeuctc detail page here")
     const handleColorChange = async (sku) => {
         setSelectedColor(sku);
         setLoading(true);
@@ -59,6 +68,8 @@ const ProductDetailMain = ({ productDetail }) => {
             setLoading(false);
         }
     };
+
+    
     return (
         <>
             {loading && (
@@ -125,8 +136,6 @@ const ProductDetailMain = ({ productDetail }) => {
                             </div>
                         </div>
 
-
-
                         <div className="prices-sec flex items-center flex-wrap gap-2 pt-3 pb-4 px-2 lg:px-0">
 
                             {/* If sale_price exists show old price with line-through */}
@@ -182,13 +191,34 @@ const ProductDetailMain = ({ productDetail }) => {
                             sizes={currentProduct?.sizes || []}
                             onColorChange={handleColorChange}
                             selectedColor={selectedColor || currentProduct?.colors?.[0]?.sku}
+                            onSizeChange={(sizeObj) => setSelectedSizeObj(sizeObj)}
+                            onQtyChange={(qty) => setQuantity(qty)}  
                         />
                         <div className="px-2">
                             <div className="pt-6 flex items-center justify-start gap-2 lg:gap-4">
-                                <button onClick={() => {
-
-                                    openCart();
-                                }} className="bg-[#fb5d01] hover:bg-[#fb7701] hidden lg:block hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-2 xl:py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">
+                                <button 
+                              onClick={() => {
+                                if (!selectedColor) {
+                                  alert("Please select color");
+                                  return;
+                                }
+                            
+                                if (!selectedSizeObj) {
+                                  alert("Please select size");
+                                  return;
+                                }
+                            
+                                addToCart(
+                                  currentProduct,
+                                  selectedColor,
+                                  selectedSizeObj, // full size object
+                                  quantity,
+                                  
+                                );
+                            
+                                openCart();
+                              }}
+                                 className="bg-[#fb5d01] hover:bg-[#fb7701] hidden lg:block hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-2 xl:py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">
                                     Add to cart!
                                 </button>
                                 <button onClick={() => setIsBuyNowOpen(true)} className="bg-[#fb5d01] main-button-buy hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-2 xl:py-3 px-3 lg:px-6 rounded-full w-[80%] mx-auto lg:w-full transition-all duration-300 ease-in-out">
@@ -269,9 +299,10 @@ const ProductDetailMain = ({ productDetail }) => {
                             e.stopPropagation();
                             setSelectedProductSku(currentProduct.sku);
                             setIsModalOpen(true);
-                        }} 
-                    
-                    className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">
+
+                        }}
+
+                        className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">
                         Add to cart!
                     </button>
                 </div>

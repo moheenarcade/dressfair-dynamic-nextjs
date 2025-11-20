@@ -4,22 +4,26 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
 
-const ProductColorSize = ({ 
-    colors = [], 
-    sizes = [] ,
-    onColorChange, 
-    selectedColor: propSelectedColor 
+const ProductColorSize = ({
+    colors = [],
+    sizes = [],
+    selectedColor: propSelectedColor,
+    selectedQty: propSelectedQty,
+    onColorChange,
+    onSizeChange,
+    onQtyChange
 }) => {
-    const [selectedColor, setSelectedColor] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(propSelectedColor || null);
     const [selectedSize, setSelectedSize] = useState(null);
-    const [selectedQty, setSelectedQty] = useState(1);
     const [openQty, setOpenQty] = useState(false);
     const [hoveredSizeId, setHoveredSizeId] = useState(null);
     const availableSizes = sizes.filter(size => Number(size.available_quantity) > 0);
     const qtyOptions = [1, 2, 3, 4, 5];
-
-     // Sync with parent's selected color
-     useEffect(() => {
+    const [selectedQty, setSelectedQty] = useState(propSelectedQty ?? 1);
+    const [showSizeError, setShowSizeError] = useState(false); 
+    
+    // Sync with parent's selected color
+    useEffect(() => {
         setSelectedColor(propSelectedColor);
     }, [propSelectedColor]);
 
@@ -29,6 +33,23 @@ const ProductColorSize = ({
         if (onColorChange) {
             onColorChange(colorSku); // Notify parent
         }
+    };
+
+    // Sync with parent's selected color
+    useEffect(() => {
+        setSelectedColor(propSelectedColor);
+    }, [propSelectedColor]);
+
+    // Sync with parent's quantity
+    useEffect(() => {
+        setSelectedQty(propSelectedQty ?? 1);
+    }, [propSelectedQty]);
+
+    // Handle quantity select
+    const handleQtySelect = (qty) => {
+        setSelectedQty(qty);
+        if (onQtyChange) onQtyChange(qty); // notify parent
+        setOpenQty(false);
     };
 
 
@@ -48,8 +69,8 @@ const ProductColorSize = ({
                     {colors.map((color, index) => (
                         <div
                             key={index}
-                           onClick={() => handleColorSelect(color.sku)}
-                            className={`single-color cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col justify-center items-center w-fit border rounded-md overflow-hidden
+                            onClick={() => handleColorSelect(color.sku)}
+                            className={`single-color cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col justify-center items-center w-fit border-2 rounded-md overflow-hidden
                     ${selectedColor === color.sku ? "border-black" : "border-[#aaa]"}
                 `}
                         >
@@ -71,7 +92,7 @@ const ProductColorSize = ({
             {/* Size Section */}
             <div className="size-sec pb-4">
                 <p className="text-[#222] font-semibold">
-                    Size: <span>{selectedSize || ""}</span>
+                    Size: <span>{selectedSize?.value || ""}</span>
                 </p>
 
                 <div className="sizes pt-2 flex items-center gap-2 flex-wrap">
@@ -79,11 +100,14 @@ const ProductColorSize = ({
                         availableSizes.map((sizeObj) => (
                             <div
                                 key={sizeObj.product_option_id}
-                                onClick={() => setSelectedSize(sizeObj.value)}
+                                onClick={() => {
+                                    setSelectedSize(sizeObj);
+                                    if (onSizeChange) onSizeChange(sizeObj);
+                                }}
                                 onMouseEnter={() => setHoveredSizeId(sizeObj.product_option_id)}
                                 onMouseLeave={() => setHoveredSizeId(null)}
-                                className={`relative single-size cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out py-1 px-4 text-[#222] text-[14px] font-bold w-fit rounded-full border
-          ${selectedSize === sizeObj.value ? "border-black" : "border-[#aaa]"}`}
+                                className={`relative single-size cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out py-1 px-4 text-[#222] text-[14px] font-bold w-fit rounded-full border-2
+          ${selectedSize?.product_option_id === sizeObj.product_option_id ? "border-black" : "border-[#aaa]"}`}
                             >
                                 {sizeObj.value}
 
@@ -117,8 +141,6 @@ const ProductColorSize = ({
                     95% of customers say these fit true to size
                 </div>
             </div>
-
-            {/* Quantity Section */}
             <div className="qty-sect relative flex items-center gap-2 pt-1">
                 <p className="text-[#222] font-semibold pb-1">Qty</p>
 
@@ -128,10 +150,7 @@ const ProductColorSize = ({
                 >
                     <div className="border border-[#aaa] font-semibold rounded-sm px-3 py-1 text-sm cursor-pointer flex justify-between items-center bg-white">
                         <span>{selectedQty}</span>
-                        <span
-                            className={`transform transition-transform duration-300 ${openQty ? "rotate-180" : ""
-                                }`}
-                        >
+                        <span className={`transform transition-transform duration-300 ${openQty ? "rotate-180" : ""}`}>
                             <IoIosArrowDown />
                         </span>
                     </div>
@@ -150,10 +169,7 @@ const ProductColorSize = ({
                                         key={qty}
                                         whileHover={{ backgroundColor: "#f3f3f3" }}
                                         className="px-3 py-2 text-sm cursor-pointer font-semibold"
-                                        onClick={() => {
-                                            setSelectedQty(qty);
-                                            setOpenQty(false);
-                                        }}
+                                        onClick={() => handleQtySelect(qty)}
                                     >
                                         {qty}
                                     </motion.li>

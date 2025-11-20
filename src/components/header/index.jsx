@@ -28,9 +28,22 @@ import { PiBookBookmarkLight } from "react-icons/pi";
 import ProductBanner from "../../../public/deals-product3.avif";
 import { MdAddShoppingCart } from 'react-icons/md';
 import { fetchAndSaveCategories, getLocalCategories } from '../../lib/api';
+import { useCart } from '@/context/CartContext';
 
 const Header = () => {
     const pathname = usePathname();
+    const {
+        cartItems,
+        updateQty,
+        toggleSingle,
+        toggleSelectAll,
+        isCartOpen,
+        closeCart,
+        subtotal,
+        totalQty,
+        allSelected,
+        removeItem,
+    } = useCart();
     const isHomePage = pathname === '/' || pathname === '/home';
     const [showMobileSearchModel, setMobileSearchModel] = useState(false);
     const [showMobileCategory, setMobileCategory] = useState(false);
@@ -266,7 +279,7 @@ const Header = () => {
                                                         activeCategory.sub_categories.map((sub) => (
                                                             <Link
                                                                 key={sub.id}
-                                                              
+
                                                                 href={`/c/${activeCategory.name
                                                                     .toLowerCase()
                                                                     .replace(/&/g, "and")
@@ -672,6 +685,9 @@ const Header = () => {
                                     <Link href="/cart">
                                         <span className={`${isHomePage ? "bg-[#BA0000]" : "bg-[#eeeeee]"} absolute inset-0 min-w-[50px] mx-auto h-[50px] my-auto rounded-full scale-0 origin-center transition-transform duration-500 ease-in-out group-hover:scale-100`}></span>
                                         <FiShoppingCart className="text-xl relative z-10" />
+                                        <span className='absolute text-[12px] font-semibold right-[5px] text-white px-1 -top-3 bg-[#fb7701] min-w-5 h-5 text-center rounded-full'>
+                                            {totalQty}
+                                        </span>
                                     </Link>
                                 </li>
                             </ul>
@@ -713,10 +729,13 @@ const Header = () => {
                                 <FaRegUser className="text-2xl" />
                             </button>
                         </div>
-                        <button>
+                        <button className='relative'>
                             <Link href="/cart">
                                 <FiShoppingCart className="text-2xl" />
                             </Link>
+                            <span className='absolute text-[12px] font-semibold right-[-6px] text-white px-1 -top-3 bg-[#fb7701] min-w-5 h-5 text-center rounded-full'>
+                                {totalQty}
+                            </span>
                         </button>
                     </div>
                 </div>
@@ -737,15 +756,11 @@ const Header = () => {
                 isOpen={showSignInModal}
                 onClose={() => setShowSignInModal(false)}
             />
-
-
             <div ref={mobileCategoriesContainerRef}>
                 {showMobileCategory && (
                     <MobileCategories categories={categories} onClose={() => setMobileCategory(false)} />
                 )}
             </div>
-
-
             <MobileHeaderSearchModel isOpen={showMobileSearchModel} onClose={() => setMobileSearchModel(false)} />
         </>
     )

@@ -1,16 +1,384 @@
+// "use client";
+// import { createContext, useContext, useState, useEffect, useMemo } from "react";
+
+// const CartContext = createContext();
+
+// export const CartProvider = ({ children }) => {
+//   const [cartItems, setCartItems] = useState([]);
+//   const [isCartOpen, setIsCartOpen] = useState(false);
+
+//   // Load cart from localStorage
+//   useEffect(() => {
+//     try {
+//       const savedCart = localStorage.getItem("cart");
+//       if (savedCart) {
+//         const parsedCart = JSON.parse(savedCart);
+//         if (Array.isArray(parsedCart)) {
+//           setCartItems(parsedCart);
+//         } else {
+//           setCartItems([]);
+//         }
+//       }
+//     } catch (error) {
+//       console.error("Failed to load cart from localStorage:", error);
+//       setCartItems([]);
+//     }
+//   }, []);
+  
+
+//   // Sync cart to localStorage
+//   useEffect(() => {
+//     localStorage.setItem("cart", JSON.stringify(cartItems));
+//   }, [cartItems]);
+
+//   const openCart = () => setIsCartOpen(true);
+//   const closeCart = () => setIsCartOpen(false);
+
+//   // Add to cart
+//   const addToCart = (product, selectedColorSku, selectedSizeObj, quantity = 1) => {
+//     if (!product || !selectedColorSku || !selectedSizeObj) return;
+  
+//     const colorObj = product.colors.find(c => c.sku === selectedColorSku);
+  
+//     const cartItemPayload = {
+//       product_id: product.product_id || product.id || product.sku,
+//       product_sku: product.sku,
+//       name: product.name,
+//       images: product.images?.map(img => img.image) || [],
+//       color: {
+//         sku: colorObj?.sku,
+//         name: colorObj?.name,
+//         image: colorObj?.image,
+//         quantity: colorObj?.quantity,
+//       },
+//       size: {
+//         product_option_id: selectedSizeObj.product_option_id,
+//         value: selectedSizeObj.value,
+//         available_quantity: selectedSizeObj.available_quantity,
+//       },
+//       qty: quantity,
+//       price: parseFloat(product.sale_price || product.price || 0),
+//       selected: true
+//     };
+  
+//     // Compare product_id + color + size_id
+//     const existingItemIndex = cartItems.findIndex(
+//       item =>
+//         item.product_id === cartItemPayload.product_id &&
+//         item.color.sku === selectedColorSku &&
+//         item.size.product_option_id === selectedSizeObj.product_option_id
+//     );
+  
+//     if (existingItemIndex !== -1) {
+//       // If same item exists, just update quantity
+//       const updatedItems = [...cartItems];
+//       updatedItems[existingItemIndex].qty += quantity;
+//       setCartItems(updatedItems);
+//     } else {
+//       // Add new item for new size/color
+//       setCartItems([...cartItems, cartItemPayload]);
+//     }
+  
+//     openCart();
+//   };
+  
+
+//   // Update quantity
+//   const updateQty = (productId, colorSku, sizeId, qty) => {
+//     setCartItems(prev =>
+//       prev.map(item =>
+//         item.product_id === productId &&
+//         item.color.sku === colorSku &&
+//         item.size.product_option_id === sizeId
+//           ? { ...item, qty }
+//           : item
+//       )
+//     );
+//   };
+
+//   // Toggle single selection
+//   const toggleSingle = (productId, colorSku, sizeId) => {
+//     setCartItems(prev =>
+//       prev.map(item =>
+//         item.product_id === productId &&
+//         item.color.sku === colorSku &&
+//         item.size.product_option_id === sizeId
+//           ? { ...item, selected: !item.selected }
+//           : item
+//       )
+//     );
+//   };
+
+//   // Toggle all selected
+//   const toggleSelectAll = () => {
+//     const allSelected = cartItems.every(item => item.selected);
+//     setCartItems(prev =>
+//       prev.map(item => ({ ...item, selected: !allSelected }))
+//     );
+//   };
+
+//   // Remove item
+//   const removeItem = (productId, colorSku, sizeId) => {
+//     setCartItems(prev =>
+//       prev.filter(
+//         item =>
+//           !(
+//             item.product_id === productId &&
+//             item.color.sku === colorSku &&
+//             item.size.product_option_id === sizeId
+//           )
+//       )
+//     );
+//   };
+
+//   // Derived calculations
+//   const subtotal = useMemo(() => {
+//     return cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+//   }, [cartItems]);
+
+//   const totalQty = useMemo(() => {
+//     return cartItems.reduce((acc, item) => acc + item.qty, 0);
+//   }, [cartItems]);
+
+//   const allSelected = useMemo(() => {
+//     return cartItems.length > 0 && cartItems.every(item => item.selected);
+//   }, [cartItems]);
+
+//   return (
+//     <CartContext.Provider
+//       value={{
+//         cartItems,
+//         setCartItems,
+//         addToCart,
+//         updateQty,
+//         toggleSingle,
+//         toggleSelectAll,
+//         removeItem,
+//         isCartOpen,
+//         openCart,
+//         closeCart,
+//         subtotal,
+//         totalQty,
+//         allSelected,
+//       }}
+//     >
+//       {children}
+//     </CartContext.Provider>
+//   );
+// };
+
+// export const useCart = () => useContext(CartContext);
+
+
+
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Load cart from localStorage on client only
+  useEffect(() => {
+    try {
+      const savedCart = localStorage.getItem("cart");
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        if (Array.isArray(parsedCart)) setCartItems(parsedCart);
+        else setCartItems([]);
+      } else {
+        setCartItems([]);
+      }
+    } catch (err) {
+      console.error("Failed to load cart:", err);
+      setCartItems([]);
+    }
+  }, []);
+
+  // Sync cartItems to localStorage whenever it changes
+  useEffect(() => {
+    if (cartItems !== null) {
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+    }
+  }, [cartItems]);
 
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
+  // const addToCart = (product, selectedColorSku, selectedSizeObj, quantity = 1) => {
+  //   if (!product || !selectedColorSku || !selectedSizeObj) return;
+
+  //   const colorObj = product.colors.find(c => c.sku === selectedColorSku);
+  //   const cartItemPayload = {
+  //     product_id: product.product_id || product.id || product.sku,
+  //     product_sku: product.sku,
+  //     name: product.name,
+  //     images: product.images?.map(img => img.image) || [],
+  //     color: {
+  //       sku: colorObj?.sku,
+  //       name: colorObj?.name,
+  //       image: colorObj?.image,
+  //       quantity: colorObj?.quantity,
+  //     },
+  //     size: {
+  //       product_option_id: selectedSizeObj.product_option_id,
+  //       value: selectedSizeObj.value,
+  //       available_quantity: selectedSizeObj.available_quantity,
+  //     },
+  //     qty: quantity,
+  //     price: parseFloat(product.sale_price || product.price || 0),
+  //     selected: true
+  //   };
+
+  //   setCartItems(prev => {
+  //     if (!prev) return [cartItemPayload]; // first load
+  //     const existingIndex = prev.findIndex(
+  //       item =>
+  //         item.product_id === cartItemPayload.product_id &&
+  //         item.color.sku === selectedColorSku &&
+  //         item.size.product_option_id === selectedSizeObj.product_option_id
+  //     );
+  //     if (existingIndex !== -1) {
+  //       const updated = [...prev];
+  //       updated[existingIndex].qty += quantity;
+  //       return updated;
+  //     } else {
+  //       return [...prev, cartItemPayload];
+  //     }
+  //   });
+
+  //   openCart();
+  // };
+
+  // const updateQty = (productId, colorSku, sizeId, qty) => {
+  //   setCartItems(prev =>
+  //     prev.map(item =>
+  //       item.product_id === productId &&
+  //       item.color.sku === colorSku &&
+  //       item.size.product_option_id === sizeId
+  //         ? { ...item, qty }
+  //         : item
+  //     )
+  //   );
+  // };
+
+  //   // Add to cart
+  const addToCart = (product, selectedColorSku, selectedSizeObj, quantity = 1) => {
+    if (!product || !selectedColorSku || !selectedSizeObj) return;
+  
+    const colorObj = product.colors.find(c => c.sku === selectedColorSku);
+  
+    const cartItemPayload = {
+      product_id: product.product_id || product.id || product.sku,
+      product_sku: product.sku,
+      name: product.name,
+      images: product.images?.map(img => img.image) || [],
+      color: {
+        sku: colorObj?.sku,
+        name: colorObj?.name,
+        image: colorObj?.image,
+        quantity: colorObj?.quantity,
+      },
+      size: {
+        product_option_id: selectedSizeObj.product_option_id,
+        value: selectedSizeObj.value,
+        available_quantity: selectedSizeObj.available_quantity,
+      },
+      qty: quantity,
+      price: parseFloat(product.sale_price || product.price || 0),
+      selected: true
+    };
+  
+    // Compare product_id + color + size_id
+    const existingItemIndex = cartItems.findIndex(
+      item =>
+        item.product_id === cartItemPayload.product_id &&
+        item.color.sku === selectedColorSku &&
+        item.size.product_option_id === selectedSizeObj.product_option_id
+    );
+  
+    if (existingItemIndex !== -1) {
+      // If same item exists, just update quantity
+      const updatedItems = [...cartItems];
+      updatedItems[existingItemIndex].qty += quantity;
+      setCartItems(updatedItems);
+    } else {
+      // Add new item for new size/color
+      setCartItems([...cartItems, cartItemPayload]);
+    }
+  
+    openCart();
+  };
+  
+
+  // Update quantity
+  const updateQty = (productId, colorSku, sizeId, qty) => {
+    setCartItems(prev =>
+      prev.map(item =>
+        item.product_id === productId &&
+        item.color.sku === colorSku &&
+        item.size.product_option_id === sizeId
+          ? { ...item, qty }
+          : item
+      )
+    );
+  };
+
+  const removeItem = (productId, colorSku, sizeId) => {
+    setCartItems(prev =>
+      prev.filter(
+        item =>
+          !(
+            item.product_id === productId &&
+            item.color.sku === colorSku &&
+            item.size.product_option_id === sizeId
+          )
+      )
+    );
+  };
+
+  const subtotal = useMemo(() => {
+    if (!cartItems) return 0;
+    return cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+  }, [cartItems]);
+
+  const totalQty = useMemo(() => {
+    if (!cartItems) return 0;
+    return cartItems.reduce((acc, item) => acc + item.qty, 0);
+  }, [cartItems]);
+
+  const allSelected = useMemo(() => {
+    if (!cartItems) return false;
+    return cartItems.length > 0 && cartItems.every(item => item.selected);
+  }, [cartItems]);
+
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem("cart");
+  };
+
+  // Render nothing until cartItems loaded
+  if (cartItems === null) return null;
+
   return (
-    <CartContext.Provider value={{ isCartOpen, openCart, closeCart }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        setCartItems,
+        addToCart,
+        updateQty,
+        removeItem,
+        clearCart,
+        isCartOpen,
+        openCart,
+        closeCart,
+        subtotal,
+        totalQty,
+        allSelected,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

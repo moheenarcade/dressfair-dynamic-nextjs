@@ -23,14 +23,7 @@ const ProductCardMobile = ({ products = [] }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [randomRating] = useState(getRandomRating());
     const [randomSold] = useState(getRandomSold());
-
-    // useEffect(() => {
-    //     const randomInterval = Math.floor(Math.random() * 10000) + 12000; // 7–15s random interval
-    //     const interval = setInterval(() => {
-    //         setActiveMessageIndex((prev) => (prev + 1) % messages.length);
-    //     }, randomInterval);
-    //     return () => clearInterval(interval);
-    // }, []);
+    const [selectedProductSku, setSelectedProductSku] = useState(null);
 
     console.log(products, "mobile product list ")
     return (
@@ -82,8 +75,9 @@ const ProductCardMobile = ({ products = [] }) => {
 
                                     <button
                                         onClick={(e) => {
-                                            e.preventDefault(); // prevent link navigation
-                                            e.stopPropagation(); // stop the click from bubbling up
+                                            e.preventDefault(); 
+                                            e.stopPropagation(); 
+                                            setSelectedProductSku(product.sku);
                                             setIsModalOpen(true);
                                         }}
                                         className="border hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-2 py-[1px] flex justify-center items-center">
@@ -98,35 +92,9 @@ const ProductCardMobile = ({ products = [] }) => {
 
 
             {/* Modal */}
-            <MobileAddToCartBottomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <div className="">
-                    <div className="flex justify-between pb-3">
-                        <div className="flex gap-2">
-                            <Image className="w-18 h-18 rounded-sm" width={100} height={100} src='/deals-product3.avif' alt="product " />
-                            <div className="pr-4">
-                                <p className="line-clamp-1 text-[14px] text-[#666] font-semibold">New Fashion Men's Four Seasons Comfy Casual Running Shoes</p>
-                                <div className="flex gap-1 items-center pt-1">
-                                    <p className="line-through text-[#222] text-[14px] font-semibold">44,127</p>
-                                    <p className="text-[#222] text-[14px] font-semibold">Rs. <span className="text-xl">12,252</span></p>
-                                </div>
-                                <p className="text-[#fb7701] border border-[#fb7701] rounded-sm px-2 font-semibold w-fit text-[14px]">72% OFF limited time</p>
-                            </div>
-                        </div>
-                        <div className="">
-                            <button onClick={() => setIsModalOpen(false)}>
-                                <CgClose className="text-xl" />
-                            </button>
-                        </div>
-                    </div>
-                    <ProductColorSize />
-                    <button
-                        onClick={() => setIsModalOpen(false)}
-                        className="mt-4 bg-[#fb5d01] hover:bg-[#fb7701] text-white py-3 px-6 rounded-full w-full font-semibold"
-                    >
-                        Confirm Add to Cart
-                    </button>
-                </div>
-            </MobileAddToCartBottomModal>
+            <MobileAddToCartBottomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} 
+              productSku={selectedProductSku} 
+                />
         </>
     )
 }

@@ -261,7 +261,7 @@ const ProductDetailMain = ({ productDetail }) => {
                     <ExploreInterestProducts />
                 </div>
 
-                <div className="fixed left-0 right-0 w-full bottom-0 py-3 px-4 z-[99999] bg-white block lg:hidden">
+                <div className="fixed left-0 right-0 w-full bottom-0 py-3 px-4 z-[99] bg-white block lg:hidden">
                     <button
                         onClick={(e) => {
                             e.preventDefault();

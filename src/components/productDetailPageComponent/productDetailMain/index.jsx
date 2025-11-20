@@ -39,10 +39,11 @@ const ProductDetailMain = ({ productDetail }) => {
     const { openCart } = useCart();
     const [currentProduct, setCurrentProduct] = useState(productDetail);
     const [loading, setLoading] = useState(false);
+        const [selectedProductSku, setSelectedProductSku] = useState(null);
     const [selectedColor, setSelectedColor] = useState(
         productDetail?.colors?.[0]?.sku || null
     );
-    
+
     const handleColorChange = async (sku) => {
         setSelectedColor(sku);
         setLoading(true);
@@ -61,7 +62,7 @@ const ProductDetailMain = ({ productDetail }) => {
         <>
             {loading && (
                 <div className="fixed inset-0 z-[9999] bg-black/60 flex items-center justify-center">
-                    <WhiteLoader/>
+                    <WhiteLoader />
                 </div>
             )}
             <div className="product-detail-main relative lg:pt-3 pb-12">
@@ -261,7 +262,15 @@ const ProductDetailMain = ({ productDetail }) => {
                 </div>
 
                 <div className="fixed left-0 right-0 w-full bottom-0 py-3 px-4 z-[99999] bg-white block lg:hidden">
-                    <button onClick={() => setIsModalOpen(true)} className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setSelectedProductSku(currentProduct.sku);
+                            setIsModalOpen(true);
+                        }} 
+                    
+                    className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">
                         Add to cart!
                     </button>
                 </div>
@@ -269,35 +278,9 @@ const ProductDetailMain = ({ productDetail }) => {
 
 
             {/* Modal */}
-            <MobileAddToCartBottomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <div className="">
-                    <div className="flex justify-between pb-3">
-                        <div className="flex gap-2">
-                            <Image className="w-18 h-18 rounded-sm" width={100} height={100} src='/deals-product3.avif' alt="product " />
-                            <div className="pr-4">
-                                <p className="line-clamp-1 text-[14px] text-[#666] font-semibold">New Fashion Men's Four Seasons Comfy Casual Running Shoes</p>
-                                <div className="flex gap-1 items-center pt-1">
-                                    <p className="line-through text-[#222] text-[14px] font-semibold">44,127</p>
-                                    <p className="text-[#222] text-[14px] font-semibold">Rs. <span className="text-xl">12,252</span></p>
-                                </div>
-                                <p className="text-[#fb7701] border border-[#fb7701] rounded-sm px-2 font-semibold w-fit text-[14px]">72% OFF limited time</p>
-                            </div>
-                        </div>
-                        <div className="">
-                            <button onClick={() => setIsModalOpen(false)}>
-                                <CgClose className="text-xl" />
-                            </button>
-                        </div>
-                    </div>
-                    <ProductColorSize />
-                    <button
-                        onClick={() => setIsModalOpen(false)}
-                        className="mt-4 bg-[#fb5d01] hover:bg-[#fb7701] text-white py-3 px-6 rounded-full w-full font-semibold"
-                    >
-                        Confirm Add to Cart
-                    </button>
-                </div>
-            </MobileAddToCartBottomModal>
+            <MobileAddToCartBottomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}
+                productSku={selectedProductSku}
+            />
 
             <BuyNowModel
                 isOpen={isBuyNowOpen}

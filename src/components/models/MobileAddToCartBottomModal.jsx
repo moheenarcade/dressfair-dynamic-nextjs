@@ -75,14 +75,15 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
           >
-
-            {/* Modal Content */}
-            <div className="max-h-[80vh] overflow-y-auto">
-            {loading && (
-                <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
+               {loading && (
+                <div className="absolute right-0 left-0 inset-0 z-[9999] bg-black/60 flex items-center justify-center">
                     <WhiteLoader/>
                 </div>
             )}
+
+            {/* Modal Content */}
+            <div className="max-h-[80vh] overflow-y-auto relative">
+         
               <div className="">
                 <div className="flex justify-between pb-3">
                   <div className="flex gap-2">

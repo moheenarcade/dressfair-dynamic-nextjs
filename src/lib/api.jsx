@@ -75,3 +75,22 @@ export const getLocalCategories = () => {
   const data = localStorage.getItem("main_cat");
   return data ? JSON.parse(data) : [];
 };
+
+// get sub category list  
+export const getSubCategories = async (categoryId = "") => {
+  try {
+    if (!categoryId) return { success: false, data: [] };
+
+    const res = await axios.get(`${API}/sub/categories?category_id=${categoryId}`, {
+      headers: {
+        "spa-merchant-id": "v6eJxZKeRs8RmL0AfgtDwnQ",
+        "spa-store-id": "1",
+      },
+    });
+
+    return res.data;
+  } catch (error) {
+    console.log("Subcategories API Error:", error);
+    return { success: false, data: [] };
+  }
+};

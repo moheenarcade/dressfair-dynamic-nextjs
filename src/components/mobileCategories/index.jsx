@@ -62,18 +62,7 @@ const MobileCategories = ({ onClose, categories }) => {
 
                             {activeCategory?.sub_categories?.length > 0 &&
                                 activeCategory.sub_categories.map((sub) => (
-                                    // <Link
-                                    //     key={sub.id}
-                                    //     href={`/c/${activeCategory.name
-                                    //         .toLowerCase()
-                                    //         .replace(/&/g, "and")
-                                    //         .replace(/\s+/g, "-")}/${sub.name
-                                    //             .toLowerCase()
-                                    //             .replace(/&/g, "and")
-                                    //             .replace(/\s+/g, "-")}`}
-                                    //             onClick={() => { sessionStorage.setItem("selectedCategoryId", sub.id)}}
-                                    //     className="flex flex-col items-center text-center cursor-pointer group hover:scale-[1.06] transition-all duration-500 ease-in-out"
-                                    // >
+                                 
                                     <Link
                                         key={sub.id}
                                         href={`/c/${activeCategory.name

@@ -23,7 +23,7 @@ const categories = [
 const NewInFilters = () => {
     const swiperRef = useRef(null);
     const [selectedCategory, setSelectedCategory] = useState("Recommended");
- const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [page, setPage] = useState(1);

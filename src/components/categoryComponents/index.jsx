@@ -10,7 +10,7 @@ import ProductImage2 from "../../../public/deals-product3.avif";
 import { LuChevronRight } from 'react-icons/lu';
 import CategoryFilters from '@/utils/CategoryFilters';
 import ProductCardMobile from '@/components/homePageMobile/productCardMobile';
-import { fetchAndSaveCategories, getCatalogue, getLocalCategories } from '@/lib/api';
+import { fetchAndSaveCategories, getCatalogue, getLocalCategories, getSubCategories } from '@/lib/api';
 import Loader from '../loader';
 import { FaChevronDown } from 'react-icons/fa6';
 
@@ -125,37 +125,66 @@ const categoriesData = [
 const CategroyComponents = () => {
   const params = useParams();
   const slug = params.slug || [];
+
+  const [categories, setCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [subcategoryList, setSubcategoryList] = useState([]);
+  const [subcategory, setSubcategory] = useState(null);
+
   const [products, setProducts] = useState([]);
-  const swiperRef = useRef(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  console.log(filteredProducts, "filteredProductsfilteredProductsfilteredProducts")
-  const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [subcategory, setSubcategory] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(categories?.[0] || null);
 
   const toSlug = (name) =>
     name.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-");
 
-  useEffect(() => {
-    setFilteredProducts(products); // sync whenever products change
-  }, [products]);
-
-  // Fetch categories from API and save in localStorage
+  // Fetch main categories from API
   useEffect(() => {
     const loadCategories = async () => {
-      const apiData = await fetchAndSaveCategories(); // fetch & save
-      const localCats = getLocalCategories(); // get localStorage data
+      const apiData = await fetchAndSaveCategories();
+      const localCats = getLocalCategories();
       setCategories(localCats);
-      setActiveCategory(localCats[0] || null); // first category active by default
+      setActiveCategory(localCats[0] || null);
     };
     loadCategories();
   }, []);
 
+  // Detect category and subcategory from URL
+  useEffect(() => {
+    if (!categories || categories.length === 0) return;
+
+    const categorySlug = slug[0];
+    const subcategorySlug = slug[1];
+
+    const foundCategory = categories.find(cat => toSlug(cat.name) === categorySlug);
+    if (!foundCategory) return;
+
+    setActiveCategory(foundCategory);
+
+    if (subcategorySlug) {
+      const foundSubcategory = subcategoryList.find(sub => toSlug(sub.name) === subcategorySlug);
+      setSubcategory(foundSubcategory || null);
+    } else {
+      setSubcategory(null);
+
+      // If no subcategory in URL, load subcategories dynamically
+      const categoryId = foundCategory.id || sessionStorage.getItem("selectedCategoryId");
+      if (categoryId) loadSubcategories(categoryId);
+    }
+  }, [slug, categories]);
+
+  // Load subcategories dynamically
+  const loadSubcategories = async (categoryId) => {
+    const res = await getSubCategories(categoryId);
+    if (res.success && res.data) {
+      setSubcategoryList(res.data);
+    }
+  }
+
+  // Load products
   useEffect(() => {
     loadProducts(page);
   }, [page]);
@@ -164,15 +193,13 @@ const CategroyComponents = () => {
     if (pageNumber === 1) setLoading(true);
     if (pageNumber > 1) setLoadingMore(true);
 
-    const categoryId = sessionStorage.getItem("selectedCategoryId") || '';
-
+    const categoryId = activeCategory?.id || sessionStorage.getItem("selectedCategoryId") || '';
     const res = await getCatalogue(pageNumber, categoryId);
 
     if (res?.success) {
       setProducts(prev =>
         pageNumber === 1 ? res.data : [...prev, ...res.data]
       );
-
       setHasMore(res.pagination.current_page < res.pagination.last_page);
     }
 
@@ -180,53 +207,24 @@ const CategroyComponents = () => {
     setLoadingMore(false);
   };
 
-
+  // Filter products by category/subcategory
   useEffect(() => {
-    if (slug.length === 0) return;
-
-    const categorySlug = slug[0];
-    const subcategorySlug = slug[1];
-
-    const foundCategory = categoriesData.find(
-      (cat) => toSlug(cat.name) === categorySlug
-    );
-
-    if (!foundCategory) return;
-
-    setCategory(foundCategory);
-
-    if (subcategorySlug) {
-      const foundSubcategory = foundCategory.subcategories.find(
-        (sub) => toSlug(sub.name) === subcategorySlug
-      );
-      setSubcategory(foundSubcategory || null);
-    } else {
-      setSubcategory(null);
-    }
-  }, [slug]);
-
-  useEffect(() => {
-    if (!category) return;
+    if (!activeCategory) return;
 
     let filtered = [];
-
     if (subcategory) {
       filtered = products.filter(
-        (p) =>
-          p.category &&
+        p => p.category &&
           (p.category.toLowerCase() === subcategory.name.toLowerCase() ||
-            p.category.toLowerCase() === category.name.toLowerCase())
+            p.category.toLowerCase() === activeCategory.name.toLowerCase())
       );
     } else {
       filtered = products.filter(
-        (p) =>
-          p.category &&
-          p.category.toLowerCase().includes(category.name.toLowerCase())
+        p => p.category && p.category.toLowerCase().includes(activeCategory.name.toLowerCase())
       );
     }
-
     setFilteredProducts(filtered.length > 0 ? filtered : products);
-  }, [category, subcategory, products]);
+  }, [activeCategory, subcategory, products]);
 
 
   return (
@@ -256,49 +254,30 @@ const CategroyComponents = () => {
         )}
       </div>
 
-      {/* <div className="block xl:hidden">
-        {subcategory && (
-          <nav className="flex items-center text-center justify-center space-x-2 text-sm text-gray-500 pb-3 px-2">
-            {subcategory && (
-              <>
-                <span className="text-gray-800 font-semibold text-lg">
-                  {subcategory.name}
-                </span>
-              </>
-            )}
-          </nav>
-        )}
-      </div> */}
 
-      {/* {!subcategory && (
+      {!subcategory && subcategoryList.length > 0 && (
         <div className="grid grid-cols-4 md:grid-cols-7 lg:grid-cols-12 gap-4 pt-6 pb-6 mb-6 border-b border-b-gray-300 px-2">
-          {category.subcategories.map((sub, index) => (
-            <Link
-              key={index}
-              href={`/c/${toSlug(category.name)}/${toSlug(sub.name)}`}
-            >
-              <div className="single-cat group cursor-pointer flex flex-col items-center ">
+          {subcategoryList.map((sub, index) => (
+            <Link key={index} href={`/c/${toSlug(activeCategory.name)}/${toSlug(sub.name)}`}>
+              <div className="single-cat group cursor-pointer flex flex-col items-center">
                 <Image
                   className="w-[90%] h-auto rounded-full group-hover:scale-[1.05] transition-all duration-300 ease-in-out"
-                  src={sub.image}
+                  src="/deals-product4.avif"
                   alt={sub.name}
+                  width={200}
+                  height={200}
                 />
-                <p className="text-[13px] font-normal text-center mt-1">
-                  {sub.name}
-                </p>
+                <p className="text-[13px] font-normal text-center mt-1">{sub.name}</p>
               </div>
             </Link>
           ))}
         </div>
-      )} */}
+      )}
 
       {/* Category Filters Section */}
       <CategoryFilters
       />
       <div className="pt-6 hidden xl:block">
-        <ProductCard products={filteredProducts} />
-
-
         {loading ? (
           <Loader />
         ) : (
@@ -329,7 +308,6 @@ const CategroyComponents = () => {
       </div>
 
       <div className="block xl:hidden px-2 pt-3">
-        {/* <ProductCardMobile products={filteredProducts} /> */}
         {loading ? (
           <Loader />
         ) : (

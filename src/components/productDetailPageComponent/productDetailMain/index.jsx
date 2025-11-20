@@ -44,6 +44,7 @@ const ProductDetailMain = ({ productDetail }) => {
         productDetail?.colors?.[0]?.sku || null
     );
 
+    console.log(productDetail , "productDetail in proeuctc detail page here")
     const handleColorChange = async (sku) => {
         setSelectedColor(sku);
         setLoading(true);

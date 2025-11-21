@@ -1,6 +1,5 @@
 
 
-
 "use client";
 import { useCart } from "@/context/CartContext";
 import { motion, AnimatePresence } from "framer-motion";

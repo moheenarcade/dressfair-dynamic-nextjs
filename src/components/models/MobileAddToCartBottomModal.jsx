@@ -1,28 +1,60 @@
+
+
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import ProductColorSize from "../productDetailPageComponent/productColorSize";
 import { CgClose } from "react-icons/cg";
 import Image from "next/image";
 import { getProductDetails } from "@/lib/api";
 import WhiteLoader from "../whiteLoader";
+import { IoIosArrowDown } from "react-icons/io";
+import { useCart } from "@/context/CartContext";
+import { toast } from 'react-hot-toast';
 
 const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
   console.log(productSku, "productSkuproductSkuin mobile bootm model")
   const [loading, setLoading] = useState(true);
+  const { addToCart, openCart } = useCart();
   const [productDetail, setProductDetail] = useState(null);
   const [currentProductSku, setCurrentProductSku] = useState(productSku);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSizeObj, setSelectedSizeObj] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [openQty, setOpenQty] = useState(false);
+  const [hoveredSizeId, setHoveredSizeId] = useState(null);
+  const qtyOptions = [1, 2, 3, 4, 5];
 
-  console.log(productDetail, "productDetailproductDetailproductDetailproductDetailproductDetail")
+  console.log(productDetail, "product detail model mobile bottom ")
+
+  // Find the color that matches the current product SKU
+  const findMatchingColor = (product) => {
+    if (!product?.colors || !product?.sku) return product?.colors?.[0]?.sku || null;
+    
+    const matchingColor = product.colors.find(color => color.sku === product.sku);
+    return matchingColor ? matchingColor.sku : (product.colors[0]?.sku || null);
+  };
+
+  // Find the first available size (with quantity > 0)
+  const findFirstAvailableSize = (sizes) => {
+    if (!sizes || !Array.isArray(sizes)) return null;
+    return sizes.find(size => Number(size.available_quantity) > 0) || null;
+  };
+
+  const availableSizes = (productDetail?.sizes || []).filter(size => Number(size.available_quantity) > 0);
+
   // Function to handle color change
   const handleColorChange = async (newColorSku) => {
     setLoading(true);
     setCurrentProductSku(newColorSku);
+    setSelectedColor(newColorSku);
 
     try {
       const res = await getProductDetails(newColorSku);
       if (res?.success) {
         setProductDetail(res.data);
+        // Set first available size for new product
+        const firstAvailableSize = findFirstAvailableSize(res.data?.sizes);
+        setSelectedSizeObj(firstAvailableSize || res.data?.sizes?.[0] || null);
       }
     } catch (error) {
       console.error("Error fetching product details:", error);
@@ -40,19 +72,90 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
       setLoading(true);
       setCurrentProductSku(productSku);
       const res = await getProductDetails(productSku);
-      if (res?.success) setProductDetail(res.data);
+      if (res?.success) {
+        setProductDetail(res.data);
+        // Set initial color and size
+        const matchingColor = findMatchingColor(res.data);
+        setSelectedColor(matchingColor);
+        
+        const firstAvailableSize = findFirstAvailableSize(res.data?.sizes);
+        setSelectedSizeObj(firstAvailableSize || res.data?.sizes?.[0] || null);
+      }
       setLoading(false);
     };
 
     fetchProduct();
   }, [isOpen, productSku]);
+
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
   }, [isOpen]);
 
+  // Color and Size handlers
+  const handleColorSelect = (colorSku) => {
+    setSelectedColor(colorSku);
+    handleColorChange(colorSku);
+  };
+
+  const handleSizeSelect = (sizeObj) => {
+    setSelectedSizeObj(sizeObj);
+  };
+
+  const handleQtySelect = (qty) => {
+    setQuantity(qty);
+    setOpenQty(false);
+  };
+
+  // Check if selected size is out of stock
+  const isSelectedSizeOutOfStock = () => {
+    if (!selectedSizeObj) return true;
+    return Number(selectedSizeObj.available_quantity) <= 0;
+  };
+
+  // Get the currently selected color name for display
+  const getSelectedColorName = () => {
+    return productDetail?.colors?.find(color => color.sku === selectedColor)?.name || "";
+  };
 
   const productImages = productDetail?.images?.map(img => img.image) || [];
+
+  const handleAddToCart = () => {
+    if (!selectedColor) {
+        toast.error("Please select color");
+        return;
+    }
+
+    if (!selectedSizeObj) {
+        toast.error("Please select size");
+        return;
+    }
+
+    // Check if selected size is out of stock
+    if (isSelectedSizeOutOfStock()) {
+        toast.error("This product is out of stock for the selected size");
+        return;
+    }
+
+    // Check if requested quantity is more than available
+    if (quantity > Number(selectedSizeObj.available_quantity)) {
+        toast.error(`Only ${selectedSizeObj.available_quantity} items available in this size`);
+        return;
+    }
+
+    // Use productDetail instead of currentProduct
+    addToCart(
+        productDetail, // Fixed: using productDetail instead of undefined currentProduct
+        selectedColor,
+        selectedSizeObj,
+        quantity,
+        false
+        
+    );
+    
+    toast.success("Product added to cart successfully!");
+    onClose();
+};
 
   return (
     <AnimatePresence>
@@ -75,19 +178,21 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
           >
-               {loading && (
-                <div className="absolute right-0 left-0 inset-0 z-[9999] bg-black/60 flex items-center justify-center">
-                    <WhiteLoader/>
-                </div>
+            {loading && (
+              <div className="absolute right-0 left-0 inset-0 z-[9999] bg-black/60 flex items-center justify-center">
+                <WhiteLoader/>
+              </div>
             )}
 
             {/* Modal Content */}
             <div className="max-h-[80vh] overflow-y-auto relative">
-         
               <div className="">
                 <div className="flex justify-between pb-3">
                   <div className="flex gap-2">
-                    <Image className="w-18 h-18 rounded-sm" width={100} height={100}
+                    <Image 
+                      className="w-18 h-18 rounded-sm" 
+                      width={100} 
+                      height={100}
                       src={productImages[0] || "/Placeholder_view_vector.png"}
                       alt={productDetail?.name || "product image"}
                     />
@@ -109,8 +214,8 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
                       </div>
                       {productDetail?.sale_price && (
                         <p className="text-[#fb7701] border border-[#fb7701] rounded-sm px-2 font-semibold w-fit text-[14px]">
-
-                          {Math.round(((productDetail?.price - productDetail?.sale_price) / productDetail?.price) * 100)}% OFF limited time</p>
+                          {Math.round(((productDetail?.price - productDetail?.sale_price) / productDetail?.price) * 100)}% OFF limited time
+                        </p>
                       )}
                     </div>
                   </div>
@@ -120,14 +225,143 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
                     </button>
                   </div>
                 </div>
-                <ProductColorSize
-                  colors={productDetail?.colors || []}
-                  sizes={productDetail?.sizes || []}
-                  onColorChange={handleColorChange}
-                  selectedColor={currentProductSku}
-                />
+
+                {/* Product Color & Size Section - Moved from Child Component */}
+                <div className="product-color-size">
+                  {/* Color Section */}
+                  <div className="color-sect pb-4">
+                    <p className="text-[#222] font-semibold">
+                      Color:{" "}
+                      <span className="capitalize">
+                        {getSelectedColorName()}
+                      </span>
+                    </p>
+
+                    <div className="colors flex gap-2 flex-wrap pt-2">
+                      {(productDetail?.colors || []).map((color, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleColorSelect(color.sku)}
+                          className={`single-color cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col justify-center items-center w-fit border-2 rounded-md overflow-hidden
+                            ${selectedColor === color.sku ? "border-black" : "border-[#aaa]"}
+                          `}
+                        >
+                          <Image
+                            className="w-16 h-16 object-cover"
+                            width={50}
+                            height={50}
+                            src={color.image}
+                            alt={color.sku}
+                          />
+                          <p className="px-1 py-1 text-[#222] text-[12px] font-bold">
+                            {color.name}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Size Section */}
+                  <div className="size-sec pb-4">
+                    <p className="text-[#222] font-semibold">
+                      Size: <span>{selectedSizeObj?.value || ""}</span>
+                      {selectedSizeObj && isSelectedSizeOutOfStock() && (
+                        <span className="text-red-500 text-sm ml-2">(Out of Stock)</span>
+                      )}
+                    </p>
+
+                    <div className="sizes pt-2 flex items-center gap-2 flex-wrap">
+                      {availableSizes.length > 0 ? (
+                        availableSizes.map((sizeObj) => (
+                          <div
+                            key={sizeObj.product_option_id}
+                            onClick={() => handleSizeSelect(sizeObj)}
+                            onMouseEnter={() => setHoveredSizeId(sizeObj.product_option_id)}
+                            onMouseLeave={() => setHoveredSizeId(null)}
+                            className={`relative single-size cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out py-1 px-4 text-[#222] text-[14px] font-bold w-fit rounded-full border-2
+                              ${selectedSizeObj?.product_option_id === sizeObj.product_option_id ? "border-black" : "border-[#aaa]"}
+                              ${Number(sizeObj.available_quantity) <= 0 ? "opacity-50 cursor-not-allowed" : ""}
+                            `}
+                          >
+                            {sizeObj.value}
+
+                            {/* Custom Tooltip */}
+                            {hoveredSizeId === sizeObj.product_option_id && (
+                              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-black rounded shadow-md whitespace-nowrap z-[9899999999999]">
+                                {Number(sizeObj.available_quantity) > 0 
+                                  ? `Available quantity: ${sizeObj.available_quantity}`
+                                  : "Out of stock"
+                                }
+                              </div>
+                            )}
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-red-500 text-sm">Out of stock — unable to add to cart</p>
+                      )}
+                    </div>
+
+                    <div className="flex pt-2 gap-1 items-center text-[14px] text-[#757575] font-[500]">
+                      <svg
+                        className="_300bKV8h"
+                        alt=""
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                        viewBox="0 0 1024 1024"
+                        width="1em"
+                        height="1em"
+                        fill="#757575"
+                        aria-hidden="true"
+                      >
+                        <path d="M512 7.3c278.7 0 504.7 226 504.7 504.7 0 278.7-226 504.7-504.7 504.7-278.7 0-504.7-226-504.7-504.7 0-278.7 226-504.7 504.7-504.7z m0 73.2c-238.3 0-431.5 193.2-431.5 431.5 0 238.3 193.2 431.5 431.5 431.5 238.3 0 431.5-193.2 431.5-431.5 0-238.3-193.2-431.5-431.5-431.5z m-73.1 676.1c-20.2 0-36.6-16.4-36.6-36.5 0-20.2 16.4-36.6 36.6-36.6l43.6-0.1 0-196.8-14.3 0c-18 0-32.9-12.9-36-30l-0.6-6.5c0-20.2 16.4-36.6 36.6-36.6l50.9 0c20.2 0 36.6 16.4 36.6 36.6l0 233.3 29.4 0.1c20.2 0 36.6 16.4 36.6 36.6 0 20.2-16.4 36.6-36.6 36.5l-146.2 0z m63.8-500.6c30.3 0 54.9 24.6 54.9 54.9 0 30.3-24.6 54.9-54.9 54.8-30.3 0-54.9-24.6-54.9-54.8 0-30.3 24.6-54.9 54.9-54.9z"></path>
+                      </svg>
+                      95% of customers say these fit true to size
+                    </div>
+                  </div>
+
+                  {/* Quantity Section */}
+                  <div className="qty-sect relative flex items-center gap-2 pt-1">
+                    <p className="text-[#222] font-semibold pb-1">Qty</p>
+
+                    <div
+                      className="select-qty-option relative w-[100px]"
+                      onClick={() => setOpenQty(!openQty)}
+                    >
+                      <div className="border border-[#aaa] font-semibold rounded-sm px-3 py-1 text-sm cursor-pointer flex justify-between items-center bg-white">
+                        <span>{quantity}</span>
+                        <span className={`transform transition-transform duration-300 ${openQty ? "rotate-180" : ""}`}>
+                          <IoIosArrowDown />
+                        </span>
+                      </div>
+
+                      <AnimatePresence>
+                        {openQty && (
+                          <motion.ul
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute top-full left-0 w-full bg-white border border-gray-100 mt-px rounded-md shadow-md overflow-hidden z-50"
+                          >
+                            {qtyOptions.map((qty) => (
+                              <motion.li
+                                key={qty}
+                                whileHover={{ backgroundColor: "#f3f3f3" }}
+                                className="px-3 py-2 text-sm cursor-pointer font-semibold"
+                                onClick={() => handleQtySelect(qty)}
+                              >
+                                {qty}
+                              </motion.li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                </div>
+
                 <button
-                  onClick={onClose}
+                  onClick={handleAddToCart}
                   className="mt-4 bg-[#fb5d01] hover:bg-[#fb7701] text-white py-3 px-6 rounded-full w-full font-semibold"
                 >
                   Confirm Add to Cart

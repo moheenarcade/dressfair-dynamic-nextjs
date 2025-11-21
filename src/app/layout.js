@@ -5,6 +5,7 @@ import { CartProvider } from "@/context/CartContext";
 import CartSidebar from "@/components/models/CartSidebar";
 import LayoutContent from "@/components/LayoutContent";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+          <Toaster position="top-right" />
         <LanguageProvider>
           <UserProvider>
             <CartProvider>

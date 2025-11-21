@@ -26,7 +26,7 @@ import Loader from "@/components/loader";
 import WhiteLoader from "@/components/whiteLoader";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const product = {
     title: "Men's Winter Casual PU Leather Jacket",
@@ -159,14 +159,9 @@ const ProductDetailMain = ({ productDetail }) => {
         );
 
         // openCart(true);
-        // toast.success("Product added to cart successfully!");
-        setTimeout(() => {
-            toast.success("Product added to cart successfully!");
-        }, 50);
+        toast.success("Product added to cart successfully!");
+      
     };
-    useEffect(() => {
-        toast.success("Test toast");
-    }, []);
 
     // Handle buy now with validation
     const handleBuyNow = () => {
@@ -202,7 +197,6 @@ const ProductDetailMain = ({ productDetail }) => {
 
     return (
         <>
-            <Toaster position="top-right" reverseOrder={false} />
             {loading && (
                 <div className="fixed inset-0 z-[9999] bg-black/60 flex items-center justify-center">
                     <WhiteLoader />

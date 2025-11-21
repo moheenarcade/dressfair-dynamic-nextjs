@@ -43,7 +43,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-          <Toaster position="top-center" />
+          <Toaster position="top-center" 
+          containerStyle={{
+            zIndex: 989999999999999, // your custom z-index
+          }}
+          />
         <LanguageProvider>
           <UserProvider>
             <CartProvider>

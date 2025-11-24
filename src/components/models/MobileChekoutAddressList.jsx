@@ -11,6 +11,8 @@ import { BsCheckLg } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import toast, { Toaster } from 'react-hot-toast';
+import EditAddressMobileModelSidebar from "./editAddressMobileModelSidebar";
+import AddNewAddressMobileModal from "./AddNewAddressMobileModel";
 
 const notify = () =>
   toast.success("Copied successfully!", {
@@ -45,6 +47,7 @@ const MobileChekoutAddressList = ({
   const [editingAddress, setEditingAddress] = useState(null);
   const [addingAddress, setAddingAddress] = useState(false);
   const [deletingAddress, setDeletingAddress] = useState(null);
+  const [isAddAddressOpen, setIsAddAddressOpen] = useState(false);
 
 
   const addresses = [
@@ -189,7 +192,7 @@ const MobileChekoutAddressList = ({
 
                 <div className="fixed left-0 right-0 w-full bottom-0 border-t border-t-gray-100 py-3 px-1 md:px-6 z-[99999] bg-white block xl:hidden">
                   <div className="pt-3 flex justify-center items-center">
-                    <button className="hover:bg-[#fb7701] hover:scale-[1.03] text-lg transition-all duration-300 ease-in-out w-full md:w-[50%] mx-auto py-[10px] px-4 rounded-full border border-transparent text-white bg-[#fb5d01] text-md font-semibold">
+                    <button onClick={() => setIsAddAddressOpen(true)} className="hover:bg-[#fb7701] hover:scale-[1.03] text-lg transition-all duration-300 ease-in-out w-full md:w-[50%] mx-auto py-[10px] px-4 rounded-full border border-transparent text-white bg-[#fb5d01] text-md font-semibold">
                       Add a new address
                     </button>
                   </div>
@@ -250,6 +253,25 @@ const MobileChekoutAddressList = ({
               </motion.div>
             )}
           </AnimatePresence>
+
+          <EditAddressMobileModelSidebar
+            isOpen={!!editingAddress}
+            onClose={() => setEditingAddress(null)}
+            address={editingAddress}
+            onSave={(updated) => {
+              handleEditSave(updated);
+              setEditingAddress(null);
+            }}
+          />
+
+          <AddNewAddressMobileModal
+            isOpen={isAddAddressOpen}
+            onClose={() => setIsAddAddressOpen(false)}
+            onSave={(newAddress) => {
+              console.log("New address saved:", newAddress);
+              setIsAddAddressOpen(false);
+            }}
+          />
         </>
       )}
     </AnimatePresence>

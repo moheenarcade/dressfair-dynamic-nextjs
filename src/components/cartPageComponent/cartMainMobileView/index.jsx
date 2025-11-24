@@ -140,7 +140,7 @@ const CartMainMobileView = () => {
                     </div>
 
                     <div className="cart-items pt-4 flex flex-col gap-5 pb-4">
-                        {cartItems.map((item) => (
+                        {cartItems?.map((item) => (
                             <div key={item.id} className="single-item flex gap-1 items-center">
                                 <button
                                     className=" "

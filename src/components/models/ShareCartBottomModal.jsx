@@ -81,7 +81,7 @@ const ShareCartBottomModal = ({ isOpen, onClose }) => {
 
                         {/* Content */}
                         <div className="max-h-[70vh] overflow-y-auto px-4 pb-20 pt-6 flex flex-col gap-4">
-                                {cartItems.map((item) => (
+                                {cartItems?.map((item) => (
                                                             <div key={item.id} className="single-item flex gap-1 items-center">
                                                                 <button
                                                                     className=" "

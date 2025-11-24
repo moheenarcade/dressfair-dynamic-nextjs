@@ -119,7 +119,7 @@ const CartMain = () => {
                         </div>
 
                         <div className="cart-items pt-4 flex flex-col gap-5 border-t border-t-gray-200 mt-4 pb-10">
-                            {cartItems.map((item) => (
+                            {cartItems?.map((item) => (
                                 <div key={`${item.product_id}-${item.color.sku}-${item.size.product_option_id}`} className="single-item flex gap-4 items-center">
                                     <button
                                         className=" "

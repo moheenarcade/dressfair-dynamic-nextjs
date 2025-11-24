@@ -116,7 +116,7 @@ const CheckoutCartItemSliderMobile = () => {
                         modules={[Navigation, Autoplay]}
                         className="checkout-items-slider"
                     >
-                        {cartItems.map((item) => (
+                        {cartItems?.map((item) => (
                             <SwiperSlide key={item.id}>
                                 <div className="checkout-single-item cursor-pointer hover:shadow-md">
                                     <Image width="200" height="200" src={item.img} alt="product banner" />

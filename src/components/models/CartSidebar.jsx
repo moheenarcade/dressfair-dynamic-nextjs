@@ -25,7 +25,7 @@ export default function CartSidebar() {
     totalQty,
     allSelected,
     removeItem,
-    
+
   } = useCart();
 
   const qtyOptions = [0, 1, 2, 3, 4, 5];
@@ -53,7 +53,7 @@ export default function CartSidebar() {
       toast.success("Item removed from cart successfully!");
     } else {
       updateQty(product_id, color.sku, size.product_option_id, newQty);
-      
+
       if (newQty > currentQty) {
         toast.success(`Quantity increased to ${newQty}`);
       } else if (newQty < currentQty) {
@@ -128,82 +128,85 @@ export default function CartSidebar() {
 
             {/* Cart items list */}
             <div className="cart-items px-5 pt-4 flex flex-col gap-5 h-[65vh] pb-14 overflow-y-auto">
-              {cartItems.map((item) => (
-                <div key={`${item.product_id}-${item.color.sku}-${item.size.product_option_id}`} className="single-item">
-                  <div className="relative border border-gray-100 overflow-hidden rounded-md">
-                    <button
-                      className="absolute top-2 left-2"
-                      onClick={() =>
-                        toggleSingle(item.product_id, item.color.sku, item.size.product_option_id)
-                      }
-                    >
-                      {item.selected ? (
-                        <BsCheckCircleFill className="text-xl text-[#222]" />
-                      ) : (
-                        <GoCircle className="text-xl text-black" />
-                      )}
-                    </button>
+              {cartItems?.map((item) => {
+                const itemKey = item.size
+                  ? `${item.product_id}-${item.color?.sku}-${item.size?.product_option_id}`
+                  : `${item.product_id}-${item.color?.sku}`;
 
-                    <Image
-                      className="w-full"
-                      width={100}
-                      height={100}
-                      src={item.images[0] || "/placeholder.png"}
-                      alt={item.name}
-                    />
-                  </div>
-
-                  <p className="text-center text-[#222] text-[14px] font-semibold py-2">
-                    <span className="text-[12px]">RS.</span> {item.price}
-                  </p>
-
-                  {/* Quantity dropdown */}
-                  <div className="select-qty-option relative w-[100px] mx-auto">
-                    <div
-                      className="border border-[#aaa] font-semibold rounded-sm px-3 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
-                      onClick={() =>
-                        toggleQtyDropdown(`${item.product_id}-${item.color.sku}-${item.size.product_option_id}`)
-                      }
-                    >
-                      <span>{item.qty}</span>
-                      <span
-                        className={`transform transition-transform duration-300 ${
-                          openQtyId === `${item.product_id}-${item.color.sku}-${item.size.product_option_id}`
-                            ? "rotate-180"
-                            : ""
-                        }`}
+                return (
+                  <div key={itemKey}
+                    className="single-item">
+                    <div className="relative border border-gray-100 overflow-hidden rounded-md">
+                      <button
+                        className="absolute top-2 left-2"
+                        onClick={() =>
+                          toggleSingle(item.product_id, item.color.sku, item.size.product_option_id)
+                        }
                       >
-                        <IoIosArrowDown />
-                      </span>
+                        {item.selected ? (
+                          <BsCheckCircleFill className="text-xl text-[#222]" />
+                        ) : (
+                          <GoCircle className="text-xl text-black" />
+                        )}
+                      </button>
+
+                      <Image
+                        className="w-full"
+                        width={100}
+                        height={100}
+                        src={item.images?.[0] || "/placeholder.png"}
+                        alt={item.name}
+                      />
                     </div>
 
-                    <AnimatePresence>
-                      {openQtyId === `${item.product_id}-${item.color.sku}-${item.size.product_option_id}` && (
-                        <motion.ul
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute top-full left-0 w-full bg-white border border-gray-100 mt-px rounded-md shadow-md overflow-hidden z-50"
+                    <p className="text-center text-[#222] text-[14px] font-semibold py-2">
+                      <span className="text-[12px]">RS.</span> {item.price}
+                    </p>
+                    <div className="select-qty-option relative w-[100px] mx-auto">
+                      <div
+                        className="border border-[#aaa] font-semibold rounded-sm px-3 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
+                        onClick={() =>
+                          toggleQtyDropdown(`${item.product_id}-${item.color.sku}-${item.size.product_option_id}`)
+                        }
+                      >
+                        <span>{item.qty}</span>
+                        <span
+                          className={`transform transition-transform duration-300 ${openQtyId === `${item.product_id}-${item.color.sku}-${item.size.product_option_id}`
+                              ? "rotate-180"
+                              : ""
+                            }`}
                         >
-                          {qtyOptions.map((qty) => (
-                            <motion.li
-                              key={qty}
-                              whileHover={{ backgroundColor: "#f3f3f3" }}
-                              className={`px-3 py-2 text-sm cursor-pointer font-semibold ${
-                                qty === 0 ? "text-red-500 hover:text-red-600" : ""
-                              }`}
-                              onClick={() => handleUpdateQty(item, qty)}
-                            >
-                              {qty === 0 ? "0" : qty}
-                            </motion.li>
-                          ))}
-                        </motion.ul>
-                      )}
-                    </AnimatePresence>
+                          <IoIosArrowDown />
+                        </span>
+                      </div>
+
+                      <AnimatePresence>
+                        {openQtyId === `${item.product_id}-${item.color.sku}-${item.size.product_option_id}` && (
+                          <motion.ul
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute top-full left-0 w-full bg-white border border-gray-100 mt-px rounded-md shadow-md overflow-hidden z-50"
+                          >
+                            {qtyOptions.map((qty) => (
+                              <motion.li
+                                key={qty}
+                                whileHover={{ backgroundColor: "#f3f3f3" }}
+                                className={`px-3 py-2 text-sm cursor-pointer font-semibold ${qty === 0 ? "text-red-500 hover:text-red-600" : ""
+                                  }`}
+                                onClick={() => handleUpdateQty(item, qty)}
+                              >
+                                {qty === 0 ? "0" : qty}
+                              </motion.li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

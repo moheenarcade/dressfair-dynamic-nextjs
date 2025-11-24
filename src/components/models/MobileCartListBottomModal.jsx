@@ -100,7 +100,7 @@ const MobileCartListBottomModal = ({
                       modules={[Autoplay, Pagination, Navigation]}
                       className="cartSwiper"
                     >
-                      {cartItems.map((item) => (
+                      {cartItems?.map((item) => (
                         <SwiperSlide key={item.id}>
                           <div className="single-item shadow-lg p-1 border border-gray-200 rounded-sm">
                             <Image width={100} height={100} src={item.img} alt="product banner" />

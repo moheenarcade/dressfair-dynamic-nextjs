@@ -216,7 +216,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 <li className="text-black">Mens winter clothing</li>
                             </ul>
                         </div>
-                        <ProductMainSlider productDescription={currentProduct.product_description} sliderImages={currentProduct} />
+                        <ProductMainSlider productDescription={currentProduct?.product_description} sliderImages={currentProduct} />
                     </div>
 
                     <div className="w-full lg:w-[44%] lg:pt-8 self-start lg:sticky top-4 h-fit">
@@ -515,7 +515,7 @@ const ProductDetailMain = ({ productDetail }) => {
                     <ProductStoreInfo />
                 </div>
                 <div className="product-detail-sec block lg:hidden">
-                    <ProductDetails productDescription={currentProduct.product_description} />
+                    <ProductDetails productDescription={currentProduct?.product_description} />
                 </div>
                 <div className="block: xl:hidden">
                     <ProductListingMobile />

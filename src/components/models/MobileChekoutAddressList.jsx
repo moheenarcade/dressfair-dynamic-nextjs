@@ -231,7 +231,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 <li className="text-black">Mens winter clothing</li>
                             </ul>
                         </div>
-                        <ProductMainSlider productDescription={currentProduct.product_description} sliderImages={currentProduct} />
+                        <ProductMainSlider productDescription={currentProduct?.product_description} sliderImages={currentProduct} />
                     </div>
 
                     <div className="w-full lg:w-[44%] lg:pt-8 self-start lg:sticky top-4 h-fit">
@@ -280,30 +280,30 @@ const ProductDetailMain = ({ productDetail }) => {
                         <div className="prices-sec flex items-center flex-wrap gap-2 pt-3 pb-4 px-2 lg:px-0">
 
                             {/* If sale_price exists show old price with line-through */}
-                            {currentProduct.sale_price ? (
+                            {currentProduct?.sale_price ? (
                                 <p className="text-[#000000] text-[20px] font-semibold relative">
                                     <span className="absolute top-[15px] bg-[#FB7701] w-full h-[2.5px]"></span>
-                                    {currentProduct.price}
+                                    {currentProduct?.price || "null"}
                                 </p>
                             ) : (
                                 // If sale_price does NOT exist, show price normally
                                 <p className="text-[#000000] text-[24px] font-semibold">
-                                    Rs. {currentProduct.price}
+                                    Rs. {currentProduct?.price || "null"}
                                 </p>
                             )}
 
                             {/* Sale price block (only if sale_price exists) */}
-                            {currentProduct.sale_price && (
+                            {currentProduct?.sale_price && (
                                 <div className="flex items-end text-[#FB7701]">
                                     <Image className="w-4 h-4" src={PriceSection} alt="promotional content" />
                                     <p className="text-[20px] font-semibold leading-[20px]">
-                                        Rs. <span className="text-[28px]">{currentProduct.sale_price}</span>
+                                        Rs. <span className="text-[28px]">{currentProduct?.sale_price || "null"}</span>
                                     </p>
                                 </div>
                             )}
 
                             {/* Discount badge (only when sale price exists) */}
-                            {currentProduct.sale_price && (
+                            {currentProduct?.sale_price && (
                                 <p className="text-[#FB7701] text-[15px] font-bold border border-[#FB7701] rounded-sm px-1 leading-[18px]">
                                     {Math.round(
                                         ((currentProduct.price - currentProduct.sale_price) / currentProduct.price) * 100
@@ -530,7 +530,7 @@ const ProductDetailMain = ({ productDetail }) => {
                     <ProductStoreInfo />
                 </div>
                 <div className="product-detail-sec block lg:hidden">
-                    <ProductDetails productDescription={currentProduct.product_description} />
+                    <ProductDetails productDescription={currentProduct?.product_description} />
                 </div>
                 <div className="block: xl:hidden">
                     <ProductListingMobile />

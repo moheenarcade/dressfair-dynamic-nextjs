@@ -108,7 +108,7 @@ const CartItemsDetailcheckoutDisktopModel = ({ isOpen, onClose, product }) => {
                             </div>
 
                         <div className="cart-items pt-4 max-h-[500px] px-6 overflow-y-auto flex flex-col gap-5 mt-4 pb-10">
-                            {cartItems.map((item) => (
+                            {cartItems?.map((item) => (
                                 <div key={item.id} className="single-item flex gap-4 items-center">
                              
                                     <div className="flex gap-4">

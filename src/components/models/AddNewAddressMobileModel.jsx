@@ -45,16 +45,18 @@ const AddNewAddressMobileModal = ({ isOpen, onClose, onSave }) => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 bg-black/60 flex justify-center items-center z-[999999999999999999]"
+        className="fixed inset-0 bg-black/50 z-[999999999]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
+        {/* RIGHT → LEFT sliding modal */}
         <motion.div
-          className="relative flex flex-col justify-between h-[640px] overflow-hidden bg-white rounded-lg shadow-xl w-full max-w-[700px] px-6 py-6"
-          initial={{ scale: 0.85, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.85, opacity: 0 }}
+          className="fixed right-0 top-0 h-full w-[90%] max-w-[700px] bg-white shadow-xl px-6 py-6 rounded-l-2xl overflow-y-auto"
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ type: "spring", stiffness: 120, damping: 22 }}
         >
           <button onClick={onClose} className="p-1 absolute right-2 top-4 hover:bg-gray-100 rounded-full">
             <CgClose className="text-xl" />

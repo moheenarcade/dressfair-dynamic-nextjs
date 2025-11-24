@@ -142,7 +142,7 @@ const CheckOutMainMobileView = () => {
 
             <div className="checkout-header fixed w-full top-0 bg-white right-0 left-0 z-[99999]">
                 <div className="flex items-center justify-between py-2 px-3">
-                    <GoChevronLeft className='text-3xl' />
+                   <Link href="/cart"> <GoChevronLeft className='text-3xl' /></Link>
                     <p className='font-semibold text-[19px]'>
                         Checkout ({totalQty})
                     </p>

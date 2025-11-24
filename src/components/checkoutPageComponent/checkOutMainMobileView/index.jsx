@@ -319,12 +319,12 @@ const CheckOutMainMobileView = () => {
                             setIsModalOpen(true);
                         }}
                         className="w-[35%] flex flex-col">
-                        <span className="text-[#000000] text-[16px] md:text-xl font-[500] line-through">
+                        {/* <span className="text-[#000000] text-[16px] md:text-xl font-[500] line-through">
                             154,992
-                        </span>
+                        </span> */}
                         <div className="flex items-center mx-auto">
                             <span className="text-[14px] font-[600] text-[#FB7701]">
-                                Rs. <span className="text-[18px] md:text-2xl">57,357</span>
+                                Rs. <span className="text-[18px] md:text-2xl">{subtotal}</span>
                             </span>
                             <FaChevronUp className="text-md" />
                         </div>
@@ -332,7 +332,7 @@ const CheckOutMainMobileView = () => {
                     <Link href="#" className="w-[65%] ">
                         <button className="bg-[#fb5d01] py-3  w-full hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold flex flex-col justify-center text-lg py-1 px-5 lg:px-6 rounded-full transition-all duration-300 ease-in-out">
 
-                            Submit order (17)
+                            Submit order ({totalQty})
                         </button>
                     </Link>
                 </div>

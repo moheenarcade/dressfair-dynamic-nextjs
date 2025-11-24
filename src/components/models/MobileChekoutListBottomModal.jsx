@@ -11,16 +11,25 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Link from "next/link";
 import { FaChevronUp } from "react-icons/fa6";
+import { useCart } from "@/context/CartContext";
 
 const MobileChekoutListBottomModal = ({
   isOpen,
   onClose,
-  cartItems,
-  toggleQtyDropdown,
-  updateQty,
-  qtyOptions,
-  setIsModalOpen
 }) => {
+      const {
+          cartItems,
+          updateQty,
+          toggleSingle,
+          toggleSelectAll,
+          isCartOpen,
+          closeCart,
+          subtotal,
+          totalQty,
+          allSelected,
+          removeItem,
+  
+      } = useCart();
   // Disable scroll when modal is open
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
@@ -64,7 +73,7 @@ const MobileChekoutListBottomModal = ({
                   </button>
                 </div>
                 <div className="px-3 flex items-center py-2 gap-2">
-                  <p className="text-[#000] text-[16px] font-[500]">Cart (14)</p>
+                  <p className="text-[#000] text-[16px] font-[500]">Cart ({totalQty})</p>
                   <p className="text-[#fb7701] text-[12px]">1 item may sell out today!</p>
                 </div>
 
@@ -72,16 +81,16 @@ const MobileChekoutListBottomModal = ({
                   <div className="cart-product-list py-3 border-y border-gray-200">
                     <div className="flex items-center justify-between">
                       <p className="text-black text-[15px] font-[500]">Item(s) total:</p>
-                      <p className="text-[#777777] text-[15px] line-through font-[500]">Rs. 154,992</p>
+                      <p className="text-[#777777] text-[15px] line-through font-[500]">Rs. {subtotal}</p>
                     </div>
-                    <div className="flex items-center justify-between pt-1">
+                    {/* <div className="flex items-center justify-between pt-1">
                       <p className="text-black text-[15px] font-[500]">Item(s) discount:</p>
-                      <p className="text-[#fb7701] text-[15px] font-[500]">-Rs. 96,635</p>
+                      <p className="text-[#fb7701] text-[15px] font-[500]">-Rs. {subtotal}</p>
                     </div>
                     <div className="flex items-center justify-between">
                       <p className="text-black text-[15px] font-[500]">Subtotal:</p>
-                      <p className="text-[#000] text-[15px] font-[500]">Rs. 104,992</p>
-                    </div>
+                      <p className="text-[#000] text-[15px] font-[500]">Rs. {subtotal}</p>
+                    </div> */}
                   </div>
 
                   <div className="flex items-center justify-between py-3 border-b border-b-gray-200">
@@ -97,7 +106,7 @@ const MobileChekoutListBottomModal = ({
                         Order total (Applicable taxes included):
                       </p>
                       <p className='text-[#0A8800] text-[20px] font-bold'>
-                        <span className='text-[15px]'>Rs.</span>102,549
+                        <span className='text-[15px]'>Rs.</span>{subtotal}
                       </p>
                     </div>
                     <div className="border border-[#0a8800] rounded-md p-2 mt-1 relative">
@@ -120,12 +129,12 @@ const MobileChekoutListBottomModal = ({
                     <button
                       onClick={onClose}
                       className="w-[35%] flex flex-col mx-auto">
-                      <span className="text-[#000000] text-[16px] md:text-xl font-[500] line-through">
+                      {/* <span className="text-[#000000] text-[16px] md:text-xl font-[500] line-through">
                         154,992
-                      </span>
+                      </span> */}
                       <div className="flex items-center mx-auto">
                         <span className="text-[14px] font-[600] text-[#FB7701]">
-                          Rs. <span className="text-[18px] md:text-2xl">57,357</span>
+                          Rs. <span className="text-[18px] md:text-2xl">{subtotal}</span>
                         </span>
                         <FaChevronUp className="text-md" />
                       </div>
@@ -133,7 +142,7 @@ const MobileChekoutListBottomModal = ({
                     <Link href="#" className="w-[65%]">
                       <button className="bg-[#fb5d01] py-3  w-full hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold flex flex-col justify-center text-lg py-1 px-5 lg:px-6 rounded-full transition-all duration-300 ease-in-out">
 
-                        Submit order (17)
+                        Submit order ({totalQty})
                       </button>
                     </Link>
                   </div>

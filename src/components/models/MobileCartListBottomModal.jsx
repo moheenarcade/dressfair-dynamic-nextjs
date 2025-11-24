@@ -11,16 +11,25 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Link from "next/link";
 import { FaChevronUp } from "react-icons/fa6";
+import { useCart } from "@/context/CartContext";
 
 const MobileCartListBottomModal = ({
   isOpen,
   onClose,
-  cartItems,
-  toggleQtyDropdown,
-  updateQty,
-  qtyOptions,
-  setIsModalOpen
 }) => {
+      const {
+          cartItems,
+          updateQty,
+          toggleSingle,
+          toggleSelectAll,
+          isCartOpen,
+          closeCart,
+          subtotal,
+          totalQty,
+          allSelected,
+          removeItem,
+  
+      } = useCart();
 
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
@@ -64,7 +73,7 @@ const MobileCartListBottomModal = ({
                   </button>
                 </div>
                 <div className="px-3 flex items-center py-2 gap-2">
-                  <p className="text-[#000] text-[16px] font-[500]">Cart (14)</p>
+                  <p className="text-[#000] text-[16px] font-[500]">Cart ({totalQty})</p>
                   <p className="text-[#fb7701] text-[12px]">1 item may sell out today!</p>
                 </div>
 
@@ -103,14 +112,14 @@ const MobileCartListBottomModal = ({
                       {cartItems?.map((item) => (
                         <SwiperSlide key={item.id}>
                           <div className="single-item shadow-lg p-1 border border-gray-200 rounded-sm">
-                            <Image width={100} height={100} src={item.img} alt="product banner" />
+                            <Image width={100} height={100} src={item.images[0] || "/placeholder.png"} alt="product banner" />
                             <div className="flex items-center justify-between">
-                              <p className="text-[14px] font-[600]"><span className="text-[11px]">Rs.</span>3129 <span>5x</span></p>
-                              <p className="text-[#8d8c8c] text-[13px] font-semibold relative w-fit"><span className="absolute top-[9px] bg-[#FB7701] w-full h-[2px]"></span>5232</p>
+                              <p className="text-[14px] font-[600] text-center"><span className="text-[11px]">Rs.</span>{item.price}<span> (5x)</span></p>
+                              {/* <p className="text-[#8d8c8c] text-[13px] font-semibold relative w-fit"><span className="absolute top-[9px] bg-[#FB7701] w-full h-[2px]"></span>5232</p> */}
                             </div>
-                            <p className="text-[#fb7701] text-[13px] font-[500]">
+                            {/* <p className="text-[#fb7701] text-[13px] font-[500]">
                               47% OFF
-                            </p>
+                            </p> */}
                           </div>
                         </SwiperSlide>
                       ))}
@@ -122,11 +131,11 @@ const MobileCartListBottomModal = ({
                   <div className="cart-product-list py-3 border-y border-gray-200">
                     <div className="flex items-center justify-between">
                       <p className="text-black text-[15px] font-[500]">Item(s) total:</p>
-                      <p className="text-[#777777] text-[15px] line-through font-[500]">Rs. 154,992</p>
+                      <p className="text-[#777777] text-[15px] line-through font-[500]">Rs. {subtotal}</p>
                     </div>
                     <div className="flex items-center justify-between pt-1">
                       <p className="text-black text-[15px] font-[500]">Item(s) discount:</p>
-                      <p className="text-[#fb7701] text-[15px] font-[500]">-Rs. 96,635</p>
+                      <p className="text-[#fb7701] text-[15px] font-[500]">-Rs. {subtotal}</p>
                     </div>
                   </div>
 
@@ -137,7 +146,7 @@ const MobileCartListBottomModal = ({
                         62% OFF
                       </span>
                       <span className="text-[14px]">Rs.</span>
-                      154,992
+                      {subtotal}
                     </p>
                   </div>
                   <div className="border border-[#0a8800] rounded-md p-2 mt-1 relative">
@@ -157,12 +166,12 @@ const MobileCartListBottomModal = ({
                     <button
                       onClick={onClose}
                       className="w-[35%] flex flex-col mx-auto">
-                      <span className="text-[#000000] text-[16px] md:text-xl font-[500] line-through">
+                      {/* <span className="text-[#000000] text-[16px] md:text-xl font-[500] line-through">
                         154,992
-                      </span>
+                      </span> */}
                       <div className="flex items-center mx-auto">
                         <span className="text-[14px] font-[600] text-[#FB7701]">
-                          Rs. <span className="text-[18px] md:text-2xl">57,357</span>
+                          Rs. <span className="text-[18px] md:text-2xl">{subtotal}</span>
                         </span>
                         <FaChevronUp className="text-md" />
                       </div>

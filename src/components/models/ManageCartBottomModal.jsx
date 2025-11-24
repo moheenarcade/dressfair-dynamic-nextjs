@@ -7,20 +7,22 @@ import { BsCheckCircleFill } from "react-icons/bs";
 import { GoCircle } from "react-icons/go";
 import { IoIosArrowDown } from "react-icons/io";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 const ManageCartBottomModal = ({ isOpen, onClose }) => {
-    const { isCartOpen, closeCart } = useCart();
+    const {
+        cartItems,
+        updateQty,
+        toggleSingle,
+        toggleSelectAll,
+        isCartOpen,
+        closeCart,
+        subtotal,
+        totalQty,
+        allSelected,
+        removeItem,
 
-
-    const [cartItems, setCartItems] = useState([
-        { id: 1, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-        { id: 2, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-        { id: 3, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-        { id: 4, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-        { id: 5, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-    ]);
-
-    const allSelected = cartItems.length > 0 && cartItems.every(item => item.selected);
+    } = useCart();
 
 
     useEffect(() => {
@@ -35,35 +37,50 @@ const ManageCartBottomModal = ({ isOpen, onClose }) => {
 
 
 
+    // Local state to manage which dropdown is open
+    const [openQtyId, setOpenQtyId] = useState(null);
+
+    useEffect(() => {
+        if (cartItems.length === 0) {
+            closeCart();
+        }
+    }, [cartItems, closeCart]);
+
+    // Handle quantity update with toast
+    const handleUpdateQty = (item, newQty) => {
+        const { product_id, color, size } = item;
+        const currentQty = item.qty;
+
+        if (newQty === 0) {
+            removeItem(product_id, color.sku, size.product_option_id);
+            toast.success("Item removed from cart successfully!");
+        } else {
+            updateQty(product_id, color.sku, size.product_option_id, newQty);
+
+            if (newQty > currentQty) {
+                toast.success(`Quantity increased to ${newQty}`);
+            } else if (newQty < currentQty) {
+                toast.success(`Quantity decreased to ${newQty}`);
+            }
+        }
+        setOpenQtyId(null);
+    };
+
+    // Handle item removal with toast
+    const handleRemoveItem = (item) => {
+        const { product_id, color, size } = item;
+        removeItem(product_id, color.sku, size.product_option_id);
+        toast.success("Item removed from cart successfully!");
+    };
+
+    useEffect(() => {
+        if (cartItems.length === 0) {
+            closeCart();
+        }
+    }, [cartItems, closeCart]);
+
     const toggleQtyDropdown = (id) => {
-        setCartItems(prev =>
-            prev.map(item =>
-                item.id === id ? { ...item, openQty: !item.openQty } : { ...item, openQty: false }
-            )
-        );
-    };
-
-    const toggleSelectAll = () => {
-        const updated = cartItems.map((item) => ({
-            ...item,
-            selected: !allSelected,
-        }));
-        setCartItems(updated);
-    };
-
-    const toggleSingle = (id) => {
-        const updated = cartItems.map((item) =>
-            item.id === id ? { ...item, selected: !item.selected } : item
-        );
-        setCartItems(updated);
-    };
-
-    const updateQty = (id, qty) => {
-        setCartItems(prev =>
-            prev
-                .map(item => (item.id === id ? { ...item, qty, openQty: false } : item))
-                .filter(item => item.qty > 0)
-        );
+        setOpenQtyId(openQtyId === id ? null : id);
     };
 
 
@@ -106,39 +123,43 @@ const ManageCartBottomModal = ({ isOpen, onClose }) => {
                                 <div key={item.id} className="single-item flex gap-1 items-center">
                                     <button
                                         className=" "
-                                        onClick={() => toggleSingle(item.id)}
+                                        onClick={() =>
+                                            toggleSingle(item.product_id, item.color.sku, item.size.product_option_id)
+                                        }
                                     >
                                         {item.selected ? (
-                                            <BsCheckCircleFill className="text-lg text-[#222]" />
+                                            <BsCheckCircleFill className="text-xl text-[#222]" />
                                         ) : (
-                                            <GoCircle className="text-lg text-black" />
+                                            <GoCircle className="text-xl text-black" />
                                         )}
                                     </button>
                                     <div className="flex gap-4">
                                         <div className="border border-gray-100 overflow-hidden rounded-md">
                                             <Image
-                                                className="w-[380px] h-auto"
+                                                className="w-[120px] h-auto"
                                                 width={130}
                                                 height={130}
-                                                src={item.img}
+                                                src={item.images[0] || "/placeholder.png"}
                                                 alt="product banner"
                                             />
                                         </div>
 
                                         <div className="flex flex-col justify-between">
                                             <div className="flex gap-2 items-start">
-                                                <p className="line-clamp-2 text-[#666] text-[12px] lg:text-xl font-[500]">24-Hour Long-Lasting Body & Deodorant Spray - Non-Sticky, Refreshing Aroma, Elegant Design for Men & Women, Perfect for Dates, Outdoor Activities, Ideal Gift, Daily Use</p>
-                                                
+                                                <p className="line-clamp-2 text-[#666] text-[12px] lg:text-xl font-[500]">
+                                                    {item.name}
+                                                </p>
+
                                             </div>
                                             <div className="flex justify-between w-full items-center border-b border-b-gray-200">
                                                 <div className="text-center text-[#fb7701] text-[16px] lg:text-2xl font-semibold py-2 flex items-center gap-1">
                                                     <span className="text-[12px] lg:text-xl">Rs.</span>{item.price}
-                                                    <p className="text-[#757575] text-[11px] lg:text-lg font-normal relative"><span className="absolute top-[8px] lg:top-[13] bg-[#FB7701] w-full h-[2px]"></span>27452</p>
+                                                    {/* <p className="text-[#757575] text-[11px] lg:text-lg font-normal relative"><span className="absolute top-[8px] lg:top-[13] bg-[#FB7701] w-full h-[2px]"></span>27452</p>
                                                     <p className="text-[#fb7701] border border-[#fb7701] px-1 p-px rounded-sm text-[10px] lg:text-lg">
                                                         -47%
-                                                    </p>
+                                                    </p> */}
                                                 </div>
-                                        
+
                                             </div>
                                         </div>
                                     </div>
@@ -160,9 +181,31 @@ const ManageCartBottomModal = ({ isOpen, onClose }) => {
                                             All
                                         </p>
                                     </div>
-                                    <button className="border border-gray-500 text-black text-sm font-[600] rounded-full py-1 px-3">
+                                    <button
+                                        className="border border-gray-500 text-black text-sm font-[600] rounded-full py-1 px-3"
+                                        onClick={() => {
+                                            let anyRemoved = false;
+                                            cartItems.forEach((item) => {
+                                                if (item.selected) {
+                                                    removeItem(
+                                                        item.product_id,
+                                                        item.color?.sku,
+                                                        item.size?.product_option_id ?? null
+                                                    );
+                                                    anyRemoved = true;
+                                                }
+                                            });
+
+                                            if (anyRemoved) {
+                                                toast.success("Selected items removed from cart");
+                                            } else {
+                                                toast.error("No items selected");
+                                            }
+                                        }}
+                                    >
                                         Remove
                                     </button>
+
                                 </div>
                             </div>
                         </div>

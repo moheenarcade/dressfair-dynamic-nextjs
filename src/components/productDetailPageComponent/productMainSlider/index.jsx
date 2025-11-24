@@ -22,8 +22,6 @@ const ProductMainSlider = ({ sliderImages, productDescription }) => {
 
     const productImages = sliderImages?.images?.map((img) => img.image) || [];
 
-
-
     return (
         <>
             <div className="flex">

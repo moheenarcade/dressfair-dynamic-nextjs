@@ -53,8 +53,20 @@ const paymentMethods = [
 ];
 
 const CheckOutMainMobileView = () => {
+    const {
+        cartItems,
+        updateQty,
+        toggleSingle,
+        toggleSelectAll,
+        isCartOpen,
+        closeCart,
+        subtotal,
+        totalQty,
+        allSelected,
+        removeItem,
+
+    } = useCart();
     const [selectedPayment, setSelectedPayment] = useState("cod");
-    const { isCartOpen, closeCart } = useCart();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [openQty, setOpenQty] = useState(false);
     const [selectedQty, setSelectedQty] = useState(1);
@@ -65,15 +77,8 @@ const CheckOutMainMobileView = () => {
     const [showMobileAddressModel, setShowMobileAddressModel] = useState(false);
     const [showCartItemsModel, setShowCartItemsModel] = useState(false);
 
-    const [cartItems, setCartItems] = useState([
-        { id: 1, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-        { id: 2, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-        { id: 3, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-        { id: 4, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-        { id: 5, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-    ]);
 
-    const allSelected = cartItems.length > 0 && cartItems.every(item => item.selected);
+
 
 
     useEffect(() => {
@@ -82,42 +87,53 @@ const CheckOutMainMobileView = () => {
         }
     }, [cartItems, closeCart]);
 
+    // Local state to manage which dropdown is open
+    const [openQtyId, setOpenQtyId] = useState(null);
+
+    useEffect(() => {
+        if (cartItems.length === 0) {
+            closeCart();
+        }
+    }, [cartItems, closeCart]);
+
+    const toggleQtyDropdown = (id) => {
+        setOpenQtyId(openQtyId === id ? null : id);
+    };
+
+    // Handle quantity update with toast
+    const handleUpdateQty = (item, newQty) => {
+        const { product_id, color, size } = item;
+        const currentQty = item.qty;
+
+        if (newQty === 0) {
+            removeItem(product_id, color.sku, size.product_option_id);
+            toast.success("Item removed from cart successfully!");
+        } else {
+            updateQty(product_id, color.sku, size.product_option_id, newQty);
+
+            if (newQty > currentQty) {
+                toast.success(`Quantity increased to ${newQty}`);
+            } else if (newQty < currentQty) {
+                toast.success(`Quantity decreased to ${newQty}`);
+            }
+        }
+        setOpenQtyId(null);
+    };
+
+    // Handle item removal with toast
+    const handleRemoveItem = (item) => {
+        const { product_id, color, size } = item;
+        removeItem(product_id, color.sku, size.product_option_id);
+        toast.success("Item removed from cart successfully!");
+    };
+
+
     useEffect(() => {
         const handleClickOutside = () => setShowMoreMenu(false);
         if (showMoreMenu) document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
     }, [showMoreMenu]);
 
-    const toggleQtyDropdown = (id) => {
-        setCartItems(prev =>
-            prev.map(item =>
-                item.id === id ? { ...item, openQty: !item.openQty } : { ...item, openQty: false }
-            )
-        );
-    };
-
-    const toggleSelectAll = () => {
-        const updated = cartItems.map((item) => ({
-            ...item,
-            selected: !allSelected,
-        }));
-        setCartItems(updated);
-    };
-
-    const toggleSingle = (id) => {
-        const updated = cartItems.map((item) =>
-            item.id === id ? { ...item, selected: !item.selected } : item
-        );
-        setCartItems(updated);
-    };
-
-    const updateQty = (id, qty) => {
-        setCartItems(prev =>
-            prev
-                .map(item => (item.id === id ? { ...item, qty, openQty: false } : item))
-                .filter(item => item.qty > 0)
-        );
-    };
 
     return (
 
@@ -128,7 +144,7 @@ const CheckOutMainMobileView = () => {
                 <div className="flex items-center justify-between py-2 px-3">
                     <GoChevronLeft className='text-3xl' />
                     <p className='font-semibold text-[19px]'>
-                        Checkout (17)
+                        Checkout ({totalQty})
                     </p>
                     <p className='invisible'>
                         <GoChevronLeft className='text-3xl' />
@@ -150,13 +166,13 @@ const CheckOutMainMobileView = () => {
             </div>
 
             <div className=" pt-5 bg-white">
-                <div 
-                 onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setShowMobileAddressModel(true);
-                }}
-                className="overflow-hidden flex gap-2 cursor-pointer bg-white relative rounded-sm p-3">
+                <div
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setShowMobileAddressModel(true);
+                    }}
+                    className="overflow-hidden flex gap-2 cursor-pointer bg-white relative rounded-sm p-3">
                     <CiLocationOn className='text-xl mt-1' />
                     <div className="">
                         <div className="flex items-center gap-3">
@@ -346,7 +362,7 @@ const CheckOutMainMobileView = () => {
             />
 
 
-          
+
         </>
     )
 }

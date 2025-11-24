@@ -110,7 +110,7 @@ const CartItemsDetailCheckoutMobile = ({ isOpen, onClose }) => {
                                     <div className="flex gap-4">
                                         <div className="border border-gray-100 overflow-hidden rounded-md">
                                             <Image
-                                                className="w-[380px] h-auto"
+                                                className="w-[140px] h-auto"
                                                 width={130}
                                                 height={130}
                                                 src={item.img}
@@ -120,7 +120,9 @@ const CartItemsDetailCheckoutMobile = ({ isOpen, onClose }) => {
 
                                         <div className="flex flex-col justify-between">
                                             <div className="flex gap-2 items-start">
-                                                <p className="line-clamp-2 text-[#666] text-[12px] lg:text-xl font-[500]">24-Hour Long-Lasting Body & Deodorant Spray - Non-Sticky, Refreshing Aroma, Elegant Design for Men & Women, Perfect for Dates, Outdoor Activities, Ideal Gift, Daily Use</p>
+                                                <p className="line-clamp-2 text-[#666] text-[12px] lg:text-xl font-[500]">
+                                                    {item.name}
+                                                </p>
                                                 
                                             </div>
                                             <div className="flex justify-between w-full items-center border-b border-b-gray-200">
@@ -133,41 +135,41 @@ const CartItemsDetailCheckoutMobile = ({ isOpen, onClose }) => {
                                                 </div>
 
                                                 <div className="select-qty-option relative w-[60px]">
-                                                    <div
-                                                        className="border border-[#aaa] font-semibold rounded-sm px-2 py-1 text-sm cursor-pointer flex justify-between items-center bg-white"
-                                                        onClick={() => toggleQtyDropdown(item.id)}
+                                                <div
+                                                    className="border border-[#aaa] font-semibold rounded-sm px-2 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
+                                                    onClick={() => toggleQtyDropdown(item.id)}
+                                                >
+                                                    <span>{item.qty}</span>
+                                                    <span
+                                                        className={`transform transition-transform duration-300 ${item.openQty ? "rotate-180" : ""
+                                                            }`}
                                                     >
-                                                        <span>{item.qty}</span>
-                                                        <span
-                                                            className={`transform transition-transform duration-300 ${item.openQty ? "rotate-180" : ""
-                                                                }`}
-                                                        >
-                                                            <IoIosArrowDown />
-                                                        </span>
-                                                    </div>
+                                                        <IoIosArrowDown />
+                                                    </span>
+                                                </div>
 
-                                                    <AnimatePresence>
-                                                        {item.openQty && (
-                                                            <motion.ul
-                                                                initial={{ opacity: 0, y: -10 }}
-                                                                animate={{ opacity: 1, y: 0 }}
-                                                                exit={{ opacity: 0, y: -10 }}
-                                                                transition={{ duration: 0.2 }}
-                                                                className="absolute top-full left-0 w-full bg-white border border-gray-100 mt-px rounded-md shadow-md overflow-hidden z-50"
-                                                            >
-                                                                {qtyOptions.map((qty) => (
-                                                                    <motion.li
-                                                                        key={qty}
-                                                                        whileHover={{ backgroundColor: "#f3f3f3" }}
-                                                                        className="px-1 py-1 text-sm cursor-pointer font-semibold"
-                                                                        onClick={() => updateQty(item.id, qty)}
-                                                                    >
-                                                                        {qty}
-                                                                    </motion.li>
-                                                                ))}
-                                                            </motion.ul>
-                                                        )}
-                                                    </AnimatePresence>
+                                                <AnimatePresence>
+                                                    {item.openQty && (
+                                                        <motion.ul
+                                                            initial={{ opacity: 0, y: -10 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            exit={{ opacity: 0, y: -10 }}
+                                                            transition={{ duration: 0.2 }}
+                                                            className="absolute top-full left-0 w-full bg-white border border-gray-100 mt-px rounded-md shadow-md overflow-hidden z-50"
+                                                        >
+                                                            {qtyOptions.map((qty) => (
+                                                                <motion.li
+                                                                    key={qty}
+                                                                    whileHover={{ backgroundColor: "#f3f3f3" }}
+                                                                    className="px-3 py-2 text-sm cursor-pointer font-semibold"
+                                                                    onClick={() => updateQty(item.id, qty)}
+                                                                >
+                                                                    {qty}
+                                                                </motion.li>
+                                                            ))}
+                                                        </motion.ul>
+                                                    )}
+                                                </AnimatePresence>
                                                 </div>
                                         
                                             </div>

@@ -11,29 +11,34 @@ import "swiper/css/navigation";
 import CartItemsDetailCheckoutMobile from '@/components/models/cartItemsDetailCheckoutMobile';
 
 const CheckoutCartItemSliderMobile = () => {
-      const { isCartOpen, closeCart } = useCart();
-          const [isModalOpen, setIsModalOpen] = useState(false);
-      
+    const {
+        cartItems,
+        updateQty,
+        toggleSingle,
+        toggleSelectAll,
+        isCartOpen,
+        closeCart,
+        subtotal,
+        totalQty,
+        allSelected,
+        removeItem,
+
+    } = useCart();
         const [openQty, setOpenQty] = useState(false);
+            const [showCartItemsModel, setShowCartItemsModel] = useState(false);
+        
         const [selectedQty, setSelectedQty] = useState(1);
         const qtyOptions = [0, 1, 2, 3, 4, 5];
-        const [showCartItemsModel, setShowCartItemsModel] = useState(false);
-    
-        const [cartItems, setCartItems] = useState([
-            { id: 1, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-            { id: 2, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-            { id: 3, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-            { id: 4, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-            { id: 5, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-    
-            { id: 6, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-            { id: 7, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-            { id: 8, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-            { id: 9, img: "/deals-product5.avif", price: 13233, selected: true, qty: 1, openQty: false },
-        ]);
-    
-        const allSelected = cartItems.length > 0 && cartItems.every(item => item.selected);
-    
+
+
+        useEffect(() => {
+            if (cartItems.length === 0) {
+                closeCart();
+            }
+        }, [cartItems, closeCart]);
+
+        // Local state to manage which dropdown is open
+        const [openQtyId, setOpenQtyId] = useState(null);
     
         useEffect(() => {
             if (cartItems.length === 0) {
@@ -42,41 +47,49 @@ const CheckoutCartItemSliderMobile = () => {
         }, [cartItems, closeCart]);
     
         const toggleQtyDropdown = (id) => {
-            setCartItems(prev =>
-                prev.map(item =>
-                    item.id === id ? { ...item, openQty: !item.openQty } : { ...item, openQty: false }
-                )
-            );
+            setOpenQtyId(openQtyId === id ? null : id);
         };
     
-        const toggleSelectAll = () => {
-            const updated = cartItems.map((item) => ({
-                ...item,
-                selected: !allSelected,
-            }));
-            setCartItems(updated);
+        // Handle quantity update with toast
+        const handleUpdateQty = (item, newQty) => {
+            const { product_id, color, size } = item;
+            const currentQty = item.qty;
+    
+            if (newQty === 0) {
+                removeItem(product_id, color.sku, size.product_option_id);
+                toast.success("Item removed from cart successfully!");
+            } else {
+                updateQty(product_id, color.sku, size.product_option_id, newQty);
+    
+                if (newQty > currentQty) {
+                    toast.success(`Quantity increased to ${newQty}`);
+                } else if (newQty < currentQty) {
+                    toast.success(`Quantity decreased to ${newQty}`);
+                }
+            }
+            setOpenQtyId(null);
         };
     
-        const toggleSingle = (id) => {
-            const updated = cartItems.map((item) =>
-                item.id === id ? { ...item, selected: !item.selected } : item
-            );
-            setCartItems(updated);
+        // Handle item removal with toast
+        const handleRemoveItem = (item) => {
+            const { product_id, color, size } = item;
+            removeItem(product_id, color.sku, size.product_option_id);
+            toast.success("Item removed from cart successfully!");
         };
+
     
-        const updateQty = (id, qty) => {
-            setCartItems(prev =>
-                prev
-                    .map(item => (item.id === id ? { ...item, qty, openQty: false } : item))
-                    .filter(item => item.qty > 0)
-            );
-        };
+        useEffect(() => {
+            if (cartItems.length === 0) {
+                closeCart();
+            }
+        }, [cartItems, closeCart]);
     
+       
     return (
         <>
             <div className="cart-items-list">
                 <div className="flex justify-between items-center py-3">
-                    <p className='text-[#222] font-[600] text-[16px] md:text-xl'>Item details (<span className=''>17</span>)</p>
+                    <p className='text-[#222] font-[600] text-[16px] md:text-xl'>Item details (<span className=''>{totalQty}</span>)</p>
                     <button 
                      onClick={(e) => {
                         e.stopPropagation();
@@ -119,12 +132,12 @@ const CheckoutCartItemSliderMobile = () => {
                         {cartItems?.map((item) => (
                             <SwiperSlide key={item.id}>
                                 <div className="checkout-single-item cursor-pointer hover:shadow-md">
-                                    <Image width="200" height="200" src={item.img} alt="product banner" />
+                                    <Image width="200" height="200" src={item.images[0] || "/placeholder.png"} alt="product banner" />
                                     <div className="price-sec flex flex-wrap items-center gap-1 py-1">
-                                        <p className="text-[12px] font-semibold text-[#fb7701]">Rs <span className="text-[13px]">12,000</span></p>
-                                        <p className="text-[10px] font-semibold text-[#767676]">
+                                        <p className="text-[12px] font-semibold text-[#fb7701]">Rs <span className="text-[13px]">{item.price}</span></p>
+                                        {/* <p className="text-[10px] font-semibold text-[#767676]">
                                             <span className="line-through">25,000</span>
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </div>
                             </SwiperSlide>

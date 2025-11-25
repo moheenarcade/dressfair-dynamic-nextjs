@@ -255,6 +255,16 @@ button , a {
   100% {transform: rotate(1turn)}
 }
 
+@keyframes blink-border {
+  0% { border-color: red; }
+  50% { border-color: transparent; }
+  100% { border-color: red; }
+}
+
+.blink {
+  animation: blink-border 0.5s ease-in-out 2; /* 2 blinks, 0.5s each */
+}
+
 
 @media (min-width: 100px) and (max-width: 375px) {
   .mobile-sold-num {

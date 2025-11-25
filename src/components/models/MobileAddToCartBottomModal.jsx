@@ -10,31 +10,34 @@ import WhiteLoader from "../whiteLoader";
 import { IoIosArrowDown } from "react-icons/io";
 import { useCart } from "@/context/CartContext";
 import { toast } from 'react-hot-toast';
+import { useParams } from "next/navigation";
 
 const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
-  console.log(productSku, "productSkuproductSkuin mobile bootm model")
+  const { openCart, addToCart } = useCart();
+  const { slug } = useParams();
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { addToCart, openCart } = useCart();
   const [productDetail, setProductDetail] = useState(null);
   const [currentProductSku, setCurrentProductSku] = useState(productSku);
+  const [validationError, setValidationError] = useState({
+    color: false,
+    size: false
+  });
+  
   const [selectedColor, setSelectedColor] = useState(null);
-  const [selectedSizeObj, setSelectedSizeObj] = useState(null);
+  const [selectedSizeObj, setSelectedSizeObj] = useState();
   const [quantity, setQuantity] = useState(1);
   const [openQty, setOpenQty] = useState(false);
   const [hoveredSizeId, setHoveredSizeId] = useState(null);
   const qtyOptions = [1, 2, 3, 4, 5];
 
-  console.log(productDetail, "product detail model mobile bottom ")
-
-  // Find the color that matches the current product SKU
+  // Helper functions
   const findMatchingColor = (product) => {
     if (!product?.colors || !product?.sku) return product?.colors?.[0]?.sku || null;
-    
     const matchingColor = product.colors.find(color => color.sku === product.sku);
     return matchingColor ? matchingColor.sku : (product.colors[0]?.sku || null);
   };
 
-  // Find the first available size (with quantity > 0)
   const findFirstAvailableSize = (sizes) => {
     if (!sizes || !Array.isArray(sizes)) return null;
     return sizes.find(size => Number(size.available_quantity) > 0) || null;
@@ -48,13 +51,13 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
     setCurrentProductSku(newColorSku);
     setSelectedColor(newColorSku);
 
+    // Reset selected size when color changes
+    setSelectedSizeObj(null);
+
     try {
       const res = await getProductDetails(newColorSku);
       if (res?.success) {
         setProductDetail(res.data);
-        // Set first available size for new product
-        const firstAvailableSize = findFirstAvailableSize(res.data?.sizes);
-        setSelectedSizeObj(firstAvailableSize || res.data?.sizes?.[0] || null);
       }
     } catch (error) {
       console.error("Error fetching product details:", error);
@@ -62,6 +65,7 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
       setLoading(false);
     }
   };
+
 
   // Update when productSku prop changes (when modal opens with different product)
   useEffect(() => {
@@ -77,9 +81,9 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
         // Set initial color and size
         const matchingColor = findMatchingColor(res.data);
         setSelectedColor(matchingColor);
-        
+
         const firstAvailableSize = findFirstAvailableSize(res.data?.sizes);
-        setSelectedSizeObj(firstAvailableSize || res.data?.sizes?.[0] || null);
+        setSelectedSizeObj(null);
       }
       setLoading(false);
     };
@@ -88,18 +92,21 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
   }, [isOpen, productSku]);
 
   useEffect(() => {
-    if (isOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-  }, [isOpen]);
+    setThumbsSwiper(null);
+  }, [productDetail]);
 
   // Color and Size handlers
   const handleColorSelect = (colorSku) => {
     setSelectedColor(colorSku);
     handleColorChange(colorSku);
+    setValidationError(prev => ({ ...prev, color: false }));
   };
 
   const handleSizeSelect = (sizeObj) => {
     setSelectedSizeObj(sizeObj);
+
+    setValidationError(prev => ({ ...prev, size: false }));
+
   };
 
   const handleQtySelect = (qty) => {
@@ -118,44 +125,63 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
     return productDetail?.colors?.find(color => color.sku === selectedColor)?.name || "";
   };
 
-  const productImages = productDetail?.images?.map(img => img.image) || [];
-
   const handleAddToCart = () => {
+    let hasError = false;
+
+    // Reset validation
+    setValidationError({ color: false, size: false });
+
     if (!selectedColor) {
-        toast.error("Please select color");
-        return;
+      toast.error("Please select color");
+      setValidationError(prev => ({ ...prev, color: true }));
+      hasError = true;
     }
 
     if (!selectedSizeObj) {
-        toast.error("Please select size");
-        return;
+      toast.error("Please select size");
+      setValidationError(prev => ({ ...prev, size: true }));
+      hasError = true;
     }
+
+    if (hasError) return;
 
     // Check if selected size is out of stock
     if (isSelectedSizeOutOfStock()) {
-        toast.error("This product is out of stock for the selected size");
-        return;
+      toast.error("This product is out of stock for the selected size");
+      return;
     }
 
-    // Check if requested quantity is more than available
     if (quantity > Number(selectedSizeObj.available_quantity)) {
-        toast.error(`Only ${selectedSizeObj.available_quantity} items available in this size`);
-        return;
+      toast.error(`Only ${selectedSizeObj.available_quantity} items available in this size`);
+      return;
     }
 
-    // Use productDetail instead of currentProduct
     addToCart(
-        productDetail, // Fixed: using productDetail instead of undefined currentProduct
-        selectedColor,
-        selectedSizeObj,
-        quantity,
-        false
-        
+      productDetail,
+      selectedColor,
+      selectedSizeObj,
+      quantity,
+      false
     );
-    
+
     toast.success("Product added to cart successfully!");
     onClose();
-};
+
+    // Reset selections
+    setSelectedSizeObj(null);
+    setSelectedColor(null);
+    setQuantity(1);
+  };
+
+  const handleModalClose = () => {
+    onClose();
+    setSelectedSizeObj(null);
+    setSelectedColor(null); // optional: reset color too
+    setQuantity(1); // optional
+  };
+
+  const productImages = productDetail?.images?.map(img => img.image) || [];
+
 
   return (
     <AnimatePresence>
@@ -180,7 +206,7 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
           >
             {loading && (
               <div className="absolute right-0 left-0 inset-0 z-[9999] bg-black/60 flex items-center justify-center">
-                <WhiteLoader/>
+                <WhiteLoader />
               </div>
             )}
 
@@ -189,9 +215,9 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
               <div className="">
                 <div className="flex justify-between pb-3">
                   <div className="flex gap-2">
-                    <Image 
-                      className="w-18 h-18 rounded-sm" 
-                      width={100} 
+                    <Image
+                      className="w-18 h-18 rounded-sm"
+                      width={100}
                       height={100}
                       src={productImages[0] || "/Placeholder_view_vector.png"}
                       alt={productDetail?.name || "product image"}
@@ -220,7 +246,7 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
                     </div>
                   </div>
                   <div className="">
-                    <button onClick={onClose}>
+                    <button onClick={handleModalClose}>
                       <CgClose className="text-xl" />
                     </button>
                   </div>
@@ -239,13 +265,15 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
 
                     <div className="colors flex gap-2 flex-wrap pt-2">
                       {(productDetail?.colors || []).map((color, index) => (
+                      
                         <div
-                          key={index}
-                          onClick={() => handleColorSelect(color.sku)}
-                          className={`single-color cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col justify-center items-center w-fit border-2 rounded-md overflow-hidden
-                            ${selectedColor === color.sku ? "border-black" : "border-[#aaa]"}
-                          `}
-                        >
+                        key={index}
+                        onClick={() => handleColorSelect(color.sku)}
+                        className={`single-color cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col justify-center items-center w-fit border-2 rounded-md overflow-hidden
+                    ${selectedColor === color.sku ? "border-black" : "border-[#aaa]"}
+                    ${validationError.color && !selectedColor ? "border-red-500" : ""}
+                `}
+                    >
                           <Image
                             className="w-16 h-16 object-cover"
                             width={50}
@@ -273,22 +301,24 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
                     <div className="sizes pt-2 flex items-center gap-2 flex-wrap">
                       {availableSizes.length > 0 ? (
                         availableSizes.map((sizeObj) => (
+                        
                           <div
                             key={sizeObj.product_option_id}
                             onClick={() => handleSizeSelect(sizeObj)}
                             onMouseEnter={() => setHoveredSizeId(sizeObj.product_option_id)}
                             onMouseLeave={() => setHoveredSizeId(null)}
                             className={`relative single-size cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out py-1 px-4 text-[#222] text-[14px] font-bold w-fit rounded-full border-2
-                              ${selectedSizeObj?.product_option_id === sizeObj.product_option_id ? "border-black" : "border-[#aaa]"}
-                              ${Number(sizeObj.available_quantity) <= 0 ? "opacity-50 cursor-not-allowed" : ""}
-                            `}
+${selectedSizeObj?.product_option_id === sizeObj.product_option_id ? "border-black" : "border-[#aaa]"}
+${Number(sizeObj.available_quantity) <= 0 ? "opacity-50 cursor-not-allowed" : ""}
+${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
+`}
                           >
                             {sizeObj.value}
 
                             {/* Custom Tooltip */}
                             {hoveredSizeId === sizeObj.product_option_id && (
                               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-black rounded shadow-md whitespace-nowrap z-[9899999999999]">
-                                {Number(sizeObj.available_quantity) > 0 
+                                {Number(sizeObj.available_quantity) > 0
                                   ? `Available quantity: ${sizeObj.available_quantity}`
                                   : "Out of stock"
                                 }

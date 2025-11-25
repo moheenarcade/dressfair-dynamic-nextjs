@@ -42,7 +42,12 @@ const ProductDetailMain = ({ productDetail }) => {
     const [currentProduct, setCurrentProduct] = useState(productDetail);
     const [loading, setLoading] = useState(false);
     const [selectedProductSku, setSelectedProductSku] = useState(null);
-
+    // const [selectedColor, setSelectedColor] = useState(null);
+    const [selectedSizeObj, setSelectedSizeObj] = useState();
+    const [validationError, setValidationError] = useState({
+        color: false,
+        size: false
+    });
     // Find the color that matches the current product SKU
     const findMatchingColor = (product) => {
         if (!product?.colors || !product?.sku) return product?.colors?.[0]?.sku || null;
@@ -61,9 +66,9 @@ const ProductDetailMain = ({ productDetail }) => {
         return sizes.find(size => Number(size.available_quantity) > 0) || null;
     };
 
-    const [selectedSizeObj, setSelectedSizeObj] = useState(
-        findFirstAvailableSize(productDetail?.sizes) || productDetail?.sizes?.[0] || null
-    );
+    // const [selectedSizeObj, setSelectedSizeObj] = useState(
+    //     findFirstAvailableSize(productDetail?.sizes) || productDetail?.sizes?.[0] || null
+    // );
     const [quantity, setQuantity] = useState(1);
 
     // ProductColorSize states moved to parent
@@ -77,7 +82,9 @@ const ProductDetailMain = ({ productDetail }) => {
     useEffect(() => {
         // When component mounts or currentProduct changes, set first available size as default
         const firstAvailableSize = findFirstAvailableSize(currentProduct?.sizes);
-        setSelectedSizeObj(firstAvailableSize || currentProduct?.sizes?.[0] || null);
+        // setSelectedSizeObj(firstAvailableSize || currentProduct?.sizes?.[0] || null);
+
+        setSelectedSizeObj(null);
 
         // Update selected color when currentProduct changes to match the new product's SKU
         if (currentProduct) {
@@ -109,10 +116,13 @@ const ProductDetailMain = ({ productDetail }) => {
     const handleColorSelect = (colorSku) => {
         setSelectedColor(colorSku);
         handleColorChange(colorSku);
+        setValidationError(prev => ({ ...prev, color: false }));
     };
 
     const handleSizeSelect = (sizeObj) => {
         setSelectedSizeObj(sizeObj);
+        setValidationError(prev => ({ ...prev, size: false }));
+
     };
 
     const handleQtySelect = (qty) => {
@@ -128,15 +138,24 @@ const ProductDetailMain = ({ productDetail }) => {
 
     // Handle add to cart with validation
     const handleAddToCart = () => {
+        let hasError = false;
+
+        // Reset validation
+        setValidationError({ color: false, size: false });
+
         if (!selectedColor) {
             toast.error("Please select color");
-            return;
+            setValidationError(prev => ({ ...prev, color: true }));
+            hasError = true;
         }
 
         if (!selectedSizeObj) {
             toast.error("Please select size");
-            return;
+            setValidationError(prev => ({ ...prev, size: true }));
+            hasError = true;
         }
+
+        if (hasError) return;
 
         // Check if selected size is out of stock
         if (isSelectedSizeOutOfStock()) {
@@ -144,36 +163,51 @@ const ProductDetailMain = ({ productDetail }) => {
             return;
         }
 
-        // Check if requested quantity is more than available
         if (quantity > Number(selectedSizeObj.available_quantity)) {
             toast.error(`Only ${selectedSizeObj.available_quantity} items available in this size`);
             return;
         }
 
         addToCart(
-            currentProduct,
+            productDetail,
             selectedColor,
             selectedSizeObj,
             quantity,
-            true // this is the flag for opening cart
+            true
         );
 
-        // openCart(true);
         toast.success("Product added to cart successfully!");
-      
+        onClose();
+
+        // Reset selections
+        setSelectedSizeObj(null);
+        setSelectedColor(null);
+        setQuantity(1);
     };
 
     // Handle buy now with validation
     const handleBuyNow = () => {
+        let hasError = false;
+
+         // Reset validation
+         setValidationError({ color: false, size: false });
+
+
         if (!selectedColor) {
             toast.error("Please select color");
+            setValidationError(prev => ({ ...prev, color: true }));
+            hasError = true;
             return;
         }
 
         if (!selectedSizeObj) {
             toast.error("Please select size");
+            setValidationError(prev => ({ ...prev, size: true }));
+            hasError = true;
             return;
         }
+
+        if (hasError) return;
 
         // Check if selected size is out of stock
         if (isSelectedSizeOutOfStock()) {
@@ -360,15 +394,17 @@ const ProductDetailMain = ({ productDetail }) => {
                                 <div className="sizes pt-2 flex items-center gap-2 flex-wrap">
                                     {availableSizes.length > 0 ? (
                                         availableSizes.map((sizeObj) => (
+
                                             <div
                                                 key={sizeObj.product_option_id}
                                                 onClick={() => handleSizeSelect(sizeObj)}
                                                 onMouseEnter={() => setHoveredSizeId(sizeObj.product_option_id)}
                                                 onMouseLeave={() => setHoveredSizeId(null)}
                                                 className={`relative single-size cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out py-1 px-4 text-[#222] text-[14px] font-bold w-fit rounded-full border-2
-                                                    ${selectedSizeObj?.product_option_id === sizeObj.product_option_id ? "border-black" : "border-[#aaa]"}
-                                                    ${Number(sizeObj.available_quantity) <= 0 ? "opacity-50 cursor-not-allowed" : ""}
-                                                `}
+${selectedSizeObj?.product_option_id === sizeObj.product_option_id ? "border-black" : "border-[#aaa]"}
+${Number(sizeObj.available_quantity) <= 0 ? "opacity-50 cursor-not-allowed" : ""}
+${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
+`}
                                             >
                                                 {sizeObj.value}
 

@@ -4,7 +4,7 @@ import { TbChevronRight } from "react-icons/tb";
 import { FaCheck } from "react-icons/fa6";
 import Image from 'next/image';
 import Link from "next/link";
-import ProductBanner from "../../../public/deals-product3.avif";
+import ProductBanner from "../../../public/Solid_gray.png";
 
 const MobileCategories = ({ onClose, categories }) => {
     const [activeCategory, setActiveCategory] = useState(categories?.[0] || null);
@@ -81,7 +81,7 @@ const MobileCategories = ({ onClose, categories }) => {
                                         className="flex flex-col items-center text-center cursor-pointer group hover:scale-[1.06] transition-all duration-500 ease-in-out"
                                     >
                                         <Image
-                                            src={ProductBanner}
+                                            src={sub.image || ProductBanner}
                                             alt={sub.name}
                                             width={80}
                                             height={80}

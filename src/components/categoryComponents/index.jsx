@@ -13,7 +13,7 @@ import ProductCardMobile from '@/components/homePageMobile/productCardMobile';
 import { fetchAndSaveCategories, getCatalogue, getLocalCategories, getSubCategories } from '@/lib/api';
 import Loader from '../loader';
 import { FaChevronDown } from 'react-icons/fa6';
-import ProductBanner from "../../../public/deals-product3.avif";
+import ProductBanner from "../../../public/Solid_gray.png";
 
 
 const CategroyComponents = () => {

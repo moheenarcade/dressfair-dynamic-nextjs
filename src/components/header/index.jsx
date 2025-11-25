@@ -25,7 +25,7 @@ import { useUser } from '../../context/UserContext';
 import { TbLogout2 } from 'react-icons/tb';
 import { BsCreditCard2Front } from 'react-icons/bs';
 import { PiBookBookmarkLight } from "react-icons/pi";
-import ProductBanner from "../../../public/deals-product3.avif";
+import ProductBanner from "../../../public/Solid_gray.png";
 import { MdAddShoppingCart } from 'react-icons/md';
 import { fetchAndSaveCategories, getLocalCategories } from '../../lib/api';
 import { useCart } from '@/context/CartContext';

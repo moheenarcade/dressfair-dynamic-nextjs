@@ -26,6 +26,7 @@ import { TbLogout2 } from 'react-icons/tb';
 import { BsCreditCard2Front } from 'react-icons/bs';
 import { PiBookBookmarkLight } from "react-icons/pi";
 import ProductBanner from "../../../public/Solid_gray.png";
+import ProductBanner2 from "../../../public/deals-product3.avif";
 import { MdAddShoppingCart } from 'react-icons/md';
 import { fetchAndSaveCategories, getLocalCategories } from '../../lib/api';
 import { useCart } from '@/context/CartContext';
@@ -315,9 +316,8 @@ const Header = () => {
 
                             {/* Search Bar (Auto-width Section) */}
                             <SearchBarHeader />
-                            {/* Right Icons */}
+  
                             <ul className="flex items-center shrink-0">
-                                {/* User Account Section */}
                                 {user && (
                                     <li
                                         ref={userDropdownRef}
@@ -325,8 +325,10 @@ const Header = () => {
                                         onMouseEnter={() => setShowUserDropdown(true)}
                                         onMouseLeave={() => setShowUserDropdown(false)}
                                     >
+                                         <Link href="/user/orders/all-orders" className='flex items-center gap-1'>
                                         <span className={`${isHomePage ? "bg-[#BA0000]" : "bg-[#eeeeee]"} absolute inset-0 h-[50px] my-auto rounded-full scale-0 origin-center transition-transform duration-500 ease-in-out group-hover:scale-100`}></span>
                                         <FaRegUser className="text-xl relative z-10" />
+                                
                                         <span className="leading-4 relative z-10">
                                             {user ? (
                                                 <>
@@ -340,7 +342,7 @@ const Header = () => {
                                                 </>
                                             )}
                                         </span>
-
+                                        </Link>
                                         {/* User Dropdown Menu */}
                                         {user && showUserDropdown && (
                                             <ul
@@ -360,7 +362,7 @@ const Header = () => {
                                                         <ul className='pt-4 flex flex-col gap-3 overflow-y-auto h-[450px] px-4'>
                                                             <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -373,7 +375,7 @@ const Header = () => {
                                                             </li>
                                                             <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -386,7 +388,7 @@ const Header = () => {
                                                             </li>
                                                             <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -398,7 +400,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -410,7 +412,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -422,7 +424,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -434,7 +436,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -446,7 +448,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -458,7 +460,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -470,7 +472,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -482,7 +484,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -494,7 +496,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -506,7 +508,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -518,7 +520,7 @@ const Header = () => {
                                                                 </div>
                                                             </li> <li className='flex gap-2'>
                                                                 <div className="product-banner w-16 h-16">
-                                                                    <Image className='w-full h-full' src={ProductBanner} alt='product banner' />
+                                                                    <Image className='w-full h-full' src={ProductBanner2} alt='product banner' />
                                                                 </div>
                                                                 <div className="product-content">
                                                                     <p className='text-black text-[13px] line-clamp-1'>Mens Breathable Shoes</p>
@@ -721,6 +723,7 @@ const Header = () => {
                             <TfiMenuAlt className="text-2xl" />
                         </button>
                         <div className="relative user-dropdown-container">
+                            <Link href="/user/orders">
                             <button
                                 ref={buttonRef}
                                 className="menu-icons-mobile"
@@ -728,6 +731,7 @@ const Header = () => {
                             >
                                 <FaRegUser className="text-2xl" />
                             </button>
+                            </Link>
                         </div>
                         <button className='relative'>
                             <Link href="/cart">

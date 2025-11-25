@@ -189,8 +189,8 @@ const ProductDetailMain = ({ productDetail }) => {
     const handleBuyNow = () => {
         let hasError = false;
 
-         // Reset validation
-         setValidationError({ color: false, size: false });
+        // Reset validation
+        setValidationError({ color: false, size: false });
 
 
         if (!selectedColor) {
@@ -229,8 +229,8 @@ const ProductDetailMain = ({ productDetail }) => {
         return currentProduct?.colors?.find(color => color.sku === selectedColor)?.name || "";
     };
 
-      // Handle add to cart with validation
-      const handleAddToCartMobile = () => {
+    // Handle add to cart with validation
+    const handleAddToCartMobile = () => {
         let hasError = false;
 
         // Reset validation
@@ -285,7 +285,7 @@ const ProductDetailMain = ({ productDetail }) => {
             setIsModalOpen(true);
             return;
         }
-    
+
         // If both are selected, do normal add to cart
         handleAddToCartMobile();
     };
@@ -445,8 +445,17 @@ const ProductDetailMain = ({ productDetail }) => {
 
                             {/* Size Section */}
                             <div className="size-sec pb-4">
-                                <p className="text-[#222] font-semibold">
+                                {/* <p className="text-[#222] font-semibold">
                                     Size: <span>{selectedSizeObj?.value || ""}</span>
+                                    {selectedSizeObj && isSelectedSizeOutOfStock() && (
+                                        <span className="text-red-500 text-sm ml-2">(Out of Stock)</span>
+                                    )}
+                                </p> */}
+                                <p
+                                    className={`font-semibold ${validationError.size ? "text-red-500" : "text-[#222]"
+                                        }`}
+                                >
+                                    Size: <span>{validationError.size ? <span className="text-[14px]">Please select a size </span>: selectedSizeObj?.value || ""} {}</span>
                                     {selectedSizeObj && isSelectedSizeOutOfStock() && (
                                         <span className="text-red-500 text-sm ml-2">(Out of Stock)</span>
                                     )}

@@ -229,6 +229,67 @@ const ProductDetailMain = ({ productDetail }) => {
         return currentProduct?.colors?.find(color => color.sku === selectedColor)?.name || "";
     };
 
+      // Handle add to cart with validation
+      const handleAddToCartMobile = () => {
+        let hasError = false;
+
+        // Reset validation
+        setValidationError({ color: false, size: false });
+
+        if (!selectedColor) {
+            toast.error("Please select color");
+            setValidationError(prev => ({ ...prev, color: true }));
+            hasError = true;
+        }
+
+        if (!selectedSizeObj) {
+            toast.error("Please select size");
+            setValidationError(prev => ({ ...prev, size: true }));
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        // Check if selected size is out of stock
+        if (isSelectedSizeOutOfStock()) {
+            toast.error("This product is out of stock for the selected size");
+            return;
+        }
+
+        if (quantity > Number(selectedSizeObj.available_quantity)) {
+            toast.error(`Only ${selectedSizeObj.available_quantity} items available in this size`);
+            return;
+        }
+
+        addToCart(
+            productDetail,
+            selectedColor,
+            selectedSizeObj,
+            quantity,
+            false
+        );
+
+        toast.success("Product added to cart successfully!");
+        onClose();
+
+        // Reset selections
+        setSelectedSizeObj(null);
+        setSelectedColor(null);
+        setQuantity(1);
+    };
+
+    const handleMobileAddToCart = () => {
+        // If no color or size selected, show the modal
+        if (!selectedColor || !selectedSizeObj) {
+            setSelectedProductSku(currentProduct.sku);
+            setIsModalOpen(true);
+            return;
+        }
+    
+        // If both are selected, do normal add to cart
+        handleAddToCartMobile();
+    };
+
     return (
         <>
             {loading && (
@@ -563,10 +624,7 @@ ${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
 
                 <div className="fixed left-0 right-0 w-full bottom-0 py-3 px-4 z-[99] bg-white block lg:hidden">
                     <button
-                        onClick={() => {
-                            setIsModalOpen(true);
-                            setSelectedProductSku(currentProduct.sku);
-                        }}
+                        onClick={handleMobileAddToCart}
 
                         className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">
                         Add to cart!

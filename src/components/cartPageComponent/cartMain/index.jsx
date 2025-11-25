@@ -33,6 +33,8 @@ const CartMain = () => {
         totalQty,
         allSelected,
         removeItem,
+        totalDiscount,
+        originalTotal,
 
     } = useCart();
     const [openQty, setOpenQty] = useState(false);
@@ -149,19 +151,21 @@ const CartMain = () => {
                                                 <p className="line-clamp-1 text-[#222] text-[15px] font-[400]">
                                                     {item.name}
                                                 </p>
-                                                <button   onClick={() => handleRemoveItem(item)}>
+                                                <button onClick={() => handleRemoveItem(item)}>
                                                     <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.4rem" height="1.4rem" aria-hidden="true" fill="#888"><path d="M603.4 96c47.7 0 86.9 36.4 91.3 82.9l0.5 8.8-0.1 75.1 168.9 0c24.7 0 44.8 20.1 44.8 44.8 0 22.7-16.9 41.4-38.7 44.4l-6.1 0.4-20.5 0-46.2 436.2c-5.5 52.1-47.2 92.3-98.5 96.9l-9.7 0.4-354.2 0c-52.4 0-96.8-37.2-106.7-87.7l-1.5-9.6-46.2-436.2-20.5 0c-24.7 0-44.8-20.1-44.8-44.8 0-22.7 16.9-41.4 38.7-44.3l6.1-0.5 169 0 0-75.1c0-47.7 36.4-86.9 82.9-91.3l8.8-0.4 182.7 0z m149.9 256.4l-482.7 0 45.2 426.7c0.9 8.4 7.1 15 15 16.8l4.1 0.4 354.2 0c8.4 0 15.7-5.4 18.2-13.1l0.9-4.1 45.1-426.7z m-149.9-166.8l-182.7 0c-0.8 0-1.5 0.4-1.8 1.1l-0.3 1 0 75.1 186.9 0 0.1-75.1c0-0.8-0.4-1.5-1.1-1.8l-1.1-0.3z"></path></svg>
                                                 </button>
                                             </div>
                                             <div className="flex justify-between w-full items-center border-b border-b-gray-200 pb-2">
                                                 <div className="text-center text-[#222222] text-[18px] font-semibold py-2 flex items-center gap-1">
-                                                    <span className="text-[14px]">Rs.</span>{item.price}
-                                                    {/* <p className="text-[#757575] text-[14px] font-normal relative"><span className="absolute top-[10px] bg-[#FB7701] w-full h-[2px]"></span>27452</p> */}
-                                                    {/* <p className="text-[#fb7701] border border-[#fb7701] px-1 p-px rounded-sm text-[12px]">
-                                                        -47%
-                                                    </p> */}
+                                                    <span className="text-[14px]">Rs.</span>{item.sale_price}
+                                                    <p className="text-[#757575] text-[14px] font-normal relative"><span className="absolute top-[10px] bg-[#FB7701] w-full h-[2px]"></span>Rs. {item.price}</p>
+                                                    {item.discount_percent > 0 && (
+                                                        <span className="text-[#fb7701] border border-[#fb7701] px-1 p-px rounded-sm text-[12px]">
+                                                            -{item.discount_percent}%
+                                                        </span>
+                                                    )}
                                                 </div>
-                                              
+
                                                 <div className="select-qty-option relative w-[90px]">
                                                     <div
                                                         className="border border-[#aaa] font-semibold rounded-sm px-3 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
@@ -169,11 +173,11 @@ const CartMain = () => {
                                                             toggleQtyDropdown(`${item.product_id}-${item.color.sku}-${item.size.product_option_id}`)
                                                         }
                                                     >
-                                                          Qty<span>{item.qty}</span>
+                                                        Qty<span>{item.qty}</span>
                                                         <span
                                                             className={`transform transition-transform duration-300 ${openQtyId === `${item.product_id}-${item.color.sku}-${item.size.product_option_id}`
-                                                                    ? "rotate-180"
-                                                                    : ""
+                                                                ? "rotate-180"
+                                                                : ""
                                                                 }`}
                                                         >
                                                             <IoIosArrowDown />
@@ -224,16 +228,16 @@ const CartMain = () => {
                     <div className="border-b border-b-gray-200 pt-6 pb-4">
                         <div className="flex items-center justify-between mb-3">
                             <p className="text-[15px] text-[#222]">Item(s) total:</p>
-                            <p className="text-[15px] text-[#555] line-through">Rs. {subtotal}</p>
+                            <p className="text-[15px] text-[#555] line-through">Rs. {originalTotal}</p>
                         </div>
-                        {/* <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center justify-between mb-3">
                             <p className="text-[15px] text-[#222]">Shipping Charges:</p>
                             <p className="text-[15px] text-[#555]">Rs. 0</p>
-                        </div> */}
-                        {/* <div className="flex items-center justify-between">
+                        </div>
+                        <div className="flex items-center justify-between">
                             <p className="text-[15px] text-[#222]">Item(s) discount:</p>
-                            <p className="text-[15px] font-semibold text-[#fb7701]">-Rs.54,070</p>
-                        </div> */}
+                            <p className="text-[15px] font-semibold text-[#fb7701]">-Rs. {totalDiscount}</p>
+                        </div>
                     </div>
 
                     <div className="pt-4 pb-8">

@@ -296,7 +296,7 @@ const Header = () => {
                                                                 className="flex flex-col items-center text-center cursor-pointer group hover:scale-[1.06] transition-all duration-500 ease-in-out"
                                                             >
                                                                 <Image
-                                                                    src={ProductBanner}
+                                                                    src={sub.image || ProductBanner}
                                                                     alt={sub.name}
                                                                     width={80}
                                                                     height={80}

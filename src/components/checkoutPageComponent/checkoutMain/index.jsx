@@ -62,6 +62,8 @@ const CheckoutMain = () => {
         totalQty,
         allSelected,
         removeItem,
+        totalDiscount,
+        originalTotal
 
     } = useCart();
     const [selectedPayment, setSelectedPayment] = useState("cod");
@@ -202,12 +204,12 @@ const CheckoutMain = () => {
                         <div className="border-b border-b-gray-200 pb-4">
                             <div className="flex items-center justify-between mb-3">
                                 <p className="text-[14px] text-[#222] font-semibold">Item(s) total:</p>
-                                <p className="text-[15px] text-[#555] line-through ">Rs. {subtotal}</p>
+                                <p className="text-[15px] text-[#555] line-through ">Rs. {originalTotal}</p>
                             </div>
-                            {/* <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center justify-between mb-3">
                                 <p className="text-[14px] text-[#222] font-semibold">Item(s) discount:</p>
-                                <p className="text-[15px] font-semibold text-[#fb7701]">-Rs.54,070</p>
-                            </div> */}
+                                <p className="text-[15px] font-semibold text-[#fb7701]">-Rs.{totalDiscount}</p>
+                            </div>
                             <div className="flex items-center justify-between">
                                 <p className="text-[14px] text-[#222] font-semibold">Subtotal:</p>
                                 <p className="text-[15px] text-[#222] font-[500]">Rs.{subtotal}</p>

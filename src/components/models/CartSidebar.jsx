@@ -160,7 +160,7 @@ export default function CartSidebar() {
                     </div>
 
                     <p className="text-center text-[#222] text-[14px] font-semibold py-2">
-                      <span className="text-[12px]">RS.</span> {item.price}
+                      <span className="text-[12px]">RS.</span> {item.sale_price}
                     </p>
                     <div className="select-qty-option relative w-[100px] mx-auto">
                       <div

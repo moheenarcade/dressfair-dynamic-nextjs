@@ -153,11 +153,11 @@ const ManageCartBottomModal = ({ isOpen, onClose }) => {
                                             </div>
                                             <div className="flex justify-between w-full items-center border-b border-b-gray-200">
                                                 <div className="text-center text-[#fb7701] text-[16px] lg:text-2xl font-semibold py-2 flex items-center gap-1">
-                                                    <span className="text-[12px] lg:text-xl">Rs.</span>{item.price}
-                                                    {/* <p className="text-[#757575] text-[11px] lg:text-lg font-normal relative"><span className="absolute top-[8px] lg:top-[13] bg-[#FB7701] w-full h-[2px]"></span>27452</p>
-                                                    <p className="text-[#fb7701] border border-[#fb7701] px-1 p-px rounded-sm text-[10px] lg:text-lg">
+                                                    <span className="text-[12px] lg:text-xl">Rs.</span>{item.sale_price}
+                                                     <p className="text-[#757575] text-[11px] lg:text-lg font-normal relative"><span className="absolute top-[8px] lg:top-[13] bg-[#FB7701] w-full h-[2px]"></span>Rs. {item.price}</p>
+                                                    {/* <p className="text-[#fb7701] border border-[#fb7701] px-1 p-px rounded-sm text-[10px] lg:text-lg">
                                                         -47%
-                                                    </p> */}
+                                                    </p>  */}
                                                 </div>
 
                                             </div>

@@ -110,10 +110,10 @@ const CheckoutCartItemSlider = () => {
                                 <div className="checkout-single-item cursor-pointer hover:shadow-md">
                                     <Image width="200" height="200"  src={item.images[0] || "/placeholder.png"} alt="product banner" />
                                     <div className="price-sec flex flex-wrap items-center gap-1 py-1">
-                                        <p className="text-sm font-semibold text-[#fb7701]">Rs <span className="text-[16px]">Rs.{item.price}</span></p>
-                                        {/* <p className="text-[13px] font-semibold text-[#767676]">
-                                            <span className="line-through">25,000</span>
-                                        </p> */}
+                                        <p className="text-sm font-semibold text-[#fb7701]">Rs <span className="text-[16px]">Rs.{item.sale_price}</span></p>
+                                        <p className="text-[13px] font-semibold text-[#767676]">
+                                            <span className="line-through">Rs. {item.price}</span>
+                                        </p>
                                     </div>
                                 </div>
                             </SwiperSlide>

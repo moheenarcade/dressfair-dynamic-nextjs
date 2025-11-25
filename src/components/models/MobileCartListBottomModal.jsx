@@ -112,10 +112,10 @@ const MobileCartListBottomModal = ({
                       {cartItems?.map((item) => (
                         <SwiperSlide key={item.id}>
                           <div className="single-item shadow-lg p-1 border border-gray-200 rounded-sm">
-                            <Image width={100} height={100} src={item.images[0] || "/placeholder.png"} alt="product banner" />
-                            <div className="flex items-center justify-between">
-                              <p className="text-[14px] font-[600] text-center"><span className="text-[11px]">Rs.</span>{item.price}<span> (5x)</span></p>
-                              {/* <p className="text-[#8d8c8c] text-[13px] font-semibold relative w-fit"><span className="absolute top-[9px] bg-[#FB7701] w-full h-[2px]"></span>5232</p> */}
+                            <Image className="w-full" width={100} height={100} src={item.images[0] || "/placeholder.png"} alt="product banner" />
+                            <div className="flex items-center justify-start gap-1">
+                              <p className="text-[14px] font-[600] text-center"><span className="text-[11px]">Rs.</span>{item.sale_price}</p>
+                              <p className="text-[#8d8c8c] text-[13px] font-semibold relative w-fit"><span className="absolute top-[9px] bg-[#FB7701] w-full h-[2px]"></span>Rs.{item.price}</p>
                             </div>
                             {/* <p className="text-[#fb7701] text-[13px] font-[500]">
                               47% OFF

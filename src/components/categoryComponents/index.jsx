@@ -13,6 +13,8 @@ import ProductCardMobile from '@/components/homePageMobile/productCardMobile';
 import { fetchAndSaveCategories, getCatalogue, getLocalCategories, getSubCategories } from '@/lib/api';
 import Loader from '../loader';
 import { FaChevronDown } from 'react-icons/fa6';
+import ProductBanner from "../../../public/deals-product3.avif";
+
 
 const CategroyComponents = () => {
   const params = useParams();
@@ -152,7 +154,7 @@ const CategroyComponents = () => {
               <div className="single-cat group cursor-pointer flex flex-col items-center">
                 <Image
                   className="w-[90%] h-auto rounded-full group-hover:scale-[1.05] transition-all duration-300 ease-in-out"
-                  src="/deals-product4.avif"
+                 src={sub.image || ProductBanner}
                   alt={sub.name}
                   width={200}
                   height={200}

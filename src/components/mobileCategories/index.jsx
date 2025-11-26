@@ -40,8 +40,8 @@ const MobileCategories = ({ onClose, categories }) => {
                                 categories.map((cat) => (
                                     <li
                                         key={cat.id}
-                                        onClick={() => { setActiveCategory(cat); sessionStorage.setItem("selectedCategoryId", cat.id) }}
-                                        className={`py-2 px-2 border-l-3 cursor-pointer ${activeCategory.id === cat.id
+                                        onClick={() => { setActiveCategory(cat); sessionStorage.setItem("selectedCategorySlug", cat.slug) }}
+                                        className={`py-2 px-2 border-l-3 cursor-pointer ${activeCategory.id === cat.slug
                                             ? "border-l-[#fb7701] bg-white text-black"
                                             : "border-l-transparent hover:border-l-[#fb7701] hover:bg-white text-[#555]"
                                             }`}
@@ -64,7 +64,7 @@ const MobileCategories = ({ onClose, categories }) => {
                                 activeCategory.sub_categories.map((sub) => (
                                  
                                     <Link
-                                        key={sub.id}
+                                        key={sub.slug}
                                         href={`/c/${activeCategory.name
                                             .toLowerCase()
                                             .replace(/&/g, "and")
@@ -74,7 +74,7 @@ const MobileCategories = ({ onClose, categories }) => {
                                                 .replace(/\s+/g, "-")}`}
                                         onClick={() => {
                                             // Save selected subcategory
-                                            sessionStorage.setItem("selectedCategoryId", sub.id);
+                                            sessionStorage.setItem("selectedCategorySlug", sub.slug);
                                             // Close the mobile categories panel
                                             onClose?.();
                                         }}

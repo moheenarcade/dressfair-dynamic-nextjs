@@ -34,18 +34,29 @@ export default function UserLayout({ children }) {
     };
 
     const isOrdersPage = pathname.includes('/user/orders/');
-
+    const breadcrumbs = {
+        "/user/profile": "profile",
+        "/user/orders": "Your orders",
+        "/user/your-reviews": "Your reviews",
+        "user/coupons-offers": "Coupons offers",
+        "/user/address-settings": "Address settings",
+        "/user/change-password": "Change password",
+        "/user/wishlists": "Wishlists",
+        "/user/notifications": "Notifications",
+        "/user/payments": "Payment methods",
+    };
+    const activePage = breadcrumbs[pathname] || "";
     return (
         <div className="container mx-auto px-2 2xl:px-22">
             <div className="flex items-center text-[14px] font-[500] gap-1 pt-4">
                 <h2 className="">Home</h2>
                 <FaChevronRight className="text-[11px]" />
                 <p>
-                    Your orders
+                    {activePage}
                 </p>
             </div>
-            <div className="flex  ">
-                <aside className="w-[220px] py-6">
+            <div className="flex">
+                <aside className="hidden lg:block w-[220px] py-6">
                     <nav className="flex flex-col gap-1">
                         <Link href="/user/orders/all-orders">
                             <button
@@ -224,7 +235,7 @@ export default function UserLayout({ children }) {
 
                     </nav>
                 </aside>
-                <main className="flex-1 p-6 bg-white">
+                <main className="flex-1 p-2 lg:p-6 bg-white">
                     {isOrdersPage && <OrdersNavbar />}
                     {children}
                 </main>

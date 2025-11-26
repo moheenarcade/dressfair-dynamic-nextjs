@@ -8,8 +8,8 @@ const OrdersNavbar = () => {
  
   return (
     <>
-          <div className="order-navbar flex items-center justify-between">
-                        <ul className='flex gap-3 text-[#757575] text-[15px] font-[500]'>
+          <div className="order-navbar flex flex-col md:flex-row items-center justify-between">
+                        <ul className='flex gap-2 lg:gap-3 text-[#757575] text-[13px] md:text-[15px] font-[500]'>
                             <Link href="/user/orders/all-orders">
                                 <div className="flex flex-col items-center">
                                     <li
@@ -89,7 +89,7 @@ const OrdersNavbar = () => {
                                 </div>
                             </Link>
                         </ul>
-                        <div className="order-search flex items-center gap-1 pr-4 w-[30%] text-[14px] rounded-full border border-[#949494]">
+                        <div className="order-search mt-4 lg:mt-0 flex items-center gap-1 pr-4 w-full md:w-[30%] text-[14px] rounded-full border border-[#949494]">
                             <input className='w-full h-full py-3 px-4 outline-0' type="search" placeholder='item name / order ID / Tracking No.' />
                             <button>
                                 <FiSearch className='text-xl text-[#222]' />

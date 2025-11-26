@@ -15,7 +15,6 @@ import Loader from '../loader';
 import { FaChevronDown } from 'react-icons/fa6';
 import ProductBanner from "../../../public/Solid_gray.png";
 
-
 const CategroyComponents = () => {
   const params = useParams();
   const slug = params.slug || [];
@@ -63,7 +62,7 @@ const CategroyComponents = () => {
       setSubcategory(null);
 
       // If no subcategory in URL, load subcategories dynamically
-      const categoryId = foundCategory.slug || sessionStorage.getItem("selectedCategoryId");
+      const categoryId = foundCategory.slug || sessionStorage.getItem("selectedCategorySlug");
       if (categoryId) loadSubcategories(categoryId);
     }
   }, [slug, categories]);
@@ -85,7 +84,7 @@ const CategroyComponents = () => {
     if (pageNumber === 1) setLoading(true);
     if (pageNumber > 1) setLoadingMore(true);
 
-    const categoryId = activeCategory?.id || sessionStorage.getItem("selectedCategoryId") || '';
+    const categoryId = activeCategory?.slug || sessionStorage.getItem("selectedCategorySlug") || '';
     const res = await getCatalogue(pageNumber, categoryId);
 
     if (res?.success) {
@@ -107,12 +106,12 @@ const CategroyComponents = () => {
     if (subcategory) {
       filtered = products.filter(
         p => p.category &&
-          (p.category.toLowerCase() === subcategory.name.toLowerCase() ||
-            p.category.toLowerCase() === activeCategory.name.toLowerCase())
+          (p.category.toLowerCase() === subcategory.slug.toLowerCase() ||
+            p.category.toLowerCase() === activeCategory.slug.toLowerCase())
       );
     } else {
       filtered = products.filter(
-        p => p.category && p.category.toLowerCase().includes(activeCategory.name.toLowerCase())
+        p => p.category && p.category.toLowerCase().includes(activeCategory.slug.toLowerCase())
       );
     }
     setFilteredProducts(filtered.length > 0 ? filtered : products);
@@ -205,7 +204,7 @@ const CategroyComponents = () => {
         ) : (
           <>
             <ProductCardMobile products={filteredProducts} />
-            {/* {filteredProducts.length > 0 && hasMore && ( */}
+            {filteredProducts.length > 0 && hasMore && (
               <div className="flex justify-center my-6">
                 {loadingMore ? (
                   <button
@@ -224,7 +223,7 @@ const CategroyComponents = () => {
                   </button>
                 )}
               </div>
-            {/* )} */}
+             )}
           </>
         )}
       </div>

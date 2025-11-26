@@ -3,11 +3,11 @@ import axios from "axios";
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // Get catalogue list
-export const getCatalogue = async (page = 1, categoryId = '') => {
+export const getCatalogue = async (page = 1, categorySlug = '') => {
   try {
     let url = `${API}/catalogue?page=${page}`;
-    if (categoryId) {
-      url += `&category=${categoryId}`;
+    if (categorySlug) {
+      url += `&slug=${categorySlug}`;
     }
 
     const res = await axios.get(url, {
@@ -77,11 +77,11 @@ export const getLocalCategories = () => {
 };
 
 // get sub category list  
-export const getSubCategories = async (categoryId = "") => {
+export const getSubCategories = async (categorySlug = "") => {
   try {
-    if (!categoryId) return { success: false, data: [] };
+    if (!categorySlug) return { success: false, data: [] };
 
-    const res = await axios.get(`${API}/sub/categories?category_id=${categoryId}`, {
+    const res = await axios.get(`${API}/sub/categories?category_id=${categorySlug}`, {
       headers: {
         "spa-merchant-id": "v6eJxZKeRs8RmL0AfgtDwnQ",
         "spa-store-id": "1",

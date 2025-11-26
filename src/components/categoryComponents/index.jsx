@@ -30,8 +30,8 @@ const CategroyComponents = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const toSlug = (name) =>
-    name.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-");
+  const toSlug = (slug) =>
+    slug.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-");
 
   // Fetch main categories from API
   useEffect(() => {
@@ -51,13 +51,13 @@ const CategroyComponents = () => {
     const categorySlug = slug[0];
     const subcategorySlug = slug[1];
 
-    const foundCategory = categories.find(cat => toSlug(cat.name) === categorySlug);
+    const foundCategory = categories.find(cat => cat.slug === categorySlug);
     if (!foundCategory) return;
 
     setActiveCategory(foundCategory);
 
     if (subcategorySlug) {
-      const foundSubcategory = subcategoryList.find(sub => toSlug(sub.name) === subcategorySlug);
+      const foundSubcategory = subcategoryList.find(sub => sub.slug === subcategorySlug);
       setSubcategory(foundSubcategory || null);
     } else {
       setSubcategory(null);
@@ -92,7 +92,7 @@ const CategroyComponents = () => {
       setProducts(prev =>
         pageNumber === 1 ? res.data : [...prev, ...res.data]
       );
-      setHasMore(res.pagination.current_page < res.pagination.last_page);
+      // setHasMore(res.pagination.current_page < res.pagination.last_page);
     }
 
     setLoading(false);
@@ -129,7 +129,7 @@ const CategroyComponents = () => {
             </Link>
             <LuChevronRight />
             <Link
-              href={`/c/${toSlug(category.name)}`}
+              href={`/c/${toSlug(category.slug)}`}
               className="hover:text-gray-700"
             >
               {category.name}
@@ -150,7 +150,7 @@ const CategroyComponents = () => {
       {!subcategory && subcategoryList.length > 0 && (
         <div className="grid grid-cols-4 md:grid-cols-7 lg:grid-cols-12 gap-4 pt-6 pb-6 mb-6 border-b border-b-gray-300 px-2">
           {subcategoryList.map((sub, index) => (
-            <Link key={index} href={`/c/${toSlug(activeCategory.name)}/${toSlug(sub.name)}`}>
+            <Link key={index} href={`/c/${activeCategory.slug}/${sub.slug}`}>
               <div className="single-cat group cursor-pointer flex flex-col items-center">
                 <Image
                   className="w-[90%] h-auto rounded-full group-hover:scale-[1.05] transition-all duration-300 ease-in-out"

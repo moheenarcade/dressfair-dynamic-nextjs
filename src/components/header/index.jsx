@@ -245,19 +245,18 @@ const Header = () => {
                                                     {categories?.length > 0 &&
                                                         categories.map((cat) => (
                                                             <Link
-                                                                key={cat.id}
+                                                                key={cat.slug}
                                                                 onClick={() => {
-                                                                    sessionStorage.setItem("selectedCategoryId", cat.id);
+                                                                    sessionStorage.setItem("selectedCategoryId", cat.slug);
                                                                     handleMegaMenuLinkClick();
                                                                 }}
-                                                                href={`/c/${cat.name.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-")}`}
+                                                                href={`/c/${cat.slug}`}
                                                             >
                                                                 <li
-                                                                    key={cat.id}
+                                                                    key={cat.slug}
                                                                     onMouseEnter={() => setActiveCategory(cat)}
                                                                     onClick={() => {
-
-                                                                        sessionStorage.setItem('selectedCategoryId', cat.id);
+                                                                        sessionStorage.setItem('selectedCategoryId', cat.slug);
                                                                     }}
                                                                     className={`py-3 px-4 flex justify-between items-center cursor-pointer text-sm font-semibold ${activeCategory?.id === cat.id
                                                                         ? "bg-white text-black border-l-4 border-[#fb7701]"

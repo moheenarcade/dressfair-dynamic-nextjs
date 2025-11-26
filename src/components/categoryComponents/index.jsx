@@ -92,7 +92,7 @@ const CategroyComponents = () => {
       setProducts(prev =>
         pageNumber === 1 ? res.data : [...prev, ...res.data]
       );
-      // setHasMore(res.pagination.current_page < res.pagination.last_page);
+      setHasMore(res.pagination.current_page < res.pagination.last_page);
     }
 
     setLoading(false);

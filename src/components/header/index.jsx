@@ -278,18 +278,12 @@ const Header = () => {
                                                     {activeCategory?.sub_categories?.length > 0 &&
                                                         activeCategory.sub_categories.map((sub) => (
                                                             <Link
-                                                                key={sub.id}
+                                                                key={sub.slug}
 
-                                                                href={`/c/${activeCategory.name
-                                                                    .toLowerCase()
-                                                                    .replace(/&/g, "and")
-                                                                    .replace(/\s+/g, "-")}/${sub.name
-                                                                        .toLowerCase()
-                                                                        .replace(/&/g, "and")
-                                                                        .replace(/\s+/g, "-")}`}
+                                                                href={`/c/${activeCategory.slug}/${sub.slug}`}
                                                                 onClick={() => {
                                                                     // Save selected category
-                                                                    sessionStorage.setItem("selectedCategoryId", sub.id);
+                                                                    sessionStorage.setItem("selectedCategoryId", sub.slug);
                                                                     // Close mega menu
                                                                     handleMegaMenuLinkClick();
                                                                 }}

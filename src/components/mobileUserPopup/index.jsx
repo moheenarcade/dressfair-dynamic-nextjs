@@ -4,6 +4,7 @@ import { useUser } from '../../context/UserContext';
 import { RiMessage3Line } from "react-icons/ri";
 import { TbLogout2 } from 'react-icons/tb';
 import { AiOutlineUserSwitch } from 'react-icons/ai';
+import Link from 'next/link';
 
 
 const MobileUserPopup = ({ onOpenSignIn }) => {
@@ -38,12 +39,14 @@ const MobileUserPopup = ({ onOpenSignIn }) => {
                             </div>
                         )}
                         <div className="flex justify-center items-center text-center text-[13px] gap-4 pt-4">
+                            <Link href="/user/orders/all-orders">
                             <div className="flex items-center flex-col">
                                 <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
                                     <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="topIcon-2KivG"><path fill="#FFFFFF" d="M714.8 115.2c101.3 0 183.4 82.1 183.3 183.4l0 426.8c0 101.3-82.1 183.4-183.3 183.4l-405.6 0c-101.3 0-183.4-82.1-183.3-183.4l0-426.8c0-101.3 82.1-183.4 183.3-183.4z m0 68.3l-405.6 0c-63.6 0-115.1 51.5-115.1 115.1l0 426.8c0 63.6 51.5 115.1 115.1 115.1l405.6 0c63.6 0 115.1-51.5 115.1-115.1l0-426.8c0-63.6-51.5-115.1-115.1-115.1z m-183.7 392.5c18.9 0 34.1 15.3 34.1 34.1 0 18.9-15.3 34.1-34.1 34.2l-166.3 0c-18.9 0-34.1-15.3-34.1-34.2 0-18.9 15.3-34.1 34.1-34.1l166.3 0z m85.4-192c18.9 0 34.1 15.3 34.2 34.1 0 18.9-15.3 34.1-34.2 34.2l-251.7 0c-18.9 0-34.1-15.3-34.1-34.2 0-18.9 15.3-34.1 34.1-34.1l251.7 0z"></path></svg>
                                 </div>
                                 <p>Your orders</p>
                             </div>
+                            </Link>
                             <div className="flex items-center flex-col">
                                 <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
                                     <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="topIcon-2KivG"><path fill="#FFFFFF" d="M765.9 157.9c96.6 0 174.9 78.3 174.9 174.9l0 77.4c0 14.9-9.7 28.1-23.9 32.6-30 9.4-50.8 37.3-50.8 69.2 0 31.9 20.8 59.8 50.8 69.2 14.2 4.5 23.9 17.7 23.9 32.6l0 77.4c0 96.6-78.3 174.9-174.9 174.9l-507.8 0c-96.6 0-174.9-78.3-174.9-174.9l0-77.4c0-14.9 9.7-28.1 23.9-32.6 30-9.4 50.8-37.3 50.8-69.2 0-31.9-20.8-59.8-50.8-69.2-14.2-4.5-23.9-17.7-23.9-32.6l0-77.4c0-96.6 78.3-174.9 174.9-174.9z m0 68.2l-507.8 0c-58.9 0-106.7 47.8-106.6 106.7l0 54.9 4.7 2.6c40.2 23.4 67 65.8 69.7 113.7l0.2 8c0 51.2-27.5 97-69.9 121.7l-4.7 2.5 0 55c0 56.6 44 102.8 99.6 106.4l7 0.3 507.8 0c58.9 0 106.7-47.8 106.6-106.7l0-55-4.7-2.5c-40.2-23.4-67-65.8-69.7-113.7l-0.2-8c0-51.2 27.5-97 69.9-121.7l4.7-2.6 0-54.9c0-56.6-44-102.8-99.6-106.4l-7-0.3z m-121.6 375.5c25.9 0 46.9 21 46.9 46.9 0 24.2-18.3 44.1-41.8 46.7l-5.1 0.3c-25.9 0-46.9-21-47-47 0-24.2 18.3-44.1 41.9-46.6l5.1-0.3z m0-136.5c25.9 0 46.9 21 46.9 46.9 0 24.2-18.3 44.1-41.8 46.7l-5.1 0.2c-25.9 0-46.9-21-47-46.9 0-24.2 18.3-44.1 41.9-46.7l5.1-0.2z m0-136.6c25.9 0 46.9 21 46.9 47 0 24.2-18.3 44.1-41.8 46.6l-5.1 0.3c-25.9 0-46.9-21-47-46.9 0-24.2 18.3-44.1 41.9-46.7l5.1-0.3z"></path></svg>

@@ -737,7 +737,7 @@ const Header = () => {
                             <TfiMenuAlt className="text-2xl" />
                         </button>
                         <div className="relative user-dropdown-container">
-                            <Link href="/user/orders">
+                            
                                 <button
                                     ref={buttonRef}
                                     className="menu-icons-mobile"
@@ -745,7 +745,7 @@ const Header = () => {
                                 >
                                     <FaRegUser className="text-2xl" />
                                 </button>
-                            </Link>
+                         
                         </div>
                         <button className='relative'>
                             <Link href="/cart">

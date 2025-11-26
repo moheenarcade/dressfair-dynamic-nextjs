@@ -52,12 +52,19 @@ export const getCategories = async () => {
         "spa-store-id": "1",
       },
     });
+
+    // if success then replace localStorage
+    if (res.data?.success && res.data?.data) {
+      localStorage.setItem("main_cat", JSON.stringify(res.data.data));
+    }
+
     return res.data;
   } catch (error) {
     console.log("Categories API Error:", error);
     return { success: false, data: [] };
   }
 };
+
 
 // Fetch categories and save in localStorage
 export const fetchAndSaveCategories = async () => {

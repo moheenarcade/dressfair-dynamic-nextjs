@@ -200,7 +200,12 @@ const Header = () => {
                                 <div
                                     className="relative z-[999999999999]"
                                     onMouseEnter={() => setShowMegaMenu(true)}
-                                    onMouseLeave={() => setShowMegaMenu(false)}
+                                    onMouseLeave={(e) => {
+                                        const toElement = e.relatedTarget;
+                                        if (toElement && e.currentTarget.contains(toElement)) return;
+                                        setShowMegaMenu(false);
+                                    }}
+
                                 >
                                     <li
                                         onMouseEnter={() => {
@@ -274,12 +279,13 @@ const Header = () => {
                                             {/* Right Side Subcategories */}
                                             <div className="w-3/4 p-4 overflow-y-auto">
                                                 <h3 className="font-bold text-lg mb-4">{activeCategory?.name}</h3>
-                                                <div className="grid grid-cols-5 gap-4">
-                                                    {activeCategory?.sub_categories?.length > 0 &&
-                                                        activeCategory.sub_categories.map((sub) => (
-                                                            <Link
+                                                {activeCategory?.sub_categories?.length > 0 ? (
+                                                    <div className="grid grid-cols-5 gap-4">
+                                                        {activeCategory.sub_categories.map((sub) => (
+                                                           <>
+                                                               <Link
                                                                 key={sub.slug}
-                                                              
+
                                                                 href={`/c/${sub?.slug && sub.slug ? sub.slug : activeCategory?.slug}`}
                                                                 onClick={() => {
                                                                     sessionStorage.setItem(
@@ -299,8 +305,13 @@ const Header = () => {
                                                                 />
                                                                 <p className="mt-2 text-[14px]">{sub.name}</p>
                                                             </Link>
+                                                           </>
                                                         ))}
-                                                </div>
+                                                    </div>
+                                                ) : (
+                                                    <p className="text-gray-500">No sub-categories available</p>
+                                                )}
+                                              
                                             </div>
 
                                         </div>
@@ -737,15 +748,15 @@ const Header = () => {
                             <TfiMenuAlt className="text-2xl" />
                         </button>
                         <div className="relative user-dropdown-container">
-                            
-                                <button
-                                    ref={buttonRef}
-                                    className="menu-icons-mobile"
-                                    onClick={() => setShowMobileUser(prev => !prev)}
-                                >
-                                    <FaRegUser className="text-2xl" />
-                                </button>
-                         
+
+                            <button
+                                ref={buttonRef}
+                                className="menu-icons-mobile"
+                                onClick={() => setShowMobileUser(prev => !prev)}
+                            >
+                                <FaRegUser className="text-2xl" />
+                            </button>
+
                         </div>
                         <button className='relative'>
                             <Link href="/cart">

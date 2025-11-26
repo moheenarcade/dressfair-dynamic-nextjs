@@ -1,38 +1,53 @@
 "use client";
 import Image from "next/image";
 import { FaChevronRight } from "react-icons/fa6";
-import React from "react";
+import React, { useState } from "react";
+import TrackOrderModal from "@/components/models/TrackOrderModal";
+
+const orders = [
+  {
+    status: "Pending",
+    image: "/deals-product5.avif",
+    items: 1,
+    price: "AED 153.0000",
+    time: "2025-11-24 17:03:36 pm",
+    orderId: 530,
+  },
+  {
+    status: "Pending",
+    image: "/deals-product5.avif",
+    items: 1,
+    price: "AED 153.0000",
+    time: "2025-11-24 17:03:36 pm",
+    orderId: 531,
+  },
+  {
+    status: "Canceled",
+    image: "/deals-product5.avif",
+    items: 1,
+    price: "AED 153.0000",
+    time: "2025-11-24 17:03:36 pm",
+    orderId: 532,
+  },
+];
 
 const Orders = () => {
-  const orders = [
-    {
-      status: "Pending",
-      image: "/deals-product5.avif",
-      items: 1,
-      price: "AED 153.0000",
-      time: "2025-11-24 17:03:36 pm",
-      orderId: 530,
-    },
-    {
-      status: "Pending",
-      image: "/deals-product5.avif",
-      items: 1,
-      price: "AED 153.0000",
-      time: "2025-11-24 17:03:36 pm",
-      orderId: 531,
-    },
-    {
-      status: "Canceled",
-      image: "/deals-product5.avif",
-      items: 1,
-      price: "AED 153.0000",
-      time: "2025-11-24 17:03:36 pm",
-      orderId: 532,
-    },
-  ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+
+  const openModal = (order) => {
+    setSelectedOrder(order);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedOrder(null);
+    setIsModalOpen(false);
+  };
 
   return (
-    <div className="">
+    <>
       <div className="your-orders pt-4 flex flex-col gap-3">
         {orders.map((order, index) => (
           <div
@@ -61,7 +76,7 @@ const Orders = () => {
                 {/* Hide track and change address if order is canceled */}
                 {order.status !== "Canceled" && (
                   <div className="flex flex-col gap-1">
-                    <button className="rounded-full w-[200px] py-1 px-4 text-white transition-all duration-[500] ease-in-out hover:bg-[#fb5d01fc] bg-[#fb7701] font-semibold border-2 border-transparent">
+                    <button onClick={() => openModal(order)} className="rounded-full w-[200px] py-1 px-4 text-white transition-all duration-[500] ease-in-out hover:bg-[#fb5d01fc] bg-[#fb7701] font-semibold border-2 border-transparent">
                       Track
                     </button>
                     <button className="rounded-full w-[200px] py-1 px-4 transition-all duration-[500] ease-in-out hover:text-black hover:border-black text-gray-600 font-semibold border-2 border-gray-600">
@@ -91,7 +106,14 @@ const Orders = () => {
           </div>
         ))}
       </div>
-    </div>
+
+
+      <TrackOrderModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        order={selectedOrder}
+      />
+    </>
   );
 };
 

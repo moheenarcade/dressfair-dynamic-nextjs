@@ -253,6 +253,7 @@ const Header = () => {
                                                                 key={cat.slug}
                                                                 onClick={() => {
                                                                     sessionStorage.setItem("selectedCategorySlug", cat.slug);
+                                                                    sessionStorage.setItem("selectedCategoryId", cat.id);
                                                                     handleMegaMenuLinkClick();
                                                                 }}
                                                                 href={`/c/${cat.slug}`}

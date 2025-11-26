@@ -65,13 +65,31 @@ const CategroyComponents = () => {
     }
   }, [slug, categories]);
 
+  // // Load subcategories dynamically
+  // const loadSubcategories = async (categoryId) => {
+  //   const res = await getSubCategories(categoryId);
+  //   if (res.success && res.data) {
+  //     setSubcategoryList(res.data);
+  //   }
+  // }
+
   // Load subcategories dynamically
-  const loadSubcategories = async (categoryId) => {
-    const res = await getSubCategories(categoryId);
-    if (res.success && res.data) {
-      setSubcategoryList(res.data);
-    }
+const loadSubcategories = async (categoryId) => {
+  if (!categoryId) return; // safeguard
+  const res = await getSubCategories(categoryId);
+  if (res.success && res.data) {
+    setSubcategoryList(res.data);
   }
+}
+
+// Separate useEffect to load subcategories if selectedCategoryId exists
+useEffect(() => {
+  const selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
+  if (selectedCategoryId) {
+    loadSubcategories(selectedCategoryId);
+  }
+}, []);
+
 
   // Load products
   useEffect(() => {
@@ -153,7 +171,7 @@ const CategroyComponents = () => {
       {!subcategory && subcategoryList.length > 0 && (
         <div className="grid grid-cols-4 md:grid-cols-7 lg:grid-cols-12 gap-4 pt-6 pb-6 mb-6 border-b border-b-gray-300 px-2">
           {subcategoryList.map((sub, index) => (
-            <Link key={index} href={`/c/${activeCategory.slug}/${sub.slug}`}>
+            // <Link key={index} href={`/c/${activeCategory.slug}/${sub.slug}`}>
               <div className="single-cat group cursor-pointer flex flex-col items-center">
                 <Image
                   className="w-[90%] h-auto rounded-full group-hover:scale-[1.05] transition-all duration-300 ease-in-out"
@@ -164,7 +182,7 @@ const CategroyComponents = () => {
                 />
                 <p className="text-[13px] font-normal text-center mt-1">{sub.name}</p>
               </div>
-            </Link>
+            // </Link>
           ))}
         </div>
       )}

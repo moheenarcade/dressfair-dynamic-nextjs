@@ -54,6 +54,7 @@ const MobileCategories = ({ onClose, categories }) => {
                                         onClick={() => {
                                             setActiveCategory(cat);
                                             sessionStorage.setItem("selectedCategorySlug", cat.slug);
+                                            sessionStorage.setItem("selectedCategoryId", cat.id);
 
                                         }}
                                         className={`py-2 px-2 border-l-3 cursor-pointer ${activeCategory && activeCategory.slug === cat.slug

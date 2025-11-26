@@ -41,7 +41,7 @@ const MobileCategories = ({ onClose, categories }) => {
                                     <li
                                         key={cat.id}
                                         onClick={() => { setActiveCategory(cat); sessionStorage.setItem("selectedCategorySlug", cat.slug) }}
-                                        className={`py-2 px-2 border-l-3 cursor-pointer ${activeCategory.id === cat.slug
+                                        className={`py-2 px-2 border-l-3 cursor-pointer ${activeCategory.slug === cat.slug
                                             ? "border-l-[#fb7701] bg-white text-black"
                                             : "border-l-transparent hover:border-l-[#fb7701] hover:bg-white text-[#555]"
                                             }`}
@@ -65,17 +65,13 @@ const MobileCategories = ({ onClose, categories }) => {
                                  
                                     <Link
                                         key={sub.slug}
-                                        href={`/c/${activeCategory.name
-                                            .toLowerCase()
-                                            .replace(/&/g, "and")
-                                            .replace(/\s+/g, "-")}/${sub.name
-                                                .toLowerCase()
-                                                .replace(/&/g, "and")
-                                                .replace(/\s+/g, "-")}`}
+                                        href={`/c/${sub?.slug && sub.slug ? sub.slug : activeCategory?.slug}`}
+                                   
                                         onClick={() => {
-                                            // Save selected subcategory
-                                            sessionStorage.setItem("selectedCategorySlug", sub.slug);
-                                            // Close the mobile categories panel
+                                            sessionStorage.setItem(
+                                                "selectedCategorySlug",
+                                                sub?.slug && sub.slug.trim() !== "" ? sub.slug : activeCategory?.slug
+                                            );
                                             onClose?.();
                                         }}
                                         className="flex flex-col items-center text-center cursor-pointer group hover:scale-[1.06] transition-all duration-500 ease-in-out"

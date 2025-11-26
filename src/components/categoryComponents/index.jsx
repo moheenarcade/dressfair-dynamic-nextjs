@@ -204,7 +204,7 @@ const CategroyComponents = () => {
         ) : (
           <>
             <ProductCardMobile products={filteredProducts} />
-            {filteredProducts.length > 0 && hasMore && (
+            {/* {filteredProducts.length > 0 && hasMore && ( */}
               <div className="flex justify-center my-6">
                 {loadingMore ? (
                   <button
@@ -223,7 +223,7 @@ const CategroyComponents = () => {
                   </button>
                 )}
               </div>
-             )}
+             {/* )} */}
           </>
         )}
       </div>

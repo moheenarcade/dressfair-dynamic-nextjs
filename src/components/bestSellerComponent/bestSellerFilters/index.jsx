@@ -127,9 +127,7 @@ const BestSellerFilters = () => {
                   setProducts(prev => [...prev, ...res.data]);
               }
   
-              if (res.pagination.current_page >= res.pagination.last_page) {
-                  setHasMore(false);
-              }
+              setHasMore(res.pagination.has_more_pages);
           }
   
           setLoading(false);
@@ -247,7 +245,7 @@ const BestSellerFilters = () => {
                 ) : (
                     <>
                         <ProductCard products={filteredProducts} />
-                        {filteredProducts.length > 0 && hasMore && (
+                        {hasMore && (
                             <div className="flex justify-center mt-6">
                                 {loadingMore ? (
                                     <button
@@ -351,7 +349,7 @@ const BestSellerFilters = () => {
                     ) : (
                         <>
                             <ProductCardMobile products={filteredProducts} />
-                            {filteredProducts.length > 0 && hasMore && (
+                            {hasMore && (
                                 <div className="flex justify-center my-6">
                                     {loadingMore ? (
                                         <button

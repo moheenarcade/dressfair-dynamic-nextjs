@@ -95,7 +95,7 @@ const CategroyComponents = () => {
       setProducts(prev =>
         pageNumber === 1 ? res.data : [...prev, ...res.data]
       );
-      setHasMore(res.pagination.current_page < res.pagination.last_page);
+      setHasMore(res.pagination.has_more_pages);
     }
 
     setLoading(false);
@@ -178,7 +178,7 @@ const CategroyComponents = () => {
         ) : (
           <>
             <ProductCard products={filteredProducts} />
-            {/* {filteredProducts.length > 0 && hasMore && ( */}
+            {hasMore && (
             <div className="flex justify-center mt-6">
               {loadingMore ? (
                 <button
@@ -197,7 +197,7 @@ const CategroyComponents = () => {
                 </button>
               )}
             </div>
-            {/* )} */}
+            )}
           </>
         )}
       </div>
@@ -208,7 +208,7 @@ const CategroyComponents = () => {
         ) : (
           <>
             <ProductCardMobile products={filteredProducts} />
-            {/* {filteredProducts.length > 0 && hasMore && ( */}
+            {hasMore && (
             <div className="flex justify-center my-6">
               {loadingMore ? (
                 <button
@@ -227,7 +227,7 @@ const CategroyComponents = () => {
                 </button>
               )}
             </div>
-            {/* )} */}
+          )}
           </>
         )}
       </div>

@@ -42,7 +42,7 @@ const ExploreInterestProducts = () => {
                 pageNumber === 1 ? res.data : [...prev, ...res.data]
             );
 
-            setHasMore(res.pagination.current_page < res.pagination.last_page);
+            setHasMore(res.pagination.has_more_pages);
         }
 
         setLoading(false);
@@ -64,7 +64,7 @@ const ExploreInterestProducts = () => {
             ) : (
                 <>
                     <ProductCard products={filteredProducts} />
-                    {/* {filteredProducts.length > 0 && hasMore && ( */}
+                    {hasMore && (
                     <div className="flex justify-center mt-6">
                         {loadingMore ? (
                             <button
@@ -83,7 +83,7 @@ const ExploreInterestProducts = () => {
                             </button>
                         )}
                     </div>
-                    {/* )} */}
+                    )}
                 </>
             )}
         </>

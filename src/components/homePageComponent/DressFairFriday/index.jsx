@@ -42,9 +42,7 @@ const DressfairFriday = () => {
                 setProducts(prev => [...prev, ...res.data]);
             }
 
-            if (res.pagination.current_page >= res.pagination.last_page) {
-                setHasMore(false);
-            }
+            setHasMore(res.pagination.has_more_pages);
         }
 
         setLoading(false);
@@ -139,7 +137,7 @@ const DressfairFriday = () => {
             ) : (
                 <>
                     <ProductCard products={filteredProducts} />
-                    {products.length > 0 && hasMore && (
+                    {hasMore && (
                         <div className="flex justify-center mt-6">
                             {loadingMore ? (
                                 <button

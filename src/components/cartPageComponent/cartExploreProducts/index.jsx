@@ -34,9 +34,7 @@ const CartExploreProducts = () => {
                 setProducts(prev => [...prev, ...res.data]);
             }
 
-            if (res.pagination.current_page >= res.pagination.last_page) {
-                setHasMore(false);
-            }
+            setHasMore(res.pagination.has_more_pages);
         }
 
         setLoading(false);
@@ -58,7 +56,7 @@ const CartExploreProducts = () => {
                     <ProductCard products={filteredProducts}
                         gridClass="grid-cols-2 sm:grid-cols-3 lg:grid-cols-3"
                     />
-                    {products.length > 0 && hasMore && (
+                    {hasMore && (
                         <div className="flex justify-center mt-6">
                             {loadingMore ? (
                                 <button

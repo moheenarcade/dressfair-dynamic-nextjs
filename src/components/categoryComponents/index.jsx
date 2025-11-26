@@ -46,10 +46,8 @@ const CategroyComponents = () => {
   // Detect category and subcategory from URL
   useEffect(() => {
     if (!categories || categories.length === 0) return;
-
     const categorySlug = slug[0];
     const subcategorySlug = slug[1];
-
     const foundCategory = categories.find(cat => cat.slug === categorySlug);
     if (!foundCategory) return;
 
@@ -84,7 +82,13 @@ const CategroyComponents = () => {
     if (pageNumber === 1) setLoading(true);
     if (pageNumber > 1) setLoadingMore(true);
 
-    const categoryId = activeCategory?.slug || sessionStorage.getItem("selectedCategorySlug") || '';
+    // const categoryId = activeCategory?.slug || sessionStorage.getItem("selectedCategorySlug") || '';
+    const categorySlugFromUrl = slug[0]; // first slug in URL is category
+    const categoryId =
+      categorySlugFromUrl ||
+      activeCategory?.slug ||
+      sessionStorage.getItem("selectedCategorySlug") ||
+      '';
     const res = await getCatalogue(pageNumber, categoryId);
 
     if (res?.success) {
@@ -153,7 +157,7 @@ const CategroyComponents = () => {
               <div className="single-cat group cursor-pointer flex flex-col items-center">
                 <Image
                   className="w-[90%] h-auto rounded-full group-hover:scale-[1.05] transition-all duration-300 ease-in-out"
-                 src={sub.image || ProductBanner}
+                  src={sub.image || ProductBanner}
                   alt={sub.name}
                   width={200}
                   height={200}
@@ -175,24 +179,24 @@ const CategroyComponents = () => {
           <>
             <ProductCard products={filteredProducts} />
             {/* {filteredProducts.length > 0 && hasMore && ( */}
-              <div className="flex justify-center mt-6">
-                {loadingMore ? (
-                  <button
-                    className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
-                    disabled
-                  >
-                    <div className="smallloader mx-auto"></div>
-                    loading...
-                  </button>
-                ) : (
-                  <button
-                    className="flex items-center gap-2 justify-center py-2 lg:py-3 px-6 lg:px-12 font-semibold text-md transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-[#fb6d01] bg-[#fb7701] text-white rounded-full"
-                    onClick={() => setPage(page + 1)}
-                  >
-                    See More <FaChevronDown />
-                  </button>
-                )}
-              </div>
+            <div className="flex justify-center mt-6">
+              {loadingMore ? (
+                <button
+                  className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
+                  disabled
+                >
+                  <div className="smallloader mx-auto"></div>
+                  loading...
+                </button>
+              ) : (
+                <button
+                  className="flex items-center gap-2 justify-center py-2 lg:py-3 px-6 lg:px-12 font-semibold text-md transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-[#fb6d01] bg-[#fb7701] text-white rounded-full"
+                  onClick={() => setPage(page + 1)}
+                >
+                  See More <FaChevronDown />
+                </button>
+              )}
+            </div>
             {/* )} */}
           </>
         )}
@@ -205,25 +209,25 @@ const CategroyComponents = () => {
           <>
             <ProductCardMobile products={filteredProducts} />
             {/* {filteredProducts.length > 0 && hasMore && ( */}
-              <div className="flex justify-center my-6">
-                {loadingMore ? (
-                  <button
-                    className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
-                    disabled
-                  >
-                    <div className="smallloader mx-auto"></div>
+            <div className="flex justify-center my-6">
+              {loadingMore ? (
+                <button
+                  className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
+                  disabled
+                >
+                  <div className="smallloader mx-auto"></div>
 
-                  </button>
-                ) : (
-                  <button
-                    className="flex items-center gap-2 text-black border border-gray-500 justify-center py-[6px] lg:py-3 px-5 lg:px-12 font-semibold text-sm transition-all duration-300 ease-in-out hover:scale-[1.02] bg-transparent rounded-full"
-                    onClick={() => setPage(page + 1)}
-                  >
-                    See More
-                  </button>
-                )}
-              </div>
-             {/* )} */}
+                </button>
+              ) : (
+                <button
+                  className="flex items-center gap-2 text-black border border-gray-500 justify-center py-[6px] lg:py-3 px-5 lg:px-12 font-semibold text-sm transition-all duration-300 ease-in-out hover:scale-[1.02] bg-transparent rounded-full"
+                  onClick={() => setPage(page + 1)}
+                >
+                  See More
+                </button>
+              )}
+            </div>
+            {/* )} */}
           </>
         )}
       </div>

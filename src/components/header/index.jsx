@@ -280,7 +280,7 @@ const Header = () => {
                                                             <Link
                                                                 key={sub.slug}
 
-                                                                href={`/c/${activeCategory.slug}/${sub.slug}`}
+                                                                href={`/c/${sub.slug.startsWith(activeCategory.slug) ? sub.slug : `${activeCategory.slug}/${sub.slug}`}`}
                                                                 onClick={() => {
                                                                     // Save selected category
                                                                     sessionStorage.setItem("selectedCategoryId", sub.slug);

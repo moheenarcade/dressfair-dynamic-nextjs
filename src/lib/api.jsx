@@ -81,7 +81,7 @@ export const getSubCategories = async (categorySlug = "") => {
   try {
     if (!categorySlug) return { success: false, data: [] };
 
-    const res = await axios.get(`${API}/sub/categories?category_id=${categorySlug}`, {
+    const res = await axios.get(`${API}/sub/categories?slug=${categorySlug}`, {
       headers: {
         "spa-merchant-id": "v6eJxZKeRs8RmL0AfgtDwnQ",
         "spa-store-id": "1",

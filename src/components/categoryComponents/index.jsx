@@ -63,7 +63,7 @@ const CategroyComponents = () => {
       setSubcategory(null);
 
       // If no subcategory in URL, load subcategories dynamically
-      const categoryId = foundCategory.id || sessionStorage.getItem("selectedCategoryId");
+      const categoryId = foundCategory.slug || sessionStorage.getItem("selectedCategoryId");
       if (categoryId) loadSubcategories(categoryId);
     }
   }, [slug, categories]);

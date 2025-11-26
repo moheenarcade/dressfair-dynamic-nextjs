@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineSecurityScan } from "react-icons/ai";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { FaChevronRight } from "react-icons/fa6";
@@ -12,16 +12,28 @@ import { RiCoupon5Line } from "react-icons/ri";
 import { TbWorld } from "react-icons/tb";
 import { TfiUser } from "react-icons/tfi";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiSearch } from "react-icons/fi";
+import OrdersNavbar from "./orders/ordersNavbar";
+import ExploreInterestProducts from "@/components/productDetailPageComponent/exploreInterestProducts";
+import ProductListingMobile from "@/components/homePageMobile/productListingMobile";
 
 export default function UserLayout({ children }) {
     const pathname = usePathname();
     const [isOrdersOpen, setIsOrdersOpen] = useState(false);
 
+    useEffect(() => {
+        if (pathname.includes('/user/orders/')) {
+            setIsOrdersOpen(true);
+        } else {
+            setIsOrdersOpen(false);
+        }
+    }, [pathname]);
+
     const dropdownVariants = {
         hidden: { height: 0, opacity: 0 },
         visible: { height: "auto", opacity: 1 },
     };
+
+    const isOrdersPage = pathname.includes('/user/orders/');
 
     return (
         <div className="container mx-auto px-2 2xl:px-22">
@@ -32,20 +44,22 @@ export default function UserLayout({ children }) {
                     Your orders
                 </p>
             </div>
-            <div className="flex min-h-screen ">
+            <div className="flex  ">
                 <aside className="w-[220px] py-6">
                     <nav className="flex flex-col gap-1">
-                        <button
-                            onClick={() => setIsOrdersOpen(!isOrdersOpen)}
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3`}
-                        >
-                            <div className="flex items-center gap-1">
-                                <PiBookBookmarkLight className="text-2xl" /> Orders
-                            </div>
-                            <IoChevronDown
-                                className={`transition-transform duration-300 ${isOrdersOpen ? "rotate-180" : ""}`}
-                            />
-                        </button>
+                        <Link href="/user/orders/all-orders">
+                            <button
+                                onClick={() => setIsOrdersOpen(!isOrdersOpen)}
+                                className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3`}
+                            >
+                                <div className="flex items-center gap-1">
+                                    <PiBookBookmarkLight className="text-2xl" /> Orders
+                                </div>
+                                <IoChevronDown
+                                    className={`transition-transform duration-300 ${isOrdersOpen ? "rotate-180" : ""}`}
+                                />
+                            </button>
+                        </Link>
                         <AnimatePresence>
                             {isOrdersOpen && (
                                 <motion.div
@@ -81,8 +95,8 @@ export default function UserLayout({ children }) {
                                         Delivered
                                     </Link>
                                     <Link
-                                        href="/user/orders/cancelled"
-                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3`}
+                                        href="/user/orders/returns"
+                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/orders/returns" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
                                     >
                                         Returns
                                     </Link>
@@ -90,9 +104,9 @@ export default function UserLayout({ children }) {
                             )}
                         </AnimatePresence>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
-                                }`}
+                            href="/user/your-reviews"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/your-reviews" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"}
+                                `}
                         >
                             <div className="flex items-center gap-1">
                                 <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="icon-33dOL"><path d="M725.3 179.2c89.5 0 162.1 72.6 162.2 162.1l0 299.2c0 89.3-72.2 161.8-161.6 162.1l-110.7 0.4c-3.1 0-6.1 1.4-8.2 3.7l-49.5 55.4c-37.5 42-102 45.6-144 8-2.9-2.6-5.6-5.3-8.2-8.2l-49.1-55.2c-2.1-2.4-5.1-3.7-8.3-3.7l-99.9-0.4c-85.2-0.3-154.1-69.5-154.1-154.7l0-306.6c0-89.5 72.6-162.1 162.1-162.1z m0 68.3l-469.3 0c-51.8 0-93.9 42-93.9 93.8l0 306.6c0 47.6 38.5 86.3 86.2 86.4l99.9 0.4c22.5 0.1 44 9.8 59 26.6l49.1 55.2 2.7 2.7c13.9 12.4 35.2 11.2 47.6-2.6l49.5-55.4c15-16.8 36.4-26.4 58.8-26.5l110.8-0.4c51.7-0.2 93.5-42.2 93.5-93.8l0-299.2c0-51.8-42-93.9-93.9-93.8z m-272.9 112.4c10.4-21.1 36-29.8 57.1-19.4 8.4 4.2 15.2 11 19.4 19.4l22.5 45.6c1.9 3.8 5.5 6.4 9.6 7l50.3 7.3c23.3 3.4 39.5 25 36.1 48.3-1.3 9.3-5.7 17.9-12.4 24.4l-36.4 35.5c-3 2.9-4.4 7.2-3.7 11.3l8.6 50.1c4 23.2-11.6 45.3-34.8 49.3-9.2 1.6-18.8 0.1-27.1-4.3l-45-23.7c-3.7-2-8.2-2-11.9 0l-45 23.7c-20.9 11-46.7 2.9-57.6-17.9-4.4-8.3-5.9-17.8-4.3-27.1l8.6-50.1c0.7-4.2-0.7-8.4-3.7-11.3l-36.3-35.5c-16.9-16.4-17.2-43.5-0.8-60.3 6.5-6.7 15.1-11.1 24.4-12.4l50.3-7.3c4.2-0.6 7.8-3.2 9.6-7z m38.3 57.4l-7.2 14.6c-10.6 21.4-31 36.2-54.6 39.7l-16.1 2.3 11.6 11.3c15.4 15 23.2 35.9 21.8 57.2l-0.9 7-2.8 16 14.4-7.5c19-10 41.4-11 61.1-3l6.4 3 14.4 7.5-2.8-16c-3.6-21.2 2.3-42.7 16-59l4.9-5.2 11.6-11.3-16-2.3c-21.5-3.1-40.3-15.7-51.5-34l-3.2-5.7-7.1-14.6z"></path></svg>
@@ -101,8 +115,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/profile"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/profile" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -110,8 +124,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/coupons-offers"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/coupons-offers" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -119,8 +133,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/credit-balance"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/credit-balance" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -128,8 +142,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/followed-stores"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/followed-stores" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -139,8 +153,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/browsing-history"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/browsing-history" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -150,8 +164,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/addresses"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/addresses" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -161,8 +175,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/country-region-language"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/country-region-language" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -170,8 +184,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/payment-methods"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/payment-methods" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -179,8 +193,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/account-security"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/account-security" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -188,8 +202,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/permissions"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/permissions" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -199,8 +213,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/orders"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 ${pathname === "/user/orders" ? " " : ""
+                            href="/user/notifications"
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/notifications" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -211,83 +225,22 @@ export default function UserLayout({ children }) {
                     </nav>
                 </aside>
                 <main className="flex-1 p-6 bg-white">
-                    <div className="order-navbar flex items-center justify-between">
-                        <ul className='flex gap-3 text-[#757575] text-[15px] font-[500]'>
-                            <Link href="/user/orders/all-orders">
-                                <div className="flex flex-col items-center">
-                                    <li
-                                        className={`cursor-pointer hover:text-black transition-all duration-300 ease-in-out ${pathname === "/user/orders/all-orders"
-                                            ? "font-bold text-black"
-                                            : "text-gray-500"
-                                            }`}
-                                    >
-                                        All orders
-                                    </li>
-                                    {pathname === "/user/orders/all-orders" && (
-                                        <div className="w-6 h-1 rounded-full bg-black mt-1"></div>
-                                    )}
-                                </div>
-                            </Link>
-
-                            <Link href="/user/orders/processing">
-                                <div className="flex flex-col items-center">
-                                    <li
-                                        className={`cursor-pointer hover:text-black transition-all duration-300 ease-in-out ${pathname === "/user/orders/processing"
-                                            ? "font-bold text-black"
-                                            : "text-gray-500"
-                                            }`}
-                                    >
-                                        Processing
-                                    </li>
-                                    {pathname === "/user/orders/processing" && (
-                                        <div className="w-6 h-1 rounded-full bg-black mt-1"></div>
-                                    )}
-                                </div>
-                            </Link>
-                            <Link href="/user/orders/shipped">
-                                <div className="flex flex-col items-center">
-                                    <li
-                                        className={`cursor-pointer hover:text-black transition-all duration-300 ease-in-out ${pathname === "/user/orders/shipped"
-                                            ? "font-bold text-black"
-                                            : "text-gray-500"
-                                            }`}
-                                    >
-                                        Shipped
-                                    </li>
-                                    {pathname === "/user/orders/shipped" && (
-                                        <div className="w-6 h-1 rounded-full bg-black mt-1"></div>
-                                    )}
-                                </div>
-                            </Link>
-
-                            <Link href="/user/orders/delivered">
-                                <div className="flex flex-col items-center">
-                                    <li
-                                        className={`cursor-pointer hover:text-black transition-all duration-300 ease-in-out ${pathname === "/user/orders/delivered"
-                                            ? "font-bold text-black"
-                                            : "text-gray-500"
-                                            }`}
-                                    >
-                                        Delivered
-                                    </li>
-                                    {pathname === "/user/orders/delivered" && (
-                                        <div className="w-6 h-1 rounded-full bg-black mt-1"></div>
-                                    )}
-                                </div>
-                            </Link>
-
-                            <li className='cursor-pointer hover:text-black transition-all duration-300 ease-in-out'>Returns</li>
-                        </ul>
-                        <div className="order-search flex items-center gap-1 pr-4 w-[30%] text-[14px] rounded-full border border-[#949494]">
-                            <input className='w-full h-full py-3 px-4 outline-0' type="search" placeholder='item name / order ID / Tracking No.' />
-                            <button>
-                                <FiSearch className='text-xl text-[#222]' />
-                            </button>
-                        </div>
-                    </div>
+                    {isOrdersPage && <OrdersNavbar />}
                     {children}
                 </main>
+
             </div>
+            {isOrdersPage &&
+                <>
+                    <div className="explore-interest pt-2 pb-20 hidden xl:block">
+                        <h3 className="text-[#222] font-bold pb-3 text-[22px] px-2">Explore your interests</h3>
+                        <ExploreInterestProducts />
+                    </div>
+                    <div className="block: xl:hidden pt-2 pb-12">
+                        <ProductListingMobile />
+                    </div>
+                </>
+            }
         </div>
     );
 }

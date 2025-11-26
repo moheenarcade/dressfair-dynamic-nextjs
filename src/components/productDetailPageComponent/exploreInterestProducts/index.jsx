@@ -60,32 +60,32 @@ const ExploreInterestProducts = () => {
     return (
         <>
             {loading ? (
-                    <Loader />
-                ) : (
-                    <>
-                        <ProductCard products={filteredProducts} />
-                        {/* {filteredProducts.length > 0 && hasMore && ( */}
-                            <div className="flex justify-center mt-6">
-                                {loadingMore ? (
-                                    <button
-                                        className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
-                                        disabled
-                                    >
-                                        <div className="smallloader mx-auto"></div>
-                                        loading...
-                                    </button>
-                                ) : (
-                                    <button
-                                        className="flex items-center gap-2 justify-center py-2 lg:py-3 px-6 lg:px-12 font-semibold text-md transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-[#fb6d01] bg-[#fb7701] text-white rounded-full"
-                                        onClick={() => setPage(page + 1)}
-                                    >
-                                        See More <FaChevronDown />
-                                    </button>
-                                )}
-                            </div>
-                        {/* )} */}
-                    </>
-                )}
+                <Loader />
+            ) : (
+                <>
+                    <ProductCard products={filteredProducts} />
+                    {/* {filteredProducts.length > 0 && hasMore && ( */}
+                    <div className="flex justify-center mt-6">
+                        {loadingMore ? (
+                            <button
+                                className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
+                                disabled
+                            >
+                                <div className="smallloader mx-auto"></div>
+                                loading...
+                            </button>
+                        ) : (
+                            <button
+                                className="flex items-center gap-2 justify-center py-2 lg:py-3 px-6 lg:px-12 font-semibold text-md transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-[#fb6d01] bg-[#fb7701] text-white rounded-full"
+                                onClick={() => setPage(page + 1)}
+                            >
+                                See More <FaChevronDown />
+                            </button>
+                        )}
+                    </div>
+                    {/* )} */}
+                </>
+            )}
         </>
     )
 }

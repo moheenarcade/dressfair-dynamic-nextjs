@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { BsCheckLg } from "react-icons/bs";
 import { FaAnglesLeft } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import BuyAgainModal from "./BuyAgainModal";
 
 const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
     const [activeSection, setActiveSection] = useState("details");
+    const [isBuyAgainModalOpen, setIsBuyAgainModalOpen] = useState(false);
 
     if (!isOpen || !order) return null;
     return (
@@ -48,7 +50,12 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                                         <button onClick={() => setActiveSection("receipt")} className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[170px] py-1 px-4 transition-all duration-[500] ease-in-out hover:text-black hover:border-black text-gray-600 font-semibold border-2 border-gray-600">
                                             View Reciept
                                         </button>
-                                        <button className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[170px] py-1 px-4 text-white transition-all duration-[500] ease-in-out hover:bg-[#fb5d01fc] bg-[#fb7701] font-semibold border-2 border-transparent">
+                                        <button
+                                            onClick={() => {
+                                           
+                                                setIsBuyAgainModalOpen(true); // open BuyAgain modal
+                                            }}
+                                            className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[170px] py-1 px-4 text-white transition-all duration-[500] ease-in-out hover:bg-[#fb5d01fc] bg-[#fb7701] font-semibold border-2 border-transparent">
                                             Buy this again
                                         </button>
                                     </div>
@@ -117,9 +124,9 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
 
                     <>
                         <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-2xl font-semibold">
-                        <p>Pending</p>
-                        <button onClick={() => setActiveSection("details")} className="text-sm flex items-center gap-1 absolute right-2 hover:scale-[1.03] transition-all duration-[500] ease-in-out">
-                                <FaAnglesLeft/> Back
+                            <p>Pending</p>
+                            <button onClick={() => setActiveSection("details")} className="text-sm flex items-center gap-1 absolute right-2 hover:scale-[1.03] transition-all duration-[500] ease-in-out">
+                                <FaAnglesLeft /> Back
                             </button>
                         </div>
                         <div className="p-3">
@@ -185,10 +192,10 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                 {activeSection === "receipt" && (
                     <>
                         <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-2xl font-semibold">
-                           
+
                             <p>Pending</p>
                             <button onClick={() => setActiveSection("details")} className="text-sm flex items-center gap-1 absolute right-2 hover:scale-[1.03] transition-all duration-[500] ease-in-out">
-                                <FaAnglesLeft/> Back
+                                <FaAnglesLeft /> Back
                             </button>
                         </div>
                         <div className="p-3 flex flex-col gap-3">
@@ -286,6 +293,13 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                 )}
 
             </div>
+
+            <BuyAgainModal
+                isOpen={isBuyAgainModalOpen}
+                onClose={() => setIsBuyAgainModalOpen(false)}
+                order={order}
+            />
+
         </div>
     );
 };

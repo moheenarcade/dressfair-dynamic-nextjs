@@ -35,8 +35,6 @@ const ManageCartBottomModal = ({ isOpen, onClose }) => {
         document.body.style.overflow = isOpen ? "hidden" : "";
     }, [isOpen]);
 
-
-
     // Local state to manage which dropdown is open
     const [openQtyId, setOpenQtyId] = useState(null);
 

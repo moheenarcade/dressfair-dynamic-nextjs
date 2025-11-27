@@ -41,13 +41,16 @@ const Profile = () => {
         <div className='user-info'>
           <div className="profile-sec flex flex-col border-b border-b-gray-200 pb-4">
             <div className="flex items-center gap-3">
-              <Image className='rounded-full w-16 md:w-20 h-16 md:h-20' width={100} height={100} src={profileImg} alt="user profile" />
+              <Image className='rounded-full border border-gray-300 w-16 md:w-20 h-16 md:h-20' width={100} height={100} src={profileImg} alt="user profile" />
               <div className="">
+                <div className="flex flex-col">
                 <div className="flex items-start gap-3">
                   <p className='font-bold text-md md:text-lg'>Moheen dealsarcade</p>
                   <button onClick={() => setIsEditing(true)} className='text-gray-500 mt-1 hover:text-black hover:scale-[1.05] transition-all duration-500 ease-in-out'>
                     <FaRegEdit />
                   </button>
+                  </div>
+                  <p className='text-[14px] font-semibold'>+791 23432432</p>
                 </div>
                 <div className="flex items-center justify-between pt-2">
                   <div className="">
@@ -103,7 +106,7 @@ const Profile = () => {
               <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" className="icon-1r7uj"><path d="M616.2 98.5c32.2 0 61.2 19.6 73.1 49.5l27.5 68.6 208.7 0c32.6 0 59.1 26.4 59.1 59.1l0 590.8c0 32.6-26.4 59.1-59.1 59l-827 0c-32.6 0-59.1-26.4-59.1-59l0-590.8c0-32.6 26.4-59.1 59.1-59.1l208.7 0 27.5-68.6c12-29.9 40.9-49.5 73.1-49.5l208.4 0z m-104.2 275.7c-108.8 0-196.9 88.2-196.9 196.9 0 108.8 88.2 196.9 196.9 196.9 108.8 0 196.9-88.2 196.9-196.9 0-105.9-83.6-192.3-188.4-196.8l-8.5-0.1z M393.8 571.1a118.2 118.2 0 0 0 236.4 0 118.2 118.2 0 0 0-236.4 0z"></path></svg>
             </button>
 
-            <Image className='rounded-full w-16 md:w-20 h-16 md:h-20' width={100} height={100} src={profileImg} alt="user profile" />
+            <Image className='rounded-full border border-gray-300 w-16 md:w-20 h-16 md:h-20' width={100} height={100} src={profileImg} alt="user profile" />
           </div>
           <div className="flex flex-col gap-1">
             <label className='font-semibold text-[15px] pl-1'>Name</label>

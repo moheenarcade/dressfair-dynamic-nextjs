@@ -8,7 +8,7 @@ const TrackOrderModal = ({ isOpen, onClose, order }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999999999999]">
             <div className="bg-white w-[90%] max-w-[800px] rounded-md shadow-lg overflow-hidden animate-fadeIn">
                 <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-2xl font-semibold">
                     <BsCheckLg className="text-xl md:text-3xl" />

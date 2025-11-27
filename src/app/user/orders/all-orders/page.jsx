@@ -48,7 +48,6 @@ const Orders = () => {
   const closeModal = () => {
     setSelectedOrder(null);
     setIsModalOpen(false);
-    setViewOrderDetailModelOpen(false);
   };
 
   return (
@@ -61,12 +60,12 @@ const Orders = () => {
           >
             <div className="order-header px-3 py-2 bg-gray-100 flex items-center justify-between">
               <p className="font-semibold text-[15px]">{order.status}</p>
-              <button 
+              <button
                 onClick={() => {
                   setSelectedOrder(order);
                   setViewOrderDetailModelOpen(true);
                 }}
-              className="text-[#fb7701] flex items-center gap-1 text-[14px] hover:underline transition-all duration-[300] ease-in-out font-semibold">
+                className="text-[#fb7701] flex items-center gap-1 text-[14px] hover:underline transition-all duration-[300] ease-in-out font-semibold">
                 View Order Details <FaChevronRight />
               </button>
             </div>
@@ -123,7 +122,7 @@ const Orders = () => {
         order={selectedOrder}
       />
 
-      <ViewOrderDetailsModal 
+      <ViewOrderDetailsModal
         isOpen={viewOrderDetailModelOpen}
         onClose={closeModal}
         order={selectedOrder}

@@ -22,7 +22,8 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                                 {activeSection === "details" && "Pending"}
                                 {activeSection === "track" && "Your order is currently being processed for delivery."}
                                 {activeSection === "receipt" && "Order Receipt"}
-                            </p>                            <button onClick={onClose} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
+                            </p>
+                            <button onClick={onClose} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
                                 <IoClose />
                             </button>
                         </div>

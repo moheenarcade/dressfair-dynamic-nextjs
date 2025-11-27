@@ -39,15 +39,19 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
 
-
   const openModal = (order) => {
     setSelectedOrder(order);
-    setIsModalOpen(true);
+    setIsModalOpen(true); // opens TrackOrderModal
   };
 
-  const closeModal = () => {
+  const closeTrackModal = () => {
     setSelectedOrder(null);
     setIsModalOpen(false);
+  };
+
+  const closeViewOrderModal = () => {
+    setSelectedOrder(null);
+    setViewOrderDetailModelOpen(false);
   };
 
   return (
@@ -118,13 +122,13 @@ const Orders = () => {
 
       <TrackOrderModal
         isOpen={isModalOpen}
-        onClose={closeModal}
+        onClose={closeTrackModal}
         order={selectedOrder}
       />
 
       <ViewOrderDetailsModal
         isOpen={viewOrderDetailModelOpen}
-        onClose={closeModal}
+        onClose={closeViewOrderModal}
         order={selectedOrder}
       />
 

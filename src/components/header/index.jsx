@@ -778,6 +778,7 @@ const Header = () => {
                             setShowSignInModal(true);
                             setShowMobileUser(false);
                         }}
+                        onClose={() => setShowMobileUser(false)}
                     />
                 </div>
             )}

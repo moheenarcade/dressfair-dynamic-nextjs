@@ -41,7 +41,7 @@ const Orders = () => {
 
   const openModal = (order) => {
     setSelectedOrder(order);
-    setIsModalOpen(true); // opens TrackOrderModal
+    setIsModalOpen(true);
   };
 
   const closeTrackModal = () => {
@@ -86,7 +86,6 @@ const Orders = () => {
                   />
                 </div>
 
-                {/* Hide track and change address if order is canceled */}
                 {order.status !== "Canceled" && (
                   <div className="flex flex-col gap-1">
                     <button onClick={() => openModal(order)} className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[200px] py-1 px-4 text-white transition-all duration-[500] ease-in-out hover:bg-[#fb5d01fc] bg-[#fb7701] font-semibold border-2 border-transparent">

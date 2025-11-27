@@ -7,12 +7,13 @@ import { AiOutlineUserSwitch } from 'react-icons/ai';
 import Link from 'next/link';
 
 
-const MobileUserPopup = ({ onOpenSignIn }) => {
+const MobileUserPopup = ({ onOpenSignIn , onClose }) => {
     const [showSignInModal, setShowSignInModal] = useState(false);
     const { user, logout } = useUser();
     const handleLogout = () => {
         logout();
         setShowUserDropdown(false);
+        if (onClose) onClose(); 
     };
     return (
         <>
@@ -39,7 +40,7 @@ const MobileUserPopup = ({ onOpenSignIn }) => {
                             </div>
                         )}
                         <div className="flex justify-center items-center text-center text-[13px] gap-4 pt-4">
-                            <Link href="/user/orders/all-orders">
+                            <Link href="/user/orders/all-orders" onClick={onClose}>
                             <div className="flex items-center flex-col">
                                 <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
                                     <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="topIcon-2KivG"><path fill="#FFFFFF" d="M714.8 115.2c101.3 0 183.4 82.1 183.3 183.4l0 426.8c0 101.3-82.1 183.4-183.3 183.4l-405.6 0c-101.3 0-183.4-82.1-183.3-183.4l0-426.8c0-101.3 82.1-183.4 183.3-183.4z m0 68.3l-405.6 0c-63.6 0-115.1 51.5-115.1 115.1l0 426.8c0 63.6 51.5 115.1 115.1 115.1l405.6 0c63.6 0 115.1-51.5 115.1-115.1l0-426.8c0-63.6-51.5-115.1-115.1-115.1z m-183.7 392.5c18.9 0 34.1 15.3 34.1 34.1 0 18.9-15.3 34.1-34.1 34.2l-166.3 0c-18.9 0-34.1-15.3-34.1-34.2 0-18.9 15.3-34.1 34.1-34.1l166.3 0z m85.4-192c18.9 0 34.1 15.3 34.2 34.1 0 18.9-15.3 34.1-34.2 34.2l-251.7 0c-18.9 0-34.1-15.3-34.1-34.2 0-18.9 15.3-34.1 34.1-34.1l251.7 0z"></path></svg>

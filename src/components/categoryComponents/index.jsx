@@ -29,6 +29,7 @@ const CategroyComponents = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  console.log(subcategoryList , "subcategory list here ")
   const toSlug = (slug) =>
     slug.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-");
 
@@ -65,30 +66,22 @@ const CategroyComponents = () => {
     }
   }, [slug, categories]);
 
-  // // Load subcategories dynamically
-  // const loadSubcategories = async (categoryId) => {
-  //   const res = await getSubCategories(categoryId);
-  //   if (res.success && res.data) {
-  //     setSubcategoryList(res.data);
-  //   }
-  // }
-
   // Load subcategories dynamically
-const loadSubcategories = async (categoryId) => {
-  if (!categoryId) return; // safeguard
-  const res = await getSubCategories(categoryId);
-  if (res.success && res.data) {
-    setSubcategoryList(res.data);
+  const loadSubcategories = async (categoryId) => {
+    if (!categoryId) return; // safeguard
+    const res = await getSubCategories(categoryId);
+    if (res.success && res.data) {
+      setSubcategoryList(res.data);
+    }
   }
-}
 
-// Separate useEffect to load subcategories if selectedCategoryId exists
-useEffect(() => {
-  const selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
-  if (selectedCategoryId) {
-    loadSubcategories(selectedCategoryId);
-  }
-}, []);
+  // Separate useEffect to load subcategories if selectedCategoryId exists
+  useEffect(() => {
+    const selectedCategoryId = sessionStorage.getItem("selectedCategoryId");
+    if (selectedCategoryId) {
+      loadSubcategories(selectedCategoryId);
+    }
+  }, []);
 
 
   // Load products
@@ -167,22 +160,21 @@ useEffect(() => {
         )}
       </div>
 
-
-      {!subcategory && subcategoryList.length > 0 && (
+      {activeCategory && !subcategory && subcategoryList.length > 0 && (
         <div className="grid grid-cols-4 md:grid-cols-7 lg:grid-cols-12 gap-4 pt-6 pb-6 mb-6 border-b border-b-gray-300 px-2">
           {subcategoryList.map((sub, index) => (
-            // <Link key={index} href={`/c/${activeCategory.slug}/${sub.slug}`}>
-              <div className="single-cat group cursor-pointer flex flex-col items-center">
-                <Image
-                  className="w-[90%] h-auto rounded-full group-hover:scale-[1.05] transition-all duration-300 ease-in-out"
-                  src={sub.image || ProductBanner}
-                  alt={sub.name}
-                  width={200}
-                  height={200}
-                />
-                <p className="text-[13px] font-normal text-center mt-1">{sub.name}</p>
-              </div>
-            // </Link>
+            <Link key={index} href={`/c/${activeCategory.slug}/${sub.slug}`}>
+            <div className="single-cat group cursor-pointer flex flex-col items-center">
+              <Image
+                className="w-[90%] h-auto rounded-full group-hover:scale-[1.05] transition-all duration-300 ease-in-out"
+                src={sub.image || ProductBanner}
+                alt={sub.name}
+                width={200}
+                height={200}
+              />
+              <p className="text-[13px] font-normal text-center mt-1">{sub.name}</p>
+            </div>
+            </Link>
           ))}
         </div>
       )}
@@ -197,24 +189,24 @@ useEffect(() => {
           <>
             <ProductCard products={filteredProducts} />
             {hasMore && (
-            <div className="flex justify-center mt-6">
-              {loadingMore ? (
-                <button
-                  className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
-                  disabled
-                >
-                  <div className="smallloader mx-auto"></div>
-                  loading...
-                </button>
-              ) : (
-                <button
-                  className="flex items-center gap-2 justify-center py-2 lg:py-3 px-6 lg:px-12 font-semibold text-md transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-[#fb6d01] bg-[#fb7701] text-white rounded-full"
-                  onClick={() => setPage(page + 1)}
-                >
-                  See More <FaChevronDown />
-                </button>
-              )}
-            </div>
+              <div className="flex justify-center mt-6">
+                {loadingMore ? (
+                  <button
+                    className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
+                    disabled
+                  >
+                    <div className="smallloader mx-auto"></div>
+                    loading...
+                  </button>
+                ) : (
+                  <button
+                    className="flex items-center gap-2 justify-center py-2 lg:py-3 px-6 lg:px-12 font-semibold text-md transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-[#fb6d01] bg-[#fb7701] text-white rounded-full"
+                    onClick={() => setPage(page + 1)}
+                  >
+                    See More <FaChevronDown />
+                  </button>
+                )}
+              </div>
             )}
           </>
         )}
@@ -227,25 +219,25 @@ useEffect(() => {
           <>
             <ProductCardMobile products={filteredProducts} />
             {hasMore && (
-            <div className="flex justify-center my-6">
-              {loadingMore ? (
-                <button
-                  className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
-                  disabled
-                >
-                  <div className="smallloader mx-auto"></div>
+              <div className="flex justify-center my-6">
+                {loadingMore ? (
+                  <button
+                    className="flex items-center gap-4 justify-center py-2 lg:py-3 px-6 lg:px-12 text-lg font-[500] text-gray-500 rounded-full cursor-not-allowed"
+                    disabled
+                  >
+                    <div className="smallloader mx-auto"></div>
 
-                </button>
-              ) : (
-                <button
-                  className="flex items-center gap-2 text-black border border-gray-500 justify-center py-[6px] lg:py-3 px-5 lg:px-12 font-semibold text-sm transition-all duration-300 ease-in-out hover:scale-[1.02] bg-transparent rounded-full"
-                  onClick={() => setPage(page + 1)}
-                >
-                  See More
-                </button>
-              )}
-            </div>
-          )}
+                  </button>
+                ) : (
+                  <button
+                    className="flex items-center gap-2 text-black border border-gray-500 justify-center py-[6px] lg:py-3 px-5 lg:px-12 font-semibold text-sm transition-all duration-300 ease-in-out hover:scale-[1.02] bg-transparent rounded-full"
+                    onClick={() => setPage(page + 1)}
+                  >
+                    See More
+                  </button>
+                )}
+              </div>
+            )}
           </>
         )}
       </div>

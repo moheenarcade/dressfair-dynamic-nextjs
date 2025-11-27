@@ -3,6 +3,8 @@ import Image from "next/image";
 import { FaChevronRight } from "react-icons/fa6";
 import React, { useState } from "react";
 import TrackOrderModal from "@/components/models/TrackOrderModal";
+import AddressModal from "@/components/models/AddressModal";
+import ViewOrderDetailsModal from "@/components/models/ViewOrderDetailsModal";
 
 const orders = [
   {
@@ -33,7 +35,9 @@ const orders = [
 
 const Orders = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewOrderDetailModelOpen, setViewOrderDetailModelOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
 
 
   const openModal = (order) => {
@@ -44,6 +48,7 @@ const Orders = () => {
   const closeModal = () => {
     setSelectedOrder(null);
     setIsModalOpen(false);
+    setViewOrderDetailModelOpen(false);
   };
 
   return (
@@ -56,7 +61,12 @@ const Orders = () => {
           >
             <div className="order-header px-3 py-2 bg-gray-100 flex items-center justify-between">
               <p className="font-semibold text-[15px]">{order.status}</p>
-              <button className="text-[#fb7701] flex items-center gap-1 text-[14px] hover:underline transition-all duration-[300] ease-in-out font-semibold">
+              <button 
+                onClick={() => {
+                  setSelectedOrder(order);
+                  setViewOrderDetailModelOpen(true);
+                }}
+              className="text-[#fb7701] flex items-center gap-1 text-[14px] hover:underline transition-all duration-[300] ease-in-out font-semibold">
                 View Order Details <FaChevronRight />
               </button>
             </div>
@@ -76,10 +86,10 @@ const Orders = () => {
                 {/* Hide track and change address if order is canceled */}
                 {order.status !== "Canceled" && (
                   <div className="flex flex-col gap-1">
-                    <button onClick={() => openModal(order)} className="rounded-full w-[200px] py-1 px-4 text-white transition-all duration-[500] ease-in-out hover:bg-[#fb5d01fc] bg-[#fb7701] font-semibold border-2 border-transparent">
+                    <button onClick={() => openModal(order)} className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[200px] py-1 px-4 text-white transition-all duration-[500] ease-in-out hover:bg-[#fb5d01fc] bg-[#fb7701] font-semibold border-2 border-transparent">
                       Track
                     </button>
-                    <button className="rounded-full w-[200px] py-1 px-4 transition-all duration-[500] ease-in-out hover:text-black hover:border-black text-gray-600 font-semibold border-2 border-gray-600">
+                    <button onClick={() => setIsAddressModalOpen(true)} className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[200px] py-1 px-4 transition-all duration-[500] ease-in-out hover:text-black hover:border-black text-gray-600 font-semibold border-2 border-gray-600">
                       Change Address
                     </button>
                   </div>
@@ -107,12 +117,19 @@ const Orders = () => {
         ))}
       </div>
 
-
       <TrackOrderModal
         isOpen={isModalOpen}
         onClose={closeModal}
         order={selectedOrder}
       />
+
+      <ViewOrderDetailsModal 
+        isOpen={viewOrderDetailModelOpen}
+        onClose={closeModal}
+        order={selectedOrder}
+      />
+
+      <AddressModal isOpen={isAddressModalOpen} onClose={() => setIsAddressModalOpen(false)} />
     </>
   );
 };

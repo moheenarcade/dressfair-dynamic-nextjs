@@ -6,16 +6,22 @@ import { IoClose } from "react-icons/io5";
 
 const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
     const [showTrack, setShowTrack] = useState(false);
+    const [activeSection, setActiveSection] = useState("details");
+
 
     if (!isOpen || !order) return null;
     return (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[9999999999] p-2">
             <div className="bg-white w-full max-w-[800px] overflow-hidden z-[9999998899999999]  rounded-md shadow-lg  animate-fadeIn">
-                {!showTrack ? (
+                {activeSection === "details" && (
                     <>
                         <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-xl font-semibold">
-                            <p>Pending</p>
-                            <button onClick={onClose} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
+                            {activeSection === "track" && <BsCheckLg className="text-xl md:text-3xl" />}
+                            <p>
+                                {activeSection === "details" && "Pending"}
+                                {activeSection === "track" && "Your order is currently being processed for delivery."}
+                                {activeSection === "receipt" && "Order Receipt"}
+                            </p>                            <button onClick={onClose} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
                                 <IoClose />
                             </button>
                         </div>
@@ -36,10 +42,10 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                                 </div>
                                 <div className="">
                                     <div className="flex flex-col gap-1">
-                                        <button onClick={() => setShowTrack(true)} className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[170px] py-1 px-4 transition-all duration-[500] ease-in-out hover:text-black hover:border-black text-gray-600 font-semibold border-2 border-gray-600">
+                                        <button onClick={() => setActiveSection("track")} className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[170px] py-1 px-4 transition-all duration-[500] ease-in-out hover:text-black hover:border-black text-gray-600 font-semibold border-2 border-gray-600">
                                             Track
                                         </button>
-                                        <button className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[170px] py-1 px-4 transition-all duration-[500] ease-in-out hover:text-black hover:border-black text-gray-600 font-semibold border-2 border-gray-600">
+                                        <button onClick={() => setActiveSection("receipt")} className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[170px] py-1 px-4 transition-all duration-[500] ease-in-out hover:text-black hover:border-black text-gray-600 font-semibold border-2 border-gray-600">
                                             View Reciept
                                         </button>
                                         <button className="text-[14px] md:text-[16px] rounded-full w-[160px] md:w-[170px] py-1 px-4 text-white transition-all duration-[500] ease-in-out hover:bg-[#fb5d01fc] bg-[#fb7701] font-semibold border-2 border-transparent">
@@ -105,16 +111,18 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                             Close
                         </button>
                     </>
-                ) : (
+                )}
+
+                {activeSection === "track" && (
+
                     <>
                         <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-2xl font-semibold">
                             <BsCheckLg className="text-xl md:text-3xl" />
                             <p> Your order is currently being processed for delivery.</p>
-                            <button onClick={() => setShowTrack(false)} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
+                            <button onClick={() => setActiveSection("details")} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
                                 <IoClose />
                             </button>
                         </div>
-
                         <div className="p-3">
                             <div className="pb-3 flex flex-col md:flex-row gap-2 justify-between border-b border-b-gray-200">
                                 <div className="w-full md:w-[50%]">
@@ -166,15 +174,119 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                                 </ul>
                             </div>
                         </div>
-
                         <button
                             className="mt-5 w-full py-2 rounded-md bg-[#fb7701] hover:bg-[#fb5d01fc] text-white font-semibold"
-                            onClick={() => setShowTrack(false)}
+                            onClick={() => setActiveSection("details")}
                         >
-                            Close
+                            Back
+                        </button>
+                    </>
+
+                )}
+
+                {activeSection === "receipt" && (
+                    <>
+                        <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-2xl font-semibold">
+                            <BsCheckLg className="text-xl md:text-3xl" />
+                            <p> Your order is currently being processed for delivery.</p>
+                            <button onClick={() => setActiveSection("details")} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
+                                <IoClose />
+                            </button>
+                        </div>
+                        <div className="p-3 flex flex-col gap-3">
+                            <div className="flex flex-col md:flex-row gap-3">
+                                <div className="w-full md:w-[50%] border border-gray-300 rounded-sm overflow-hidden">
+                                    <p className="text-lg font-semibold py-1 px-3 bg-gray-100 border-b border-b-gray-300">Order detail</p>
+                                    <div className="px-3">
+                                        <div className="flex items-center justify-between border-b border-b-gray-300 py-1">
+                                            <p>Order ID:</p>
+                                            <p>530</p>
+                                        </div>
+                                        <div className="flex items-center justify-between border-b border-b-gray-300 py-1">
+                                            <p>Order Time:</p>
+                                            <p>2025-11-24 17:03:38</p>
+                                        </div>
+                                        <div className="flex items-center justify-between border-b border-b-gray-300 py-1">
+                                            <p>Shipping Method</p>
+                                            <p>Flat Shipping Rate</p>
+                                        </div>
+                                        <div className="flex items-center justify-between py-1">
+                                            <p>Order ID:</p>
+                                            <p>530</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="w-full md:w-[50%] border border-gray-300 rounded-sm overflow-hidden">
+                                    <p className="text-lg font-semibold py-1 px-3 bg-gray-100 border-b border-b-gray-300">Delivery address</p>
+                                    <div className="p-3">
+                                        <p>test, 234324434,- 432423424, Saadiyat Island, Abu Dhabi, United Arab Emirates</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border border-gray-300 rounded-sm overflow-hidden">
+                                <p className="text-lg font-semibold py-1 px-3 bg-gray-100 border-b border-b-gray-300">Product detail</p>
+                                <table className="table-fixed w-full text-sm md:text-base">
+                                    <thead className="border-b border-b-gray-300">
+                                        <tr>
+                                            <th className="w-1/4 px-2 py-2 text-left">Image</th>
+                                            <th className="w-1/4 px-2 py-2 text-left">Variation</th>
+                                            <th className="w-1/4 px-2 py-2 text-left">Unit Price</th>
+                                            <th className="w-1/4 px-2 py-2 text-left">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="">
+                                            <td className="px-2 py-2">
+                                                <Image
+                                                    className="rounded-sm shadow-lg mb-2"
+                                                    width={100}
+                                                    height={100}
+                                                    src={order?.image || "/Placeholder_view_vector.png"}
+                                                    alt="product"
+                                                />
+                                            </td>
+                                            <td className="flex flex-col px-2 py-2 align-top text-left">
+                                                <p>Qty: 1</p>
+                                                <p>Size: 35</p>
+                                                <p>Color: Blue</p>
+                                            </td>
+                                            <td className="px-2 py-2 align-top text-left">
+                                                <p>
+                                                    37.00 AED
+                                                </p>
+                                            </td>
+                                            <td className="px-2 py-2 align-top text-left">
+                                                <p>37.00 AED
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div className="flex flex-col justify-end items-end">
+                                    <div className="flex border-t border-t-gray-300 w-full justify-end py-1 px-2">
+                                        <p className="text-md font-semibold">Sub-Total</p>
+                                        <p className="w-[30%] text-end">37.00 AED</p>
+                                    </div>
+                                    <div className="flex border-t border-t-gray-300 w-full justify-end py-1 px-2">
+                                        <p className="text-md font-semibold" >Shipping Charges</p>
+                                        <p className="w-[30%] text-end">15.00 AED</p>
+                                    </div>
+                                    <div className="flex border-t border-t-gray-300 w-full justify-end py-1 px-2">
+                                        <p className="text-md font-semibold">Total</p>
+                                        <p className="w-[30%] text-end">52.00 AED</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            className="mt-5 w-full py-2 rounded-md bg-[#fb7701] hover:bg-[#fb5d01fc] text-white font-semibold"
+                            onClick={() => setActiveSection("details")}
+                        >
+                            Back
                         </button>
                     </>
                 )}
+
             </div>
         </div>
     );

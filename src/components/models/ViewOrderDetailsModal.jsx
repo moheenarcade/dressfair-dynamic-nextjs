@@ -6,9 +6,7 @@ import { FaAnglesLeft } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 
 const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
-    const [showTrack, setShowTrack] = useState(false);
     const [activeSection, setActiveSection] = useState("details");
-
 
     if (!isOpen || !order) return null;
     return (
@@ -182,7 +180,6 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                             Back
                         </button>
                     </>
-
                 )}
 
                 {activeSection === "receipt" && (

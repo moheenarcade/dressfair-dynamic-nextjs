@@ -5,17 +5,19 @@ import { FaCheck } from "react-icons/fa6";
 import Image from 'next/image';
 import Link from "next/link";
 import ProductBanner from "../../../public/Solid_gray.png";
+import { getLocalCategories } from "@/lib/api";
 
 const MobileCategories = ({ onClose, categories }) => {
     const [activeCategory, setActiveCategory] = useState(categories?.[0] || null);
 
     useEffect(() => {
         const storedSlug = sessionStorage.getItem("selectedCategorySlug");
+        const localCats = getLocalCategories(); 
         if (storedSlug) {
             const foundCategory = categories.find(cat => cat.slug === storedSlug);
             if (foundCategory) setActiveCategory(foundCategory);
         } else {
-            setActiveCategory(null);
+            setActiveCategory(localCats[0] || null);
         }
     }, [categories]);
 

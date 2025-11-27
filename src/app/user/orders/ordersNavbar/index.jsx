@@ -88,6 +88,21 @@ const OrdersNavbar = () => {
                                     )}
                                 </div>
                             </Link>
+                            <Link href="/user/orders/cancel">
+                                <div className="flex flex-col items-center">
+                                    <li
+                                        className={`cursor-pointer hover:text-black transition-all duration-300 ease-in-out ${pathname === "/user/orders/cancel"
+                                            ? "font-bold text-black"
+                                            : "text-gray-500"
+                                            }`}
+                                    >
+                                        Cancel
+                                    </li>
+                                    {pathname === "/user/orders/cancel" && (
+                                        <div className="w-6 h-1 rounded-full bg-black mt-1"></div>
+                                    )}
+                                </div>
+                            </Link>
                         </ul>
                         <div className="order-search mt-4 lg:mt-0 flex items-center gap-1 pr-4 w-full md:w-[30%] text-[14px] rounded-full border border-[#949494]">
                             <input className='w-full h-full py-3 px-4 outline-0' type="search" placeholder='item name / order ID / Tracking No.' />

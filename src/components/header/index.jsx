@@ -283,36 +283,36 @@ const Header = () => {
                                                 {activeCategory?.sub_categories?.length > 0 ? (
                                                     <div className="grid grid-cols-5 gap-4">
                                                         {activeCategory.sub_categories.map((sub) => (
-                                                           <>
-                                                               <Link
-                                                                key={sub.slug}
+                                                            <>
+                                                                <Link
+                                                                    key={sub.slug}
 
-                                                                href={`/c/${sub?.slug && sub.slug ? sub.slug : activeCategory?.slug}`}
-                                                                onClick={() => {
-                                                                    sessionStorage.setItem(
-                                                                        "selectedCategorySlug",
-                                                                        sub?.slug && sub.slug.trim() !== "" ? sub.slug : activeCategory?.slug
-                                                                    );
-                                                                    handleMegaMenuLinkClick();
-                                                                }}
-                                                                className="flex flex-col items-center text-center cursor-pointer group hover:scale-[1.06] transition-all duration-500 ease-in-out"
-                                                            >
-                                                                <Image
-                                                                    src={sub.image || ProductBanner}
-                                                                    alt={sub.name}
-                                                                    width={80}
-                                                                    height={80}
-                                                                    className="w-[80px] h-[80px] rounded-full object-cover"
-                                                                />
-                                                                <p className="mt-2 text-[14px]">{sub.name}</p>
-                                                            </Link>
-                                                           </>
+                                                                    href={`/c/${sub?.slug && sub.slug ? sub.slug : activeCategory?.slug}`}
+                                                                    onClick={() => {
+                                                                        sessionStorage.setItem(
+                                                                            "selectedCategorySlug",
+                                                                            sub?.slug && sub.slug.trim() !== "" ? sub.slug : activeCategory?.slug
+                                                                        );
+                                                                        handleMegaMenuLinkClick();
+                                                                    }}
+                                                                    className="flex flex-col items-center text-center cursor-pointer group hover:scale-[1.06] transition-all duration-500 ease-in-out"
+                                                                >
+                                                                    <Image
+                                                                        src={sub.image || ProductBanner}
+                                                                        alt={sub.name}
+                                                                        width={80}
+                                                                        height={80}
+                                                                        className="w-[80px] h-[80px] rounded-full object-cover"
+                                                                    />
+                                                                    <p className="mt-2 text-[14px]">{sub.name}</p>
+                                                                </Link>
+                                                            </>
                                                         ))}
                                                     </div>
                                                 ) : (
                                                     <p className="text-gray-500">No sub-categories available</p>
                                                 )}
-                                              
+
                                             </div>
 
                                         </div>

@@ -111,6 +111,12 @@ export default function UserLayout({ children }) {
                                     >
                                         Returns
                                     </Link>
+                                    <Link
+                                        href="/user/orders/cancel"
+                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/orders/cancel" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
+                                    >
+                                        Cancel
+                                    </Link>
                                 </motion.div>
                             )}
                         </AnimatePresence>

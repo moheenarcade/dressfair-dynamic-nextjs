@@ -19,9 +19,7 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                         <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-xl font-semibold">
                             {activeSection === "track" && <BsCheckLg className="text-xl md:text-3xl" />}
                             <p>
-                                {activeSection === "details" && "Pending"}
-                                {activeSection === "track" && "Your order is currently being processed for delivery."}
-                                {activeSection === "receipt" && "Order Receipt"}
+                                {order.status}
                             </p>
                             <button onClick={onClose} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
                                 <IoClose />
@@ -124,7 +122,7 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
 
                     <>
                         <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-2xl font-semibold">
-                            <p>Pending</p>
+                            <p>{order.status}</p>
                             <button onClick={() => setActiveSection("details")} className="text-sm flex items-center gap-1 absolute right-2 hover:scale-[1.03] transition-all duration-[500] ease-in-out">
                                 <FaAnglesLeft /> Back
                             </button>
@@ -193,7 +191,7 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                     <>
                         <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-2xl font-semibold">
 
-                            <p>Pending</p>
+                            <p>{order.status}</p>
                             <button onClick={() => setActiveSection("details")} className="text-sm flex items-center gap-1 absolute right-2 hover:scale-[1.03] transition-all duration-[500] ease-in-out">
                                 <FaAnglesLeft /> Back
                             </button>

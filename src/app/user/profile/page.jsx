@@ -13,7 +13,7 @@ const Profile = () => {
           <div className="">
             <div className="flex items-start gap-3">
               <p className='font-bold text-md md:text-lg'>Moheen dealsarcade</p>
-              <button className='text-gray-500 mt-1'>
+              <button className='text-gray-500 mt-1 hover:text-black hover:scale-[1.05] transition-all duration-500 ease-in-out'>
                 <FaRegEdit />
               </button>
             </div>

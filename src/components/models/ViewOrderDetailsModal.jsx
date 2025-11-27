@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { BsCheckLg } from "react-icons/bs";
+import { FaAnglesLeft } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 
 const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
@@ -117,10 +118,9 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
 
                     <>
                         <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-2xl font-semibold">
-                            <BsCheckLg className="text-xl md:text-3xl" />
-                            <p> Your order is currently being processed for delivery.</p>
-                            <button onClick={() => setActiveSection("details")} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
-                                <IoClose />
+                        <p>Pending</p>
+                        <button onClick={() => setActiveSection("details")} className="text-sm flex items-center gap-1 absolute right-2 hover:scale-[1.03] transition-all duration-[500] ease-in-out">
+                                <FaAnglesLeft/> Back
                             </button>
                         </div>
                         <div className="p-3">
@@ -187,10 +187,10 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                 {activeSection === "receipt" && (
                     <>
                         <div className="relative flex items-center bg-[#0a8800] gap-2 px-3 py-2 text-white text-[12px] md:text-2xl font-semibold">
-                            <BsCheckLg className="text-xl md:text-3xl" />
-                            <p> Your order is currently being processed for delivery.</p>
-                            <button onClick={() => setActiveSection("details")} className="text-xl absolute right-2 hover:scale-[1.08] transition-all duration-[500] ease-in-out">
-                                <IoClose />
+                           
+                            <p>Pending</p>
+                            <button onClick={() => setActiveSection("details")} className="text-sm flex items-center gap-1 absolute right-2 hover:scale-[1.03] transition-all duration-[500] ease-in-out">
+                                <FaAnglesLeft/> Back
                             </button>
                         </div>
                         <div className="p-3 flex flex-col gap-3">
@@ -264,15 +264,15 @@ const ViewOrderDetailsModal = ({ isOpen, onClose, order }) => {
                                 </table>
                                 <div className="flex flex-col justify-end items-end">
                                     <div className="flex border-t border-t-gray-300 w-full justify-end py-1 px-2">
-                                        <p className="text-md font-semibold">Sub-Total</p>
+                                        <p className="text-md font-semibold border-r pr-2 border-r-gray-300">Sub-Total</p>
                                         <p className="w-[30%] text-end">37.00 AED</p>
                                     </div>
                                     <div className="flex border-t border-t-gray-300 w-full justify-end py-1 px-2">
-                                        <p className="text-md font-semibold" >Shipping Charges</p>
+                                        <p className="text-md font-semibold border-r pr-2 border-r-gray-300" >Shipping Charges</p>
                                         <p className="w-[30%] text-end">15.00 AED</p>
                                     </div>
                                     <div className="flex border-t border-t-gray-300 w-full justify-end py-1 px-2">
-                                        <p className="text-md font-semibold">Total</p>
+                                        <p className="text-md font-semibold pr-2 border-r  border-r-gray-300">Total</p>
                                         <p className="w-[30%] text-end">52.00 AED</p>
                                     </div>
                                 </div>

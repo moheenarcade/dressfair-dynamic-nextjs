@@ -73,7 +73,7 @@ export default function UserLayout({ children }) {
                         <Link href="/user/orders/all-orders">
                             <button
                                 onClick={() => setIsOrdersOpen(!isOrdersOpen)}
-                                className={`flex items-center justify-between text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3`}
+                                className={`flex items-center justify-between w-full text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3`}
                             >
                                 <div className="flex items-center gap-1">
                                     <PiBookBookmarkLight className="text-2xl" /> Orders

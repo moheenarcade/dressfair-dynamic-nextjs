@@ -204,7 +204,7 @@ const Profile = () => {
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="text-3xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M15.28 5.22a.75.75 0 0 1 0 1.06L9.56 12l5.72 5.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.75.75 0 0 1 1.06 0Z"></path></svg></p>
             </div>
           </div>
-          <div className="profile-img px-3 flex justify-between items-center h-[78px] pt-4 pb-3 border-b border-b-gray-200">
+          <div className="profile-img px-3 flex justify-between items-center h-[78px] pt-1 pb-3 border-b border-b-gray-200">
             <p className='text-md font-semibold'>Photo</p>
             <Image className='rounded-full border border-gray-300 w-16 md:w-20 h-16 md:h-20' width={100} height={100} src={profileImg} alt="user profile" />
           </div>

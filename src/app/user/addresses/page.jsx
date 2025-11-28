@@ -8,6 +8,46 @@ import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import toast, { Toaster } from 'react-hot-toast';
 import EditAddressModal from "@/components/models/EditAddressModal";
+import Select from "react-select";
+
+
+const customSelectStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    height: "50px",
+    minHeight: "50px",
+    borderRadius: "4px",
+    borderColor: state.isFocused ? "#fb7701" : "#99a1af",
+    boxShadow: "none",       // remove blue outline
+    outline: "0",            // remove outline
+    fontSize: "14px",
+    fontWeight: "600",
+    "&:hover": {
+      borderColor: "#fb7701",
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    borderRadius: "8px",
+    zIndex: 9999,
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    fontSize: "14px",
+    padding: "10px",
+    backgroundColor: state.isSelected
+      ? "#fb7701"
+      : state.isFocused
+      ? "#ffe7d4"
+      : "white",
+    color: state.isSelected ? "white" : "#222",
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: "#999",
+    fontSize: "14px",
+  }),
+};
 
 const countries = [
   "Pakistan",
@@ -33,6 +73,13 @@ const notify = () =>
     },
   });
 
+const cityOptions = [
+  { value: "Punjab", label: "Punjab", states: ["Lahore", "Multan", "Faisalabad", "Bahawalpur"] },
+  { value: "Sindh", label: "Sindh", states: ["Karachi", "Hyderabad", "Sukkur"] },
+  { value: "KPK", label: "KPK", states: ["Peshawar", "Abbottabad", "Swat"] },
+  { value: "Balochistan", label: "Balochistan", states: ["Quetta", "Gwadar"] },
+];
+
 const Addresses = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [defaultAddress, setDefaultAddress] = useState(1);
@@ -43,6 +90,9 @@ const Addresses = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(null);
   const [country, setCountry] = useState("Pakistan");
   const [isDefault, setIsDefault] = useState(false);
+  const [selectedCityObj, setSelectedCityObj] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -71,10 +121,6 @@ const Addresses = () => {
     setSelectedAddress(item.id);
     setDefaultAddress(item.id);
   };
-  const handleEditSave = (updated) => {
-    console.log("Updated address:", updated);
-    setEditingAddress(null);
-  };
 
   const handleSave = () => {
     if (!formData.name || !formData.phone || !formData.city || !formData.fullAddress) return;
@@ -85,7 +131,6 @@ const Addresses = () => {
       isDefault,
     };
     onSave(newAddress);
-    onClose();
   };
 
   return (
@@ -215,8 +260,13 @@ const Addresses = () => {
                     <input
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="border border-gray-400 rounded px-3 py-3 font-[600] text-[14px] text-[#222]"
-               
+                      className="border border-gray-400 
+                      outline-none 
+    focus:ring-0 
+    focus:outline-none 
+    focus:border-[#fb7701]
+                      rounded px-3 py-3 font-[600] text-[14px] text-[#222]"
+
                     />
                   </div>
 
@@ -231,21 +281,52 @@ const Addresses = () => {
                       <input
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="px-3 py-3 border-l border-l-gray-400 font-[600] w-full outline-0 text-[14px] text-[#222]"
+                        className="px-3 py-3 border-l 
+                        outline-none 
+    focus:ring-0 
+    focus:outline-none 
+    focus:border-[#fb7701]
+                        border-l-gray-400 font-[600] w-full outline-0 text-[14px] text-[#222]"
                       />
                     </div>
                   </div>
-
                   <div className="flex flex-col w-full gap-1 mb-2">
                     <label className="font-[600] text-[14px] text-[#222]">
                       Province, City <span className="text-red-600">*</span>
                     </label>
-                    <input
-                      value={formData.city}
-                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="border border-gray-400 rounded px-3 py-3 font-[600] text-[14px] text-[#222]"
-                      placeholder="City / Province"
+                    <Select
+                      options={cityOptions}
+                      value={selectedCityObj}
+                      styles={customSelectStyles}
+                      onChange={(city) => {
+                        setSelectedCityObj(city);
+                        setSelectedState(null);
+                        setFormData({ ...formData, city: city.value });
+                      }}
+                      isSearchable
+                      placeholder="Select City / Province"
+                      className="text-[14px] font-[600]"
                     />
+
+                    {selectedCityObj && (
+                      <div className="mt-2">
+                        <label className="font-[600] text-[14px] text-[#222]">
+                          State <span className="text-red-600">*</span>
+                        </label>
+                        <Select
+                          options={selectedCityObj.states.map((s) => ({ value: s, label: s }))}
+                          value={selectedState}
+                          styles={customSelectStyles}
+                          onChange={(state) => {
+                            setSelectedState(state);
+                            setFormData({ ...formData, state: state.value });
+                          }}
+                          isSearchable
+                          placeholder="Select Area / State"
+                          className="text-[14px] font-[600]"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex flex-col w-full gap-1 mb-2">
@@ -255,7 +336,12 @@ const Addresses = () => {
                     <input
                       value={formData.fullAddress}
                       onChange={(e) => setFormData({ ...formData, fullAddress: e.target.value })}
-                      className="border border-gray-400 rounded px-3 py-3 font-[600] text-[14px] text-[#222]"
+                      className="border 
+                      outline-none 
+    focus:ring-0 
+    focus:outline-none 
+    focus:border-[#fb7701]
+                      border-gray-400 rounded px-3 py-3 font-[600] text-[14px] text-[#222]"
                       placeholder="House / Street / Area"
                     />
                   </div>

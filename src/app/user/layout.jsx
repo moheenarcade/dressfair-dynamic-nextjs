@@ -37,21 +37,17 @@ export default function UserLayout({ children }) {
     const breadcrumbs = {
         "/user/profile": "Profile",
         "/user/orders/all-orders": "Your orders",
-
         "/user/orders/processing": "Processing",
         "/user/orders/shipped": "Shipped",
         "/user/orders/delivered": "Delivered",
         "/user/orders/returns": "Returns",
         "/user/orders/cancel": "Cancel",
-
-
         "/user/your-reviews": "Your reviews",
         "user/coupons-offers": "Coupons offers",
         "/user/address-settings": "Address settings",
         "/user/coupons-offers": "Coupen offers",
         "/user/followed-stores": "Followed stores",
         "/user/browsing-history": "Browsing history",
-        
         "/user/addresses": "Addresses",
         "/user/country-region-language": "country region language",
         "/user/payment-methods": "Payment methods",
@@ -257,7 +253,7 @@ export default function UserLayout({ children }) {
 
                     </nav>
                 </aside>
-                <main className="flex-1 p-0 lg:p-6 bg-white">
+                <main className="flex-1 px-0 py-4 lg:px-6 lg:py-6 bg-white">
                     {isOrdersPage && <OrdersNavbar />}
                     {children}
                 </main>

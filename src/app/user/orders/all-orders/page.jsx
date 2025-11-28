@@ -56,7 +56,7 @@ const Orders = () => {
 
   return (
     <>
-      <div className="your-orders pt-4 flex flex-col gap-3">
+      <div className="your-orders px-2 lg:px-0 pt-4 flex flex-col gap-3">
         {orders.map((order, index) => (
           <div
             key={index}

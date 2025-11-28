@@ -8,7 +8,7 @@ const OrdersNavbar = () => {
  
   return (
     <>
-          <div className="order-navbar flex flex-col md:flex-row items-center justify-between">
+          <div className="order-navbar px-4 lg:px-0 flex flex-col md:flex-row items-center justify-between">
                         <ul className='flex gap-2 lg:gap-3 text-[#757575] text-[13px] md:text-[15px] font-[500]'>
                             <Link href="/user/orders/all-orders">
                                 <div className="flex flex-col items-center">

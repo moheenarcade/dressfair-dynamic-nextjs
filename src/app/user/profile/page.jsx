@@ -10,11 +10,13 @@ import { getCroppedImg } from '@/utils/cropImage';
 import { FaChevronRight } from 'react-icons/fa6';
 import EditNameMobileBottomModel from '@/components/models/editNameMobileBottomModel';
 import EditEmailVerificationMobileBottomModel from '@/components/models/editEmailVerificationMobileBottomModel';
+import EditNubmerMobileBottomModel from '@/components/models/editNubmerMobileBottomModel';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editNameModelOpen, setEditNameModelOpen] = useState(false);
   const [editEmailModelOpen, setEditEmailModelOpen] = useState(false);
+  const [editNumberModelOpen, setEditNumberModelOpen] = useState(false);
   const [profileImg, setProfileImg] = useState("/deals-product4.avif");
   const fileInputRef = useRef(null);
   const [openCropper, setOpenCropper] = useState(false);
@@ -22,6 +24,8 @@ const Profile = () => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [mobileProfileEditing, setMobileProfileEditing] = useState(false);
+
 
   // Handle image upload
   const handleImageUpload = (e) => {
@@ -40,7 +44,8 @@ const Profile = () => {
 
   return (
     <>
-      <div className="hidden lg:block">
+     {!mobileProfileEditing && (
+      <div className="px-2 pt-4 lg:pt-0">
         {!isEditing && (
           <div className='user-info'>
             <div className="profile-sec flex flex-col border-b border-b-gray-200 pb-4">
@@ -50,9 +55,16 @@ const Profile = () => {
                   <div className="flex flex-col">
                     <div className="flex items-start gap-3">
                       <p className='font-bold text-md md:text-lg'>Moheen dealsarcade</p>
-                      <button onClick={() => setIsEditing(true)} className='text-gray-500 mt-1 hover:text-black hover:scale-[1.05] transition-all duration-500 ease-in-out'>
-                        <FaRegEdit />
-                      </button>
+                      <div className="hidden lg:block">
+                        <button onClick={() => setIsEditing(true)} className='text-gray-500 mt-1 hover:text-black hover:scale-[1.05] transition-all duration-500 ease-in-out'>
+                          <FaRegEdit />
+                        </button>
+                      </div>
+                      <div className="block lg:hidden">
+                        <button onClick={() => setMobileProfileEditing(true)} className='text-gray-500 mt-1 hover:text-black hover:scale-[1.05] transition-all duration-500 ease-in-out'>
+                          <FaRegEdit />
+                        </button>
+                      </div>
                     </div>
                     <p className='text-[14px] font-semibold'>+791 23432432</p>
                   </div>
@@ -178,63 +190,64 @@ const Profile = () => {
           </div>
         )}
       </div>
-      <div className="block lg:hidden ">
-        <div className="fixed w-full top-0 bg-white right-0 left-0 z-[99999] border-b border-b-gray-200">
-          <div className="flex items-center justify-between py-4 px-3">
-            <Link href="/cart">
-              <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="text-3xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M15.28 5.22a.75.75 0 0 1 0 1.06L9.56 12l5.72 5.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.75.75 0 0 1 1.06 0Z"></path></svg>
-            </Link>
-            <p className="font-semibold text-[19px]">Profile</p>
-            <p className="invisible">
-              <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="text-3xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M15.28 5.22a.75.75 0 0 1 0 1.06L9.56 12l5.72 5.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.75.75 0 0 1 1.06 0Z"></path></svg></p>
+    )}
+
+      {mobileProfileEditing && (
+        <div className="block lg:hidden ">
+          <div className="fixed w-full top-0 bg-white right-0 left-0 z-[99999] border-b border-b-gray-200">
+            <div className="flex items-center justify-between py-4 px-3">
+              <button onClick={() => setMobileProfileEditing(false)} >
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="text-3xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M15.28 5.22a.75.75 0 0 1 0 1.06L9.56 12l5.72 5.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.75.75 0 0 1 1.06 0Z"></path></svg>
+              </button>
+              <p className="font-semibold text-[19px]">Profile</p>
+              <p className="invisible">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="text-3xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M15.28 5.22a.75.75 0 0 1 0 1.06L9.56 12l5.72 5.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.75.75 0 0 1 1.06 0Z"></path></svg></p>
+            </div>
+          </div>
+          <div className="profile-img px-3 flex justify-between items-center h-[78px] pt-4 pb-3 border-b border-b-gray-200">
+            <p className='text-md font-semibold'>Photo</p>
+            <Image className='rounded-full border border-gray-300 w-16 md:w-20 h-16 md:h-20' width={100} height={100} src={profileImg} alt="user profile" />
+          </div>
+          <div onClick={() => setEditNameModelOpen(true)} className="edit-name px-3 border-b-12 border-b-[#f6f6f6] flex justify-between items-center h-[78px] py-3">
+            <p className='text-md font-semibold'>Name</p>
+            <div className="flex items-center gap-1 text-[#777] font-semibold">
+              <p>Moheen Dealsarcade</p>
+              <FaChevronRight />
+            </div>
+          </div>
+          <div className="flex items-center justify-between gap-3 px-3 py-3 h-[78px] border-b border-b-gray-200">
+            <div className="">
+              <p className='text-md font-semibold'>Email</p>
+              <p className='text-[15px] font-[500] text-[#777]'>moheendealsarcade@gmail.com</p>
+            </div>
+            <button onClick={() => setEditEmailModelOpen(true)} className='py-1.5 px-4 font-semibold rounded-full text-white bg-[#fb7701]'>
+              Edit
+            </button>
+          </div>
+          <div className="flex items-center justify-between gap-3 px-3 py-3 h-[78px]">
+            <div className="">
+              <p className='text-md font-semibold'>Mobile phone number</p>
+              <p className='text-[15px] font-[500] text-[#777]'>Add a mobile phone number</p>
+            </div>
+            <button onClick={() => setEditNumberModelOpen(true)} className='py-1.5 px-4 font-semibold rounded-full text-white bg-[#fb7701]'>
+              Add
+            </button>
+          </div>
+
+          <div className="px-3 text-center py-6 bg-[#f6f6f6]">
+            <p className='text-[#0a8800] flex justify-center gap-1 text-[15px] font-[500]'>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" fill="currentColor"><path d="M512 87c111.7 0 202.8 87.8 208.3 198.2l0.2 10.4 0 54.9 36.2 0c54.6 0 99.2 42.2 103.2 95.8l0.3 7.7 0 379.5c0 54.6-42.2 99.2-95.8 103.2l-7.7 0.3-489.4 0c-54.6 0-99.2-42.2-103.2-95.8l-0.3-7.7 0-379.5c0-54.6 42.2-99.2 95.8-103.2l7.7-0.3 36.2 0 0-54.9c0-111.7 87.8-202.8 198.1-208.3l10.4-0.3z m244.7 345.4l-489.4 0c-10.6 0-19.4 7.6-21.2 17.7l-0.3 3.9 0 379.5c0 10.6 7.6 19.4 17.6 21.2l3.9 0.3 489.4 0c10.6 0 19.4-7.6 21.2-17.6l0.3-3.9 0-379.5c0-10.6-7.6-19.4-17.6-21.2l-3.9-0.4z m-234.5 110.4c24 0 43.5 19.5 43.6 43.6l0 114.7c0 24-19.5 43.5-43.6 43.5-24 0-43.5-19.5-43.5-43.5l0-114.7c0-24 19.5-43.5 43.5-43.6z m-10.2-373.8c-67.1 0-122 52.2-126.3 118.2l-0.3 8.4 0 54.9 253.2 0 0-54.9c0-64.3-48-117.4-110.1-125.6l-8.2-0.8-8.3-0.2z"></path></svg>
+              Temu protects your personal information <br />and keeps it private and safe.
+            </p>
+            <p className='text-[#aaa] text-[16px] font-[500] pt-3'>
+              How we use your profile avatar and username
+            </p>
+            <p className='text-[#aaa] text-[13px] font-[500]'>
+              Your avatar and username may be shown to others when you add an item to your cart, buy an item, or participate in a promotion or event. To opt out, visit 'Notifications→Avatar and username sharing'.
+            </p>
           </div>
         </div>
-        <div className="profile-img px-3 flex justify-between items-center h-[78px] pt-4 pb-3 border-b border-b-gray-200">
-          <p className='text-md font-semibold'>Photo</p>
-          <Image className='rounded-full border border-gray-300 w-16 md:w-20 h-16 md:h-20' width={100} height={100} src={profileImg} alt="user profile" />
-        </div>
-        <div onClick={() => setEditNameModelOpen(true)} className="edit-name px-3 border-b-12 border-b-[#f6f6f6] flex justify-between items-center h-[78px] py-3">
-          <p className='text-md font-semibold'>Name</p>
-          <div className="flex items-center gap-1 text-[#777] font-semibold">
-            <p>Moheen Dealsarcade</p>
-            <FaChevronRight />
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between gap-3 px-3 py-3 h-[78px] border-b border-b-gray-200">
-          <div className="">
-            <p className='text-md font-semibold'>Email</p>
-            <p className='text-[15px] font-[500] text-[#777]'>moheendealsarcade@gmail.com</p>
-          </div>
-          <button onClick={() => setEditEmailModelOpen(true)} className='py-1.5 px-4 font-semibold rounded-full text-white bg-[#fb7701]'>
-            Edit
-          </button>
-        </div>
-        <div className="flex items-center justify-between gap-3 px-3 py-3 h-[78px]">
-          <div className="">
-            <p className='text-md font-semibold'>Mobile phone number</p>
-            <p className='text-[15px] font-[500] text-[#777]'>Add a mobile phone number</p>
-          </div>
-          <button className='py-1.5 px-4 font-semibold rounded-full text-white bg-[#fb7701]'>
-            Add
-          </button>
-        </div>
-
-        <div className="px-3 text-center py-6 bg-[#f6f6f6]">
-          <p className='text-[#0a8800] flex justify-center gap-1 text-[15px] font-[500]'>
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" fill="currentColor"><path d="M512 87c111.7 0 202.8 87.8 208.3 198.2l0.2 10.4 0 54.9 36.2 0c54.6 0 99.2 42.2 103.2 95.8l0.3 7.7 0 379.5c0 54.6-42.2 99.2-95.8 103.2l-7.7 0.3-489.4 0c-54.6 0-99.2-42.2-103.2-95.8l-0.3-7.7 0-379.5c0-54.6 42.2-99.2 95.8-103.2l7.7-0.3 36.2 0 0-54.9c0-111.7 87.8-202.8 198.1-208.3l10.4-0.3z m244.7 345.4l-489.4 0c-10.6 0-19.4 7.6-21.2 17.7l-0.3 3.9 0 379.5c0 10.6 7.6 19.4 17.6 21.2l3.9 0.3 489.4 0c10.6 0 19.4-7.6 21.2-17.6l0.3-3.9 0-379.5c0-10.6-7.6-19.4-17.6-21.2l-3.9-0.4z m-234.5 110.4c24 0 43.5 19.5 43.6 43.6l0 114.7c0 24-19.5 43.5-43.6 43.5-24 0-43.5-19.5-43.5-43.5l0-114.7c0-24 19.5-43.5 43.5-43.6z m-10.2-373.8c-67.1 0-122 52.2-126.3 118.2l-0.3 8.4 0 54.9 253.2 0 0-54.9c0-64.3-48-117.4-110.1-125.6l-8.2-0.8-8.3-0.2z"></path></svg>
-            Temu protects your personal information <br />and keeps it private and safe.
-          </p>
-          <p className='text-[#aaa] text-[16px] font-[500] pt-3'>
-            How we use your profile avatar and username
-          </p>
-          <p className='text-[#aaa] text-[13px] font-[500]'>
-            Your avatar and username may be shown to others when you add an item to your cart, buy an item, or participate in a promotion or event. To opt out, visit 'Notifications→Avatar and username sharing'.
-          </p>
-        </div>
-      </div>
-
-
+      )}
 
       <EditNameMobileBottomModel
         isOpen={editNameModelOpen}
@@ -244,6 +257,10 @@ const Profile = () => {
       <EditEmailVerificationMobileBottomModel
         isOpen={editEmailModelOpen}
         onClose={() => setEditEmailModelOpen(false)}
+      />
+      <EditNubmerMobileBottomModel
+        isOpen={editNumberModelOpen}
+        onClose={() => setEditNumberModelOpen(false)}
       />
     </>
   )

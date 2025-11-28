@@ -113,7 +113,7 @@ const CheckoutMain = () => {
 
                                 <button
                                     onClick={(e) => {
-                                        e.stopPropagation(); // prevent triggering address selection
+                                        e.stopPropagation();
                                         setSelectedAddressToEdit({
                                             name: "test",
                                             phone: "+92 433 4343434",

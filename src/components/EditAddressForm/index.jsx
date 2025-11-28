@@ -25,20 +25,20 @@ const EditAddressForm = ({ address, onSave, onCancel, exitDirection = "right" })
     const [country, setCountry] = useState(address.country || "Pakistan"); // default country
     const [isDefault, setIsDefault] = useState(false);
 
-  const handleSave = () => {
+    const handleSave = () => {
         onSave({ ...address, name, phone, address: addr, city, country, isDefault });
     };
 
     return (
-   
+
         <motion.div
-        key="edit-form"
-        initial={{ x: 300, opacity: 0 }} // slides in from right
-        animate={{ x: 0, opacity: 1 }}
-        exit={{ x: 300, opacity: 0 }} // slides out to right
-        transition={{ type: "spring", stiffness: 120, damping: 20 }}
-        className="space-y-4 relative h-full flex flex-col justify-between"
-      >
+            key="edit-form"
+            initial={{ x: 300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 300, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 120, damping: 20 }}
+            className="space-y-4 relative h-full flex flex-col justify-between"
+        >
             {/* Back Button */}
             <div className="absolute -left-2 -top-2">
                 <button onClick={onCancel} className="flex items-center gap-1 font-semibold">
@@ -104,14 +104,14 @@ const EditAddressForm = ({ address, onSave, onCancel, exitDirection = "right" })
                 >
                     {isDefault ? <>
                         <div className="w-5 h-5 rounded-full border border-5 border-black flex justify-center items-center bg-white">
-                        {isDefault && <BsCheckLg className={`${isDefault ? "text-white" : "text-[#fb7701]"}`} />}
-                    </div>
+                            {isDefault && <BsCheckLg className={`${isDefault ? "text-white" : "text-[#fb7701]"}`} />}
+                        </div>
                     </> : <>
                         <div className="w-5 h-5 rounded-full border flex justify-center items-center bg-white">
-                        {isDefault && <BsCheckLg className={`${isDefault ? "text-white" : "text-[#fb7701]"}`} />}
-                    </div>
+                            {isDefault && <BsCheckLg className={`${isDefault ? "text-white" : "text-[#fb7701]"}`} />}
+                        </div>
                     </>}
-                   
+
                     <p className="font-[500] text-[14px]">Set as my default address</p>
                 </div>
             </div>

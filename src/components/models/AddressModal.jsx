@@ -22,13 +22,13 @@ const notify = () =>
             fontWeight: "600"
         },
     });
+
 const AddressModal = ({ isOpen, onClose }) => {
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [defaultAddress, setDefaultAddress] = useState(1);
     const [editingAddress, setEditingAddress] = useState(null);
     const [addingAddress, setAddingAddress] = useState(false);
     const [deletingAddress, setDeletingAddress] = useState(null);
-
 
     const addresses = [
         {

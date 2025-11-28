@@ -35,15 +35,29 @@ export default function UserLayout({ children }) {
 
     const isOrdersPage = pathname.includes('/user/orders/');
     const breadcrumbs = {
-        "/user/profile": "profile",
-        "/user/orders": "Your orders",
+        "/user/profile": "Profile",
+        "/user/orders/all-orders": "Your orders",
+
+        "/user/orders/processing": "Processing",
+        "/user/orders/shipped": "Shipped",
+        "/user/orders/delivered": "Delivered",
+        "/user/orders/returns": "Returns",
+        "/user/orders/cancel": "Cancel",
+
+
         "/user/your-reviews": "Your reviews",
         "user/coupons-offers": "Coupons offers",
         "/user/address-settings": "Address settings",
-        "/user/change-password": "Change password",
-        "/user/wishlists": "Wishlists",
+        "/user/coupons-offers": "Coupen offers",
+        "/user/followed-stores": "Followed stores",
+        "/user/browsing-history": "Browsing history",
+        
+        "/user/addresses": "Addresses",
+        "/user/country-region-language": "country region language",
+        "/user/payment-methods": "Payment methods",
+        "/user/account-security": "Account security",
+        "/user/permissions": "Permissions",
         "/user/notifications": "Notifications",
-        "/user/payments": "Payment methods",
     };
     const activePage = breadcrumbs[pathname] || "";
     return (

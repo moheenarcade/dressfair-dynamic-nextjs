@@ -9,10 +9,12 @@ import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '@/utils/cropImage';
 import { FaChevronRight } from 'react-icons/fa6';
 import EditNameMobileBottomModel from '@/components/models/editNameMobileBottomModel';
+import EditEmailVerificationMobileBottomModel from '@/components/models/editEmailVerificationMobileBottomModel';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editNameModelOpen, setEditNameModelOpen] = useState(false);
+  const [editEmailModelOpen, setEditEmailModelOpen] = useState(false);
   const [profileImg, setProfileImg] = useState("/deals-product4.avif");
   const fileInputRef = useRef(null);
   const [openCropper, setOpenCropper] = useState(false);
@@ -176,7 +178,7 @@ const Profile = () => {
           </div>
         )}
       </div>
-      <div className="block md:hidden ">
+      <div className="block lg:hidden ">
         <div className="fixed w-full top-0 bg-white right-0 left-0 z-[99999] border-b border-b-gray-200">
           <div className="flex items-center justify-between py-4 px-3">
             <Link href="/cart">
@@ -204,7 +206,7 @@ const Profile = () => {
             <p className='text-md font-semibold'>Email</p>
             <p className='text-[15px] font-[500] text-[#777]'>moheendealsarcade@gmail.com</p>
           </div>
-          <button className='py-1.5 px-4 font-semibold rounded-full text-white bg-[#fb7701]'>
+          <button onClick={() => setEditEmailModelOpen(true)} className='py-1.5 px-4 font-semibold rounded-full text-white bg-[#fb7701]'>
             Edit
           </button>
         </div>
@@ -237,6 +239,11 @@ const Profile = () => {
       <EditNameMobileBottomModel
         isOpen={editNameModelOpen}
         onClose={() => setEditNameModelOpen(false)}
+      />
+
+      <EditEmailVerificationMobileBottomModel
+        isOpen={editEmailModelOpen}
+        onClose={() => setEditEmailModelOpen(false)}
       />
     </>
   )

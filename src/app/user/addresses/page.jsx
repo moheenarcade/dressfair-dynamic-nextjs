@@ -216,7 +216,7 @@ const Addresses = () => {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="border border-gray-400 rounded px-3 py-3 font-[600] text-[14px] text-[#222]"
-                      placeholder="Name"
+               
                     />
                   </div>
 
@@ -224,12 +224,16 @@ const Addresses = () => {
                     <label className="font-[600] text-[14px] text-[#222]">
                       Phone number <span className="text-red-600">*</span>
                     </label>
-                    <input
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="border border-gray-400 rounded px-3 py-3 font-[600] text-[14px] text-[#222]"
-                      placeholder="Phone"
-                    />
+                    <div className="flex items-center border border-gray-400 rounded px-1">
+                      <p className="w-20 px-2">
+                        Pk +92
+                      </p>
+                      <input
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="px-3 py-3 border-l border-l-gray-400 font-[600] w-full outline-0 text-[14px] text-[#222]"
+                      />
+                    </div>
                   </div>
 
                   <div className="flex flex-col w-full gap-1 mb-2">

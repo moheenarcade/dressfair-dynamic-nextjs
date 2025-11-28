@@ -47,13 +47,15 @@ export default function UserLayout({ children }) {
     };
     const activePage = breadcrumbs[pathname] || "";
     return (
-        <div className="container mx-auto px-2 2xl:px-22">
-            <div className="flex items-center text-[14px] font-[500] gap-1 pt-4">
-                <h2 className="">Home</h2>
-                <FaChevronRight className="text-[11px]" />
-                <p>
-                    {activePage}
-                </p>
+        <div className="container mx-auto px-0 2xl:px-22">
+            <div className="hidden lg:block">
+                <div className="flex items-center text-[14px] px-2 lg:px-0 font-[500] gap-1 pt-4">
+                    <h2 className="">Home</h2>
+                    <FaChevronRight className="text-[11px]" />
+                    <p>
+                        {activePage}
+                    </p>
+                </div>
             </div>
             <div className="flex">
                 <aside className="hidden lg:block w-[220px] py-6">
@@ -241,7 +243,7 @@ export default function UserLayout({ children }) {
 
                     </nav>
                 </aside>
-                <main className="flex-1 p-2 lg:p-6 bg-white">
+                <main className="flex-1 p-0 lg:p-6 bg-white">
                     {isOrdersPage && <OrdersNavbar />}
                     {children}
                 </main>

@@ -57,7 +57,7 @@ export default function UserLayout({ children }) {
     };
     const activePage = breadcrumbs[pathname] || "";
     return (
-        <div className="container mx-auto px-0 2xl:px-22">
+        <div className="container mx-auto px-0 lg:px-16 xl:px-2 2xl:px-22">
             <div className="hidden lg:block">
                 <div className="flex items-center text-[14px] px-2 lg:px-0 font-[500] gap-1 pt-4">
                     <h2 className="">Home</h2>

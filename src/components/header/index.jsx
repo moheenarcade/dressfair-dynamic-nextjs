@@ -30,9 +30,14 @@ import ProductBanner2 from "../../../public/deals-product3.avif";
 import { MdAddShoppingCart } from 'react-icons/md';
 import { fetchAndSaveCategories, getLocalCategories } from '../../lib/api';
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Header = () => {
     const pathname = usePathname();
+    const { t } = useTranslation();
+    const { language, toggleLanguage } = useLanguage();
+
     const {
         cartItems,
         updateQty,
@@ -163,21 +168,25 @@ const Header = () => {
                                             fill={`${isHomePage ? "white" : "#222222"} `}
                                             className="relative z-10"
                                         >
-                                            <title>Best-Selling Items</title>
+                                            <title>{t('Best_Selling_Items')}</title>
+                        
+
                                             <path d="M542.7 34.1c58.8 0 110.7 40.1 127.6 98.8l0.7 2.5 0.5 1.1c0.3 0.9 0.6 1.8 0.9 2.7l0.7 2.8c6.2 29.5 9.5 59.1 9.5 88.8 0 26.2-2.4 52.3-7.2 78l-1.8 9.2 145.4 0.1c2.5 0 5 0.2 7.5 0.5l1.1 0.1 2.7 0.2c41.3 3.2 79.2 25.6 102.2 61.6l2.6 4.2c15.3 25.2 22.4 54.8 20.2 84.5l0.1-1.4 0.1-1.1 0 1.1c0.1 5.4-0.3 10.6-1.2 15.3l-0.8 3.4-74 340c-2.1 8.1-5.5 15.7-10.1 22.4l0.4-0.8 1.2-1.8-1.6 3.2c-9.9 18.7-23.9 34.8-40.8 47l-4.6 3.2c-21.9 14.4-47 21.9-72.5 21.9-0.9 0-1.7 0-2.5-0.1l-612.3-0.2c-36.4 0-66.4-29.7-68.2-67.4l-0.1-3.6c-0.1-1.6-0.2-2.7 0-4l0.3-389.6c0-34.8 24.3-64.4 57.2-70.1l3.4-0.4c102-11.9 169.3-32.5 200-59 42.2-36.2 80.1-108.7 80.1-154.3 0-78.4 59-138.7 133.3-138.8z m-218.4 460.8c-28.3 0-51.2 22.9-51.2 51.2l0 204.8c0 28.3 22.9 51.2 51.2 51.2 28.3 0 51.2-22.9 51.2-51.2l0-204.8c0-28.3-22.9-51.2-51.2-51.2z"></path>
                                         </svg>
                                         {/* 🔹 active indicator bar */}
                                         {pathname === "/best-seller" && (
                                             <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-[#FB7701] rounded-full"></div>
                                         )}
-                                        <span className="relative z-10">Best-Selling Items</span>
+                                    <span className="relative z-10">{t('Best_Selling_Items')}</span>
                                     </li>
                                 </Link>
                                 <Link href="/star-rated">
                                     <li className={` ${isHomePage ? "text-white " : "text-[#222222]"} relative group flex items-center gap-1 font-semibold cursor-pointer  text-[14px] px-3 py-1 `}>
                                         <span className={`${isHomePage ? "bg-[#BA0000]" : "bg-[#eeeeee]"} absolute inset-0 h-[50px] my-auto rounded-full scale-0 origin-center transition-transform duration-500 ease-in-out group-hover:scale-100 `}></span>
                                         <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" className="relative z-10" alt="" aria-label="" fill={`${isHomePage ? "white" : "#222222"} `} aria-hidden="true"><title>5-Star Rated</title><path d="M848.7 133.8c62.1 0 112.5 52.1 112.4 116.3l0 481c0 64.2-50.4 116.3-112.4 116.3l-212.5 0c-8.9 0-17.5 3.6-23.6 10.1l-86.8 90.5-0.8 0.8c-13 12.6-33.7 12.3-46.4-0.6l-88.5-90.9c-6.2-6.3-14.6-9.9-23.4-9.9l-191.4 0c-59.3 0-107.9-47.4-112.1-107.6l-0.3-8.7 0-481c0-64.2 50.4-116.3 112.4-116.3z m-329.7 178.4c-10-3.4-20.8 2.1-24.1 12.4l-34.2 106.1-108.2 0.8c-6 0-11.7 3-15.2 8-6.3 8.8-4.5 21.1 4 27.6l87.1 66.4-32.7 106.6c-1.8 5.9-0.8 12.4 2.7 17.4 6.1 8.9 18.1 10.9 26.6 4.6l88-65.1 88 65.1c4.9 3.6 11.1 4.6 16.8 2.7 10-3.3 15.6-14.4 12.4-24.7l-32.6-106.6 87-66.4c4.8-3.7 7.7-9.5 7.8-15.7 0.1-10.9-8.4-19.8-19-19.9l-108.1-0.8-34.2-106.1c-1.9-5.9-6.4-10.5-12.1-12.4z"></path></svg>
-                                        <span className="relative z-10">5-Star Rated</span>
+                                        <span className="relative z-10">
+                                            {t('5_Star_Rated')}
+                                        </span>
                                         {/* 🔹 active indicator bar */}
                                         {pathname === "/star-rated" && (
                                             <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-[#FB7701] rounded-full"></div>
@@ -188,7 +197,9 @@ const Header = () => {
 
                                     <li className={` ${isHomePage ? "text-white " : "text-[#222222]"} relative group flex items-center gap-1 font-semibold cursor-pointer text-[14px] px-3 py-1 `}>
                                         <span className={`${isHomePage ? "bg-[#BA0000]" : "bg-[#eeeeee]"} absolute inset-0 h-[50px] my-auto rounded-full scale-0 origin-center transition-transform duration-500 ease-in-out group-hover:scale-100 `}></span>
-                                        <span className="relative z-10"> New In</span>
+                                        <span className="relative z-10">
+                                            {t('New_In')}
+                                        </span>
                                         {/* 🔹 active indicator bar */}
                                         {pathname === "/new-in" && (
                                             <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-[#FB7701] rounded-full"></div>
@@ -214,7 +225,9 @@ const Header = () => {
                                         }}
                                         className={`${isHomePage ? "text-white" : "text-[#222222]"} relative cursor-pointer flex items-center gap-2 group py-1 px-3 text-[14px] font-semibold `}>
                                         <span className={`${isHomePage ? "bg-[#BA0000]" : "bg-[#eeeeee]"} absolute inset-0 h-[50px] my-auto rounded-full scale-0 origin-center transition-transform duration-500 ease-in-out group-hover:scale-100`}></span>
-                                        <span className="relative z-10">Categories</span>
+                                        <span className="relative z-10">
+                                            {t('Categories')}
+                                        </span>
                                         <IoIosArrowDown className="relative z-10" />
                                     </li>
 
@@ -269,7 +282,7 @@ const Header = () => {
                                                                         : "text-gray-600 hover:bg-white hover:text-black border-l-4 border-l-transparent"
                                                                         }`}
                                                                 >
-                                                                    {cat.name}
+                                                                    {language == 'ar' ? cat.name : cat.name}
                                                                     <GoChevronRight className="text-[14px] text-gray-400" />
                                                                 </li>
                                                             </Link>
@@ -339,12 +352,20 @@ const Header = () => {
                                                 {user ? (
                                                     <>
                                                         <p className="text-[13px] max-w-[120px] line-clamp-1 overflow-hidden whitespace-nowrap"> {user.name || user.email || user.phone}</p>
-                                                        <b className="text-[14px]">Order & Account</b>
+                                                        <b className="text-[14px]">
+                                                            {t('Order_Account')}
+                                                        </b>
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <span className="text-[13px]">Sign in / Register</span> <br />
-                                                        <b className="text-[14px]">Order & Account</b>
+                                                        <span className="text-[13px]">
+                                                        {
+                                                            t('Sign_in_Register')
+                                                        }    
+                                                        </span> <br />
+                                                        <b className="text-[14px]">
+                                                        {t('Order_Account')}
+                                                        </b>
                                                     </>
                                                 )}
                                             </span>
@@ -621,8 +642,10 @@ const Header = () => {
                                         <span className={`${isHomePage ? "bg-[#BA0000]" : "bg-[#eeeeee]"} absolute inset-0 h-[50px] my-auto rounded-full scale-0 origin-center transition-transform duration-500 ease-in-out group-hover:scale-100`}></span>
                                         <FaRegUser className="text-xl relative z-10" />
                                         <span className="leading-4 relative z-10">
-                                            <span className="text-[13px]">Sign in / Register</span> <br />
-                                            <b className="text-[14px]">Order & Account</b>
+                                            <span className="text-[13px]">{t('Sign_in_Register')}</span> <br />
+                                            <b className="text-[14px]">
+                                                {t('Order_Account')}
+                                            </b>
                                         </span>
                                     </li>
                                 )}
@@ -633,7 +656,7 @@ const Header = () => {
 
                                     <span className="relative z-10 flex items-center gap-1">
                                         <RiChatSmile3Line className="text-xl" />
-                                        Support
+                                        {t('Support')}
                                     </span>
 
 
@@ -662,7 +685,7 @@ const Header = () => {
                                     <span className={` ${isHomePage ? "bg-[#BA0000]" : "bg-[#eeeeee]"} absolute inset-0 h-[50px] my-auto rounded-full scale-0 origin-center transition-transform duration-500 ease-in-out group-hover:scale-100`}></span>
                                     <span className="relative z-10 flex items-center gap-1">
                                         <Image className='w-4 h-4 rounded-full' src={Counrty} alt="country flag" />
-                                        English
+                                        {language === "ar" ? 'العربية' : 'English'}
                                     </span>
 
                                     {/* Dropdown menu */}
@@ -679,10 +702,13 @@ const Header = () => {
                  "
                                         />
                                         <div className="px-4 py-2">
-                                            <label className='text-[17px] font-normal'>Language</label>
+                                            <label className='text-[17px] font-normal'>
+                                                {t('Language')}
+                                            </label>
                                             <div className="lang-radio py-3 border-b border-b-gray-200">
-                                                <div className='flex items-center gap-2 text-[15px] font-normal'><div className='bg-white rounded-full border-4 border-black w-4 h-4'></div> English</div>
-
+                                                <div className='flex items-center gap-2 text-[15px] font-normal'><div className='bg-white rounded-full border-4 border-black w-4 h-4'></div> 
+                                                {language === "ar" ? 'العربية' : 'English'}
+                                                </div>
                                             </div>
 
                                             <div className="pt-3">
@@ -701,10 +727,11 @@ const Header = () => {
                                                     />
                                                     <span>You are shopping on Temu Pakistan.</span>
                                                 </p>
-
-                                                <button className='mt-3 py-1 px-2 rounded-full font-semibold text-md border hover:border-black hover:scale-[1.02] transition-all duration-500 ease-in-out border-gray-500 w-full text-center'>
-                                                    Change country/region
-                                                </button>
+                                                <Link href="/user/country-region-language">
+                                                    <button className='mt-3 py-1 px-2 rounded-full font-semibold text-md border hover:border-black hover:scale-[1.02] transition-all duration-500 ease-in-out border-gray-500 w-full text-center'>
+                                                        Change country/region
+                                                    </button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </ul>

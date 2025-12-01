@@ -6,6 +6,8 @@ import { MdDeleteSweep } from "react-icons/md";
 import Image from "next/image";
 import DLogo from "../../../public/df-logo.png";
 import { RxCross2 } from "react-icons/rx";
+import { useLanguage } from '@/context/LanguageContext';
+import { useTranslation } from "@/hooks/useTranslation";
 
 const recentItemsMock = [
     "shoes",
@@ -25,6 +27,8 @@ const popularItemsMock = [
 ];
 
 const SearchBarHeader = () => {
+    const { t } = useTranslation();
+    const { language, toggleLanguage } = useLanguage();
     const pathname = usePathname();
     const isHomePage = pathname === '/' || pathname === '/home';
     const [searchText, setSearchText] = useState("");
@@ -68,12 +72,12 @@ const SearchBarHeader = () => {
     return (
         <div className="relative w-full max-w-[500px]">
             {/* Search Input */}
-            <div className={`${isHomePage ? "border-white" : "border-black"} bg-white border-2 rounded-full flex items-center justify-between pl-4 pr-1 w-full h-[43px] `}>
+            <div className={`${isHomePage ? "border-white" : "border-black"} bg-white border-2 rounded-full flex items-center justify-between ${language === "ar" ? "pr-4 pl-1" : "pl-4 pr-1"}  w-full h-[43px] `}>
                 <input
                     ref={inputRef}
                     className="h-full w-full text-[14px] rounded-full outline-0"
                     type="search"
-                    placeholder="Search Dressfair"
+                    placeholder={t('Search_Dressfair')}
                     value={searchText}
                     onChange={handleChange}
                 />

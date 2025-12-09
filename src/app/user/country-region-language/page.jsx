@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { GoChevronRight } from "react-icons/go";
 import { FaChevronRight } from "react-icons/fa6";
+import ShareAppBottomModal from "@/components/models/ShareAppBottomModal";
 
 const customSelectStyles = {
   control: (provided, state) => ({
@@ -55,6 +56,7 @@ const countries = [
 const CountryRegionLanguage = () => {
   const { language, setLanguage } = useLanguage();
   const [openTab, setOpenTab] = useState(null);
+  const [openShare, setOpenShare] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState({
     value: "ae",
     label: "United Arab Emirates (UAE)",
@@ -339,7 +341,7 @@ const CountryRegionLanguage = () => {
                 <p className="text-[#000] font-semibold text-[15px]">Legal terms & policies</p>
                 <FaChevronRight className="text-[#777] text-[14px]" />
               </div>
-              <div className="flex items-center justify-between gap-2 py-3">
+              <div onClick={() => setOpenShare(true)} className="flex items-center justify-between gap-2 py-3">
                 <p className="text-[#000] font-semibold text-[15px]">Share this app</p>
                 <FaChevronRight className="text-[#777] text-[14px]" />
               </div>
@@ -359,6 +361,10 @@ const CountryRegionLanguage = () => {
           </div>
         </div>
       </div>
+      <ShareAppBottomModal
+        isOpen={openShare}
+        onClose={() => setOpenShare(false)}
+      />
     </>
   );
 };

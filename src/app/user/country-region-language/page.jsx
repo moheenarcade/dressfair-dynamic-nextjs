@@ -7,6 +7,7 @@ import Image from "next/image";
 import { GoChevronRight } from "react-icons/go";
 import { FaChevronRight } from "react-icons/fa6";
 import ShareAppBottomModal from "@/components/models/ShareAppBottomModal";
+import { HiOutlineHome } from "react-icons/hi2";
 
 const customSelectStyles = {
   control: (provided, state) => ({
@@ -46,12 +47,7 @@ const customSelectStyles = {
     fontSize: "14px",
   }),
 };
-const countries = [
-  { code: "ae", name: "United Arab Emirates", flag: "🇦🇪" },
-  { code: "sa", name: "Saudi Arabia", flag: "🇸🇦" },
-  { code: "om", name: "Oman", flag: "🇴🇲" },
-  { code: "pk", name: "Pakistan", flag: "🇵🇰" },
-];
+
 
 const CountryRegionLanguage = () => {
   const { language, setLanguage } = useLanguage();
@@ -159,7 +155,7 @@ const CountryRegionLanguage = () => {
         </div>
       </div>
 
-      <div className="">
+      <div className="relative">
         <div className="block lg:hidden ">
           <div className="fixed w-full top-0 bg-white right-0 left-0 z-[99999] border-b border-b-gray-200">
             <div className="flex items-center justify-between py-4 px-3">
@@ -359,12 +355,21 @@ const CountryRegionLanguage = () => {
               </div>
             </div>
           </div>
+
+
+          <Link href="/">
+            <div className="w-12 h-12 right-4 fixed bottom-10 bg-white shadow-lg border border-gray-200 rounded-full flex items-center justify-center">
+              <HiOutlineHome className="text-2xl"/>
+            </div>
+          </Link>
         </div>
       </div>
       <ShareAppBottomModal
         isOpen={openShare}
         onClose={() => setOpenShare(false)}
       />
+
+
     </>
   );
 };

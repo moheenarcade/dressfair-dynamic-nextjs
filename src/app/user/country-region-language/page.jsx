@@ -356,7 +356,6 @@ const CountryRegionLanguage = () => {
             </div>
           </div>
 
-
           <Link href="/">
             <div className="w-12 h-12 right-4 fixed bottom-10 bg-white shadow-lg border border-gray-200 rounded-full flex items-center justify-center">
               <HiOutlineHome className="text-2xl"/>
@@ -368,8 +367,6 @@ const CountryRegionLanguage = () => {
         isOpen={openShare}
         onClose={() => setOpenShare(false)}
       />
-
-
     </>
   );
 };

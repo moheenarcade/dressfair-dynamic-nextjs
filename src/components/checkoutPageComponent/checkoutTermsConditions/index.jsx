@@ -48,7 +48,7 @@ const CheckoutTermConditions = () => {
                     </p>
                     <ul className="flex flex-col gap-x-2">
                         <li className="text-[#555] text-[14px] pt-1 font-[500] flex items-start gap-1">
-                            <LuCheck className="text-3xl text-[#088901]" />
+                            <LuCheck className="text-lg text-[#088901]" />
                             Temu follows the Payment Card Industry Data Security Standard (PCI DSS) when handling card data
                         </li>
                         <li className="text-[#555] text-[14px] pt-1 font-[500] flex items-start gap-1">

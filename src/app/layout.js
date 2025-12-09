@@ -6,6 +6,7 @@ import CartSidebar from "@/components/models/CartSidebar";
 import LayoutContent from "@/components/LayoutContent";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { Toaster } from "react-hot-toast";
+import FaviconLoader from "@/components/FaviconLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,10 +46,11 @@ export default function RootLayout({ children }) {
       >
           <Toaster position="top-center" 
           containerStyle={{
-            zIndex: 999999999999999, // your custom z-index
+            zIndex: 999999999999999,
           }}
           />
         <LanguageProvider>
+        <FaviconLoader />
           <UserProvider>
             <CartProvider>
               <LayoutContent>{children}</LayoutContent>

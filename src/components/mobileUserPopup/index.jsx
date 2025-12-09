@@ -7,13 +7,13 @@ import { AiOutlineUserSwitch } from 'react-icons/ai';
 import Link from 'next/link';
 
 
-const MobileUserPopup = ({ onOpenSignIn , onClose }) => {
+const MobileUserPopup = ({ onOpenSignIn, onClose }) => {
     const [showSignInModal, setShowSignInModal] = useState(false);
     const { user, logout } = useUser();
     const handleLogout = () => {
         logout();
         setShowUserDropdown(false);
-        if (onClose) onClose(); 
+        if (onClose) onClose();
     };
     return (
         <>
@@ -22,7 +22,7 @@ const MobileUserPopup = ({ onOpenSignIn , onClose }) => {
 
                     <div className="p-4">
                         {!user && (
-                            <button  onClick={onOpenSignIn} className='bg-[#fb7701] cursor-pointer py-2 px-4 w-full rounded-full text-white text-lg font-semibold '>
+                            <button onClick={onOpenSignIn} className='bg-[#fb7701] cursor-pointer py-2 px-4 w-full rounded-full text-white text-lg font-semibold '>
                                 SIGN IN / REGISTER
                             </button>
                         )}
@@ -41,12 +41,12 @@ const MobileUserPopup = ({ onOpenSignIn , onClose }) => {
                         )}
                         <div className="flex justify-center items-center text-center text-[13px] gap-4 pt-4">
                             <Link href="/user/orders/all-orders" onClick={onClose}>
-                            <div className="flex items-center flex-col">
-                                <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
-                                    <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="topIcon-2KivG"><path fill="#FFFFFF" d="M714.8 115.2c101.3 0 183.4 82.1 183.3 183.4l0 426.8c0 101.3-82.1 183.4-183.3 183.4l-405.6 0c-101.3 0-183.4-82.1-183.3-183.4l0-426.8c0-101.3 82.1-183.4 183.3-183.4z m0 68.3l-405.6 0c-63.6 0-115.1 51.5-115.1 115.1l0 426.8c0 63.6 51.5 115.1 115.1 115.1l405.6 0c63.6 0 115.1-51.5 115.1-115.1l0-426.8c0-63.6-51.5-115.1-115.1-115.1z m-183.7 392.5c18.9 0 34.1 15.3 34.1 34.1 0 18.9-15.3 34.1-34.1 34.2l-166.3 0c-18.9 0-34.1-15.3-34.1-34.2 0-18.9 15.3-34.1 34.1-34.1l166.3 0z m85.4-192c18.9 0 34.1 15.3 34.2 34.1 0 18.9-15.3 34.1-34.2 34.2l-251.7 0c-18.9 0-34.1-15.3-34.1-34.2 0-18.9 15.3-34.1 34.1-34.1l251.7 0z"></path></svg>
+                                <div className="flex items-center flex-col">
+                                    <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
+                                        <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="topIcon-2KivG"><path fill="#FFFFFF" d="M714.8 115.2c101.3 0 183.4 82.1 183.3 183.4l0 426.8c0 101.3-82.1 183.4-183.3 183.4l-405.6 0c-101.3 0-183.4-82.1-183.3-183.4l0-426.8c0-101.3 82.1-183.4 183.3-183.4z m0 68.3l-405.6 0c-63.6 0-115.1 51.5-115.1 115.1l0 426.8c0 63.6 51.5 115.1 115.1 115.1l405.6 0c63.6 0 115.1-51.5 115.1-115.1l0-426.8c0-63.6-51.5-115.1-115.1-115.1z m-183.7 392.5c18.9 0 34.1 15.3 34.1 34.1 0 18.9-15.3 34.1-34.1 34.2l-166.3 0c-18.9 0-34.1-15.3-34.1-34.2 0-18.9 15.3-34.1 34.1-34.1l166.3 0z m85.4-192c18.9 0 34.1 15.3 34.2 34.1 0 18.9-15.3 34.1-34.2 34.2l-251.7 0c-18.9 0-34.1-15.3-34.1-34.2 0-18.9 15.3-34.1 34.1-34.1l251.7 0z"></path></svg>
+                                    </div>
+                                    <p>Your orders</p>
                                 </div>
-                                <p>Your orders</p>
-                            </div>
                             </Link>
                             <div className="flex items-center flex-col">
                                 <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
@@ -80,15 +80,19 @@ const MobileUserPopup = ({ onOpenSignIn , onClose }) => {
                         <li className='cursor-pointer flex items-center gap-1 text-[15px] font-normal py-3 border-b border-b-gray-200'>
                             <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="icon-33dOL"><path d="M490.7 125.9c213.3 0 386.1 172.9 386.1 386.1 0 213.3-172.9 386.1-386.1 386.1-213.3 0-386.1-172.9-386.2-386.1 0-213.3 172.9-386.1 386.2-386.1z m0 68.2c-175.6 0-317.9 142.3-317.9 317.9 0 175.6 142.3 317.9 317.9 317.9 175.6 0 317.9-142.3 317.8-317.9 0-175.6-142.3-317.9-317.8-317.9z m-10.7 166.4c18.9 0 34.1 15.3 34.1 34.2l0 132.7 74.3 58.4c13.6 10.7 16.9 29.6 8.3 44.1l-2.6 3.8c-11.7 14.8-33.1 17.4-47.9 5.8l-87.3-68.7c-8.2-6.5-13-16.4-13-26.8l0-149.3c0-18.9 15.3-34.1 34.1-34.2z"></path></svg>
                             Browsing history</li>
-                        <li className='cursor-pointer flex items-center gap-1 text-[15px] font-normal py-3 border-b border-b-gray-200'>
-                            <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="icon-33dOL"><path d="M490.7 93.9c209.7 0 379.7 169.9 379.7 379.5 0 13.8-0.8 27.7-2.4 42l-0.4 2.8-2.6 17.2c-1.3 7.7-2.8 15.5-4.6 23.8l-3.8 14.8c-17.1 62.2-49.7 118.7-93.8 163.7l-10.4 10.2c-36.9 38.4-91.9 82.7-165.3 133.5-58.1 40.1-134.9 40.1-192.9 0-73.4-50.8-128.3-95.1-164.1-132.3-54-51-92.1-116.8-108.9-189l-0.5-2.2c-2.5-11.1-4.5-22.6-6.1-34.5l-1.3-8c-1.6-14.4-2.4-28.2-2.4-42 0-209.6 170-379.6 379.8-379.5z m0 68.2c-172 0-311.5 139.4-311.5 311.3 0 11.1 0.7 22.5 1.9 34.1l2.6 16.8c1 6.2 2.1 12.1 3.2 17.3l3.9 15.2c15.2 54.6 45.1 103.9 87.3 143.8 33.3 34.6 84.9 76.2 154.9 124.7 34.7 24 80.6 24 115.3 0 70-48.4 121.6-90.1 156.1-125.8 44.3-41.9 75.5-95.8 89.1-154l3.3-16.4 3.2-20.2 1.2-12.8c0.6-7.7 0.9-15.2 0.9-22.7 0-171.9-139.4-311.3-311.4-311.3z m0 179.2c77.8 0 140.8 63 140.8 140.8 0 77.7-63 140.8-140.8 140.8-77.8 0-140.8-63.1-140.8-140.8 0-77.8 63-140.8 140.8-140.8z m0 68.3c-40.1 0-72.5 32.5-72.6 72.5 0 40 32.5 72.5 72.6 72.6 40.1 0 72.5-32.5 72.5-72.6 0-40.1-32.5-72.5-72.5-72.5z"></path></svg>
-                            Addresses</li>
+                        <Link href="/user/addresses" onClick={onClose}>
+                            <li className='cursor-pointer flex items-center gap-1 text-[15px] font-normal py-3 border-b border-b-gray-200'>
+                                <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="icon-33dOL"><path d="M490.7 93.9c209.7 0 379.7 169.9 379.7 379.5 0 13.8-0.8 27.7-2.4 42l-0.4 2.8-2.6 17.2c-1.3 7.7-2.8 15.5-4.6 23.8l-3.8 14.8c-17.1 62.2-49.7 118.7-93.8 163.7l-10.4 10.2c-36.9 38.4-91.9 82.7-165.3 133.5-58.1 40.1-134.9 40.1-192.9 0-73.4-50.8-128.3-95.1-164.1-132.3-54-51-92.1-116.8-108.9-189l-0.5-2.2c-2.5-11.1-4.5-22.6-6.1-34.5l-1.3-8c-1.6-14.4-2.4-28.2-2.4-42 0-209.6 170-379.6 379.8-379.5z m0 68.2c-172 0-311.5 139.4-311.5 311.3 0 11.1 0.7 22.5 1.9 34.1l2.6 16.8c1 6.2 2.1 12.1 3.2 17.3l3.9 15.2c15.2 54.6 45.1 103.9 87.3 143.8 33.3 34.6 84.9 76.2 154.9 124.7 34.7 24 80.6 24 115.3 0 70-48.4 121.6-90.1 156.1-125.8 44.3-41.9 75.5-95.8 89.1-154l3.3-16.4 3.2-20.2 1.2-12.8c0.6-7.7 0.9-15.2 0.9-22.7 0-171.9-139.4-311.3-311.4-311.3z m0 179.2c77.8 0 140.8 63 140.8 140.8 0 77.7-63 140.8-140.8 140.8-77.8 0-140.8-63.1-140.8-140.8 0-77.8 63-140.8 140.8-140.8z m0 68.3c-40.1 0-72.5 32.5-72.6 72.5 0 40 32.5 72.5 72.6 72.6 40.1 0 72.5-32.5 72.5-72.6 0-40.1-32.5-72.5-72.5-72.5z"></path></svg>
+                                Addresses</li>
+                        </Link>
                         <li className='cursor-pointer flex items-center gap-1 text-[15px] font-normal py-3 border-b border-b-gray-200'>
                             <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="icon-33dOL"><path d="M844.8 718.9c0 69.5-56.4 125.9-125.9 125.9-69.5 0-125.9-56.4-125.8-125.9l0-95.1c0-68.8 55.8-124.6 124.6-124.6l58.8 0 0-11.2c0-156.3-127.9-283.2-285.8-283.2-157.9 0-285.9 126.9-285.9 283.2l0 11.2 58.9 0c66.3 0 120.6 51.9 124.4 117.3l0.2 7.3 0 95.1c0 69.5-56.4 125.9-125.9 125.9-69.5 0-125.9-56.4-125.9-125.9l0-230.9c0-194.2 158.6-351.5 354.2-351.5 195.5 0 354.1 157.3 354.1 351.5l0 230.9z m-581.1-151.4l-58.9 0 0 151.4c0 31.8 25.8 57.6 57.6 57.6 31.8 0 57.6-25.8 57.6-57.6l0-95.1c0-31.1-25.2-56.3-56.3-56.3z m512.8 0l-58.8 0c-31.1 0-56.3 25.2-56.4 56.3l0 95.1c0 31.8 25.8 57.6 57.6 57.6 31.8 0 57.6-25.8 57.6-57.6l0-151.4z"></path></svg>
                             Customer support</li>
-                        <li className='cursor-pointer flex items-center gap-1 text-[15px] font-normal py-3'>
-                            <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="icon-33dOL"><path d="M400 154.9c56.1-32.4 125.2-32.4 181.3 0l173.3 100c56.1 32.4 90.7 92.3 90.7 157l0 200.2c0 64.8-34.6 124.6-90.7 157l-173.3 100c-56.1 32.4-125.2 32.4-181.3 0l-173.3-100c-56.1-32.4-90.7-92.3-90.7-157l0-200.2c0-64.8 34.6-124.6 90.7-157z m147.2 59.1c-35-20.2-78.1-20.2-113.1 0l-173.3 100c-35 20.2-56.5 57.5-56.5 97.9l0 200.2c0 40.4 21.6 77.7 56.5 97.9l173.3 100c35 20.2 78.1 20.2 113.1 0l173.3-100c35-20.2 56.5-57.5 56.5-97.9l0-200.2c0-40.4-21.6-77.7-56.5-97.9z m-56.5 157.2c77.8 0 140.8 63 140.8 140.8 0 77.7-63 140.8-140.8 140.8-77.8 0-140.8-63.1-140.8-140.8 0-77.8 63-140.8 140.8-140.8z m0 68.3c-40.1 0-72.5 32.5-72.6 72.5 0 40 32.5 72.5 72.6 72.5 40.1 0 72.5-32.5 72.5-72.5 0-40.1-32.5-72.5-72.5-72.5z"></path></svg>
-                            Settings</li>
+                        <Link href="/user/country-region-language" onClick={onClose}>
+                            <li className='cursor-pointer flex items-center gap-1 text-[15px] font-normal py-3'>
+                                <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="icon-33dOL"><path d="M400 154.9c56.1-32.4 125.2-32.4 181.3 0l173.3 100c56.1 32.4 90.7 92.3 90.7 157l0 200.2c0 64.8-34.6 124.6-90.7 157l-173.3 100c-56.1 32.4-125.2 32.4-181.3 0l-173.3-100c-56.1-32.4-90.7-92.3-90.7-157l0-200.2c0-64.8 34.6-124.6 90.7-157z m147.2 59.1c-35-20.2-78.1-20.2-113.1 0l-173.3 100c-35 20.2-56.5 57.5-56.5 97.9l0 200.2c0 40.4 21.6 77.7 56.5 97.9l173.3 100c35 20.2 78.1 20.2 113.1 0l173.3-100c35-20.2 56.5-57.5 56.5-97.9l0-200.2c0-40.4-21.6-77.7-56.5-97.9z m-56.5 157.2c77.8 0 140.8 63 140.8 140.8 0 77.7-63 140.8-140.8 140.8-77.8 0-140.8-63.1-140.8-140.8 0-77.8 63-140.8 140.8-140.8z m0 68.3c-40.1 0-72.5 32.5-72.6 72.5 0 40 32.5 72.5 72.6 72.5 40.1 0 72.5-32.5 72.5-72.5 0-40.1-32.5-72.5-72.5-72.5z"></path></svg>
+                                Settings</li>
+                        </Link>
                         {user && (
                             <>
                                 <li className='cursor-pointer flex items-center gap-1 text-[15px] font-normal py-3 border-b border-b-gray-200'>

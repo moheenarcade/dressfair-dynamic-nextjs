@@ -152,32 +152,50 @@ export const CartProvider = ({ children }) => {
   //   return cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
   // }, [cartItems]);
 
+  // const totalQty = useMemo(() => {
+  //   if (!cartItems) return 0;
+  //   return cartItems.reduce((acc, item) => acc + item.qty, 0);
+  // }, [cartItems]);
+
   const totalQty = useMemo(() => {
-    if (!cartItems) return 0;
-    return cartItems.reduce((acc, item) => acc + item.qty, 0);
+    if (!Array.isArray(cartItems)) return 0;
+
+    return cartItems.reduce((acc, item) => {
+      const qty = Number(item?.qty) || 0;
+      return acc + qty;
+    }, 0);
   }, [cartItems]);
 
 
   // Final subtotal (user will pay)
-const subtotal = useMemo(() => {
-  if (!cartItems) return 0;
-  return cartItems.reduce((acc, item) => acc + item.final_price * item.qty, 0);
-}, [cartItems]);
+  // const subtotal = useMemo(() => {
+  //   if (!cartItems) return 0;
+  //   return cartItems.reduce((acc, item) => acc + item.final_price * item.qty, 0);
+  // }, [cartItems]);
+  const subtotal = useMemo(() => {
+    if (!Array.isArray(cartItems)) return 0;
 
-// Total without discount (original price × qty)
-const originalTotal = useMemo(() => {
-  if (!cartItems) return 0;
-  return cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
-}, [cartItems]);
+    return cartItems.reduce((acc, item) => {
+      const price = Number(item?.final_price) || 0;
+      const qty = Number(item?.qty) || 0;
+      return acc + (price * qty);
+    }, 0);
+  }, [cartItems]);
 
-// Savings amount in currency
-const totalDiscount = useMemo(() => originalTotal - subtotal, [originalTotal, subtotal]);
+  // Total without discount (original price × qty)
+  const originalTotal = useMemo(() => {
+    if (!cartItems) return 0;
+    return cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+  }, [cartItems]);
 
-// Savings percentage
-const discountPercent = useMemo(() => {
-  if (!originalTotal || originalTotal === 0) return 0;
-  return Number(((totalDiscount / originalTotal) * 100).toFixed(0));
-}, [totalDiscount, originalTotal]);
+  // Savings amount in currency
+  const totalDiscount = useMemo(() => originalTotal - subtotal, [originalTotal, subtotal]);
+
+  // Savings percentage
+  const discountPercent = useMemo(() => {
+    if (!originalTotal || originalTotal === 0) return 0;
+    return Number(((totalDiscount / originalTotal) * 100).toFixed(0));
+  }, [totalDiscount, originalTotal]);
 
 
 

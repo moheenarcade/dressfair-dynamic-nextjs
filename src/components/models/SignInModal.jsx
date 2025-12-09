@@ -28,8 +28,7 @@ const SignInModal = ({ isOpen, onClose }) => {
     
     // Simulate API call - replace with your actual authentication
     try {
-      // Here you would typically make an API call to your backend
-      // For demo, we'll simulate a successful login
+   
       setTimeout(() => {
         const userData = {
           id: Date.now().toString(),

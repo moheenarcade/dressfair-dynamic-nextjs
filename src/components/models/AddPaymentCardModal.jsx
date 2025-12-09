@@ -94,13 +94,7 @@ const AddPaymentCardModal = ({ isOpen, onClose }) => {
                         </div>
                     </div>
 
-                    {/* Address */}
-                    <div className="border-t pt-4 flex justify-between items-center">
-                        <p className="text-sm text-gray-600">
-                            Billing address <span className="font-medium">Punjab Pakistan</span>
-                        </p>
-                        <button className="text-sm text-blue-600 font-medium">Edit</button>
-                    </div>
+                  
 
                     {/* Button */}
                     <button className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-full text-lg">

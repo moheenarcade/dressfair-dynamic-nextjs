@@ -3,6 +3,7 @@ const nextConfig = {
   reactCompiler: true,
 
   images: {
+    unoptimized: true, 
     remotePatterns: [
       {
         protocol: "https",
@@ -17,6 +18,7 @@ const nextConfig = {
         hostname: "omsshared-images.s3.ap-southeast-1.amazonaws.com",
         pathname: "/**",
       },
+      
     ],
   },
 };

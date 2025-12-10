@@ -34,6 +34,7 @@ export default function UserLayout({ children }) {
     };
 
     const isOrdersPage = pathname.includes('/user/orders/');
+    const isBrowsingPage = pathname.includes('/user/browsing-history')
     const breadcrumbs = {
         "/user/profile": "Profile",
         "/user/orders/all-orders": "Your orders",
@@ -259,7 +260,7 @@ export default function UserLayout({ children }) {
                 </main>
 
             </div>
-            {isOrdersPage &&
+            {isOrdersPage || isBrowsingPage &&
                 <>
                     <div className="explore-interest pt-2 pb-20 hidden xl:block">
                         <h3 className="text-[#222] font-bold pb-3 text-[22px] px-2">Explore your interests</h3>

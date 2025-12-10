@@ -298,55 +298,53 @@ const Notifications = () => {
       case "avatar":
         return (
           <div>
-          <p className="font-semibold text-[#222] mb-2 text-lg md:text-xl text-center">
-          Avatar and username sharing
-          </p>
-          <p className="text-center text-[#757575] text-[14px] font-[500]">
-          Share your user profile avatar and username with other users when you add a product to cart, purchase a product, or participate in a promotion and event, but it won‘t affect your reviews for product.
-          </p>
-          <div className="py-6">
-            <p className="text-[16px] text-[#222] font-[500] mb-2">
-            Avatar and username sharing
+            <p className="font-semibold text-[#222] mb-2 text-lg md:text-xl text-center">
+              Avatar and username sharing
             </p>
-            <div className="flex items-start justify-between gap-6">
-              <p className="text-[#757575] text-[14px] font-[500]">
-              To prevent others from viewing your avatar and username, you can opt out of Avatar and username sharing.
+            <p className="text-center text-[#757575] text-[14px] font-[500]">
+              Share your user profile avatar and username with other users when you add a product to cart, purchase a product, or participate in a promotion and event, but it won‘t affect your reviews for product.
+            </p>
+            <div className="py-6">
+              <p className="text-[16px] text-[#222] font-[500] mb-2">
+                Avatar and username sharing
               </p>
-              <label className="relative inline-flex cursor-pointer items-center">
-                <input
-                  type="checkbox"
-                  checked={emailEnabled}
-                  onChange={(e) => setEmailEnabled(e.target.checked)}
-                  className="peer sr-only"
-                />
-                <div className="peer h-6 w-11 rounded-full border bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-slate-800 peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
-              </label>
-            </div>
-          </div>
-          <div className="border-x overflow-hidden border-x-gray-200 w-full h-40 border-t border-t-gray-200 rounded-t-xl">
-            <div className="flex items-center gap-1 bg-gray-100 py-2 px-3">
-              <div className="w-2 h-2 rounded-full bg-[#ff5f57]"></div>
-              <div className="w-2 h-2 rounded-full bg-[#ffbd2e]"></div>
-              <div className="w-2 h-2 rounded-full bg-[#21b736]"></div>
-            </div>
-            <div className="px-4 py-4">
-              <div className="bg-[#4c4c4c] w-fit py-1 pl-1 pr-4 rounded-full flex items-center gap-2">
-                <Image className='w-6' width={100} height={100} src={UserIcon} alt="user" />
-                <p className='text-white font-[500]'>
-                  added to cart 5 min ago
+              <div className="flex items-start justify-between gap-6">
+                <p className="text-[#757575] text-[14px] font-[500]">
+                  To prevent others from viewing your avatar and username, you can opt out of Avatar and username sharing.
                 </p>
+                <label className="relative inline-flex cursor-pointer items-center">
+                  <input
+                    type="checkbox"
+                    checked={emailEnabled}
+                    onChange={(e) => setEmailEnabled(e.target.checked)}
+                    className="peer sr-only"
+                  />
+                  <div className="peer h-6 w-11 rounded-full border bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-slate-800 peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
+                </label>
+              </div>
+            </div>
+            <div className="border-x overflow-hidden border-x-gray-200 w-full h-40 border-t border-t-gray-200 rounded-t-xl">
+              <div className="flex items-center gap-1 bg-gray-100 py-2 px-3">
+                <div className="w-2 h-2 rounded-full bg-[#ff5f57]"></div>
+                <div className="w-2 h-2 rounded-full bg-[#ffbd2e]"></div>
+                <div className="w-2 h-2 rounded-full bg-[#21b736]"></div>
+              </div>
+              <div className="px-4 py-4">
+                <div className="bg-[#4c4c4c] w-fit py-1 pl-1 pr-4 rounded-full flex items-center gap-2">
+                  <Image className='w-6' width={100} height={100} src={UserIcon} alt="user" />
+                  <p className='text-white font-[500]'>
+                    added to cart 5 min ago
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-
-        </div>
         )
-        ;
+          ;
       default:
         return null;
     }
   };
-
 
   return (
     <>
@@ -380,7 +378,7 @@ const Notifications = () => {
               <p className='text-[#222] text-[13px] md:text-[14px] font-[500]'>Off: Email</p>
               <button
                 onClick={() => openModal("orders")}
-              className="text-[14px] md:text-[15px] bg-[#fb7701] md:bg-transparent text-white md:text-[#222] font-[500] border border-[#fb7701] md:border-gray-300 hover:border-black py-1 px-4 md:px-6 rounded-full"
+                className="text-[14px] md:text-[15px] bg-[#fb7701] md:bg-transparent text-white md:text-[#222] font-[500] border border-[#fb7701] md:border-gray-300 hover:border-black py-1 px-4 md:px-6 rounded-full"
               >
                 Edit
               </button>
@@ -395,7 +393,7 @@ const Notifications = () => {
               <p className='text-[#222] text-[13px] md:text-[14px] font-[500] flex items-center gap-2'>Off: Email <span className='flex w-px h-4 bg-gray-300'></span> Off: SMS</p>
               <button
                 onClick={() => openModal("chat")}
-               className="text-[14px] md:text-[15px] bg-[#fb7701] md:bg-transparent text-white md:text-[#222] font-[500] border border-[#fb7701] md:border-gray-300 hover:border-black py-1 px-4 md:px-6 rounded-full"
+                className="text-[14px] md:text-[15px] bg-[#fb7701] md:bg-transparent text-white md:text-[#222] font-[500] border border-[#fb7701] md:border-gray-300 hover:border-black py-1 px-4 md:px-6 rounded-full"
               >
                 Edit
               </button>

@@ -141,21 +141,21 @@ const Notifications = () => {
       case "orders":
         return (
           <div>
-            <p className="font-semibold text-[#222] mb-2 text-xl text-center">
+            <p className="font-semibold text-[#222] mb-2 text-lg md:text-xl text-center">
               Order updates
             </p>
             <p className="text-center text-[#757575] text-[14px] font-[500]">
               Receive notifications about order confirmations and shipment updates.
             </p>
             <div className="pt-6 border-b border-b-gray-200">
-              <p className="text-[17px] text-[#222] font-[500] mb-2">Push</p>
+              <p className="text-[15px] md:text-[17px] text-[#222] font-[500] mb-2">Push</p>
               <p className="text-start text-[#757575] text-[14px] font-[500]">
                 Open the TEMU App on your device and go to your notification settings to make adjustments.
               </p>
               <Image className="mx-auto w-60 mt-4" src={PromotionalModel} alt="promotion" width={100} height={100} />
             </div>
             <div className="py-6">
-              <p className="text-[17px] text-[#222] font-[500] mb-2">Email</p>
+              <p className="text-[15px] md:text-[17px] text-[#222] font-[500] mb-2">Email</p>
               <p className="text-[#222] text-[14px] mb-2 font-[500]">moh***ade@gmail.com</p>
               <div className="flex items-start justify-between gap-6">
                 <p className="text-[#757575] text-[14px] font-[500]">
@@ -178,19 +178,19 @@ const Notifications = () => {
       case "chat":
         return !phoneEnabled ? (
           <div>
-            <p className="font-semibold text-[#222] mb-2 text-xl text-center">Chat messages</p>
+            <p className="font-semibold text-[#222] mb-2 text-lg md:text-xl text-center">Chat messages</p>
             <p className="text-center text-[#757575] text-[14px] font-[500]">
               Never miss important messages from sellers.
             </p>
             <div className="pt-6 border-b border-b-gray-200">
-              <p className="text-[17px] text-[#222] font-[500] mb-2">Push</p>
+              <p className="text-[15px] md:text-[17px] text-[#222] font-[500] mb-2">Push</p>
               <p className="text-start text-[#757575] text-[14px] font-[500]">
                 Open the TEMU App on your device and go to your notification settings to make adjustments.
               </p>
               <Image className="mx-auto w-60 mt-4" src={PromotionalModel} alt="promotion" width={100} height={100} />
             </div>
             <div className="py-6 border-b border-b-gray-200">
-              <p className="text-[17px] text-[#222] font-[500] mb-2">SMS</p>
+              <p className="text-[15px] md:text-[17px] text-[#222] font-[500] mb-2">SMS</p>
               <div className="flex items-start gap-6">
                 <p className="text-start text-[#757575] text-[14px] font-[500]">
                   Seems you don’t have a phone number in your account,
@@ -203,7 +203,7 @@ const Notifications = () => {
               </div>
             </div>
             <div className="py-6">
-              <p className="text-[17px] text-[#222] font-[500] mb-2">Email</p>
+              <p className="text-[15px] md:text-[17px] text-[#222] font-[500] mb-2">Email</p>
               <p className="text-[#222] text-[14px] mb-2 font-[500]">moh***ade@gmail.com</p>
               <div className="flex items-start justify-between gap-6">
                 <p className="text-[#757575] text-[14px] font-[500]">
@@ -223,12 +223,12 @@ const Notifications = () => {
           </div>
         ) : (
           <div className="text-center">
-            <h2 className="text-[22px] font-bold text-[#222] mb-2">Add a mobile phone number</h2>
+            <h2 className="text-[20px] px-12 md:text-[22px] font-bold text-[#222] mb-2">Add a mobile phone number</h2>
             <p className="text-[#757575] text-[14px] mb-6">
               Enter the mobile phone number you would like to associate with your account below.
             </p>
             <div className="border border-gray-300 rounded-lg flex items-center">
-              <p className="font-semibold w-22 border-r border-r-gray-300 py-3 px-3">PK +92</p>
+              <p className="font-semibold w-24 border-r border-r-gray-300 py-3 px-3">PK +92</p>
               <input
                 type="number"
                 placeholder="Enter your phone number"
@@ -254,7 +254,7 @@ const Notifications = () => {
       case "activity":
         return (
           <div>
-            <p className="font-semibold text-[#222] mb-2 text-xl text-center">
+            <p className="font-semibold text-[#222] mb-2 text-lg md:text-xl text-center">
               Customers' activity
             </p>
             <p className="text-center text-[#757575] text-[14px] font-[500]">
@@ -293,13 +293,12 @@ const Notifications = () => {
                 </div>
               </div>
             </div>
-
           </div>
         );
       case "avatar":
         return (
           <div>
-          <p className="font-semibold text-[#222] mb-2 text-xl text-center">
+          <p className="font-semibold text-[#222] mb-2 text-lg md:text-xl text-center">
           Avatar and username sharing
           </p>
           <p className="text-center text-[#757575] text-[14px] font-[500]">

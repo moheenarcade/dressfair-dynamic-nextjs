@@ -212,7 +212,7 @@ const AddPaymentCardModal = ({ isOpen, onClose }) => {
                                     Year
                                 </label>
                                 <Select
-                                    className="mt-2 font-semibold"
+                                    className="mt-3 font-semibold"
                                     options={yearOptions}
                                     placeholder="Year"
                                     styles={customSelectStyles}
@@ -233,7 +233,7 @@ const AddPaymentCardModal = ({ isOpen, onClose }) => {
 
                             {/* CVV */}
                             <div>
-                                <label className="text-sm font-semibold flex items-center gap-1">
+                                <label className="text-sm font-semibold flex items-center gap-1 mt-1">
                                     <span>*</span> CVV
                                  
                                 </label>
@@ -289,7 +289,7 @@ const AddPaymentCardModal = ({ isOpen, onClose }) => {
                     <div className="flex justify-center items-center">
                         <button
                             onClick={handleSubmit}
-                            className="w-full md:w-[60%] mx-auto mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-full text-lg"
+                            className="w-full md:w-[60%] mx-auto mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-full text-lg"
                         >
                             Add your card
                         </button>

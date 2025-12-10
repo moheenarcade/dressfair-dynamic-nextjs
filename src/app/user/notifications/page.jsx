@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import { LuChevronRight } from 'react-icons/lu';
 import UserIcon from "../../../../public/usericon.png";
-import PromotionalModel from "../../../../public/promotional-model-img.avif";
+import PromotionalModel from "../../../../public/promotional-model-img.png";
 
 const Notifications = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -75,7 +75,6 @@ const Permissions = () => {
           </div>
         </div>
       )}
-
       <div className="flex flex-col md:flex-row justify-center md:justify-start text-center items-center gap-2">
         <div className="bg-[#0a88000f] w-12 h-12 rounded-full flex items-center justify-center">
           <IoIosLock className='text-2xl text-[#0a8800]' />

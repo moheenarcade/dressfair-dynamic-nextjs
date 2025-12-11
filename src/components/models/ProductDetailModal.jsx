@@ -268,7 +268,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
 
                         <div className="relative">
                             <div className="flex flex-wrap max-h-[600px] pb-28 overflow-y-auto">
-                                <div className="w-full md:w-[50%] z-[-1]">
+                                <div className="w-full md:w-[50%] z-[1]">
                                     <div className="flex flex-col pr-4 product-detail-main">
                                         {/* Main Image Swiper */}
                                         <div className="">

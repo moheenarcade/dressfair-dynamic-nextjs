@@ -39,6 +39,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  if (typeof window !== "undefined") {
+    window.addEventListener("error", (e) => {
+      if (/ChunkLoadError|Loading chunk/.test(e.message)) {
+        window.location.reload();
+      }
+    });
+  }
   return (
     <html lang="en">
       <body

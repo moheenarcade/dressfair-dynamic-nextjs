@@ -41,7 +41,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
     const [hoveredSizeId, setHoveredSizeId] = useState(null);
     const qtyOptions = [1, 2, 3, 4, 5];
 
-    console.log(productDetail, "productDetailproductDetailproductDetailproductDetailproductDetail")
+    // console.log(productDetail, "productDetailproductDetailproductDetailproductDetailproductDetail")
 
     // Helper functions
     const findMatchingColor = (product) => {

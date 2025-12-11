@@ -32,7 +32,6 @@ const ProductCardMobile = ({ products = [] }) => {
                 {products.map((product, index) => (
                     <Link key={index} href={`/p/${product.sku}`}>
                         <div
-
                             className="single-product xl:p-2 group transition-all duration-500 ease-in-out cursor-pointer hover:bg-white rounded-md hover:shadow-[0px_4px_24px_0px_rgba(0,0,0,0.1)]"
                         >
                             <div className="product-banner w-full aspect-square">

@@ -151,7 +151,7 @@ const Header = () => {
                         <div className="flex items-center justify-between gap-4">
                             <div className="w-[50px] shrink-0">
                                 <Link href="/">
-                                    <Image className="w-full h-auto" width={200} height={300} src='https://backend.dressfair.com/image/cache/catalog/logo-01-200x50.png' alt="Logo" />
+                                    <Image className="w-full h-auto" width={200} height={300} src='/DFlogo.png' alt="Logo" />
                                 </Link>
                             </div>
 
@@ -758,7 +758,7 @@ const Header = () => {
                                     className="w-full h-auto"
                                     width={200}
                                     height={300}
-                                    src="https://backend.dressfair.com/image/cache/catalog/logo-01-200x50.png"
+                                    src="/DFlogo.png"
                                     alt="Logo"
                                 />
                             </Link>

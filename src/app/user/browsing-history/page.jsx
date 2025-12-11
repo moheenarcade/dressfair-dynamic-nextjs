@@ -199,7 +199,7 @@ const BrowsingHistory = () => {
                 <div className="single-product p-2 group transition-all duration-500 ease-in-out cursor-pointer hover:bg-white rounded-md hover:shadow-[0px_4px_24px_0px_rgba(0,0,0,0.1)]">
                   <div className="product-img overflow-hidden w-full md:w-[250px] h-[250px] bg-[#00000008] flex items-center justify-center">
                     <Image
-                      className='w-full h-full object-contain group-hover:scale-[1.2] transition-all duration-500 ease-in-out'
+                      className='w-full h-full object-contain transition-all duration-500 ease-in-out'
                       src={product.image}
                       alt={product.name}
                     />
@@ -281,7 +281,6 @@ const BrowsingHistory = () => {
             </div>
           ))}
         </div>
-
         <div className="pt-12">
           <div className="flex items-center justify-between px-2 mb-3">
             <p className='text-lg font-semibold'>Nov 26, 2025</p>
@@ -379,7 +378,15 @@ const BrowsingHistory = () => {
       </div>
 
       <div className="block xl:hidden">
-
+          <div className="flex items-center justify-between px-4">
+            <p className='invisible'>
+            Manage
+            </p>
+            <p className='text-lg font-semibold'>Browsing history</p>
+            <button className='text-[#222] text-md'>
+              Manage
+            </button>
+          </div>
       </div>
     </>
   )

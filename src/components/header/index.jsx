@@ -250,7 +250,7 @@ const Header = () => {
                                     )}
                                     {/* Mega Menu */}
                                     <div
-                                        className={`fixed left-0 top-[110px] mx-auto right-0 overflow-hidden rounded-md z-[9999999] bg-white shadow-lg transition-all duration-300 ease-in-out ${showMegaMenu ? "opacity-100 visible" : "opacity-0 invisible"
+                                        className={`fixed left-0 top-[110px] mx-auto right-0 overflow-hidden rounded-md bg-white shadow-lg transition-all duration-300 ease-in-out ${showMegaMenu ? "opacity-100 visible z-[9999999]" : "opacity-0 invisible z-[-1]"
                                             }`}
                                         style={{ height: "70vh", width: "50%" }}
                                         onMouseEnter={() => setShowMegaMenu(true)}

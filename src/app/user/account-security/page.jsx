@@ -7,12 +7,20 @@ import { SiFacebook } from "react-icons/si";
 import { ImAppleinc } from "react-icons/im";
 import { GoChevronRight } from 'react-icons/go';
 import CombineModel from '@/components/models/CombineModel';
+import { TiEye } from "react-icons/ti";
+import { IoEyeOff } from 'react-icons/io5';
+
 
 const AccountSecurity = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [otp, setOtp] = useState(Array(6).fill(""));
   const inputRefs = useRef([]);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const handleOtpChange = (value, index) => {
     if (!/^[0-9]?$/.test(value)) return; // allow only numbers
 
@@ -30,6 +38,28 @@ const AccountSecurity = () => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1].focus();
     }
+  };
+
+
+  const passwordStrength = () => {
+    if (password.length < 1) return "-";
+    if (password.length < 8) return "Weak";
+    if (/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/.test(password)) return "Strong";
+    return "Medium";
+  };
+
+  const isFormValid = () => {
+    return (
+      password.length >= 8 &&
+      confirmPassword.length >= 8 &&
+      password === confirmPassword
+    );
+  };
+
+  const handleSubmit = () => {
+    if (!isFormValid()) return;
+    console.log("Password updated:", password);
+    setIsModalOpen(false);
   };
 
   const openModal = (type) => {
@@ -127,27 +157,149 @@ const AccountSecurity = () => {
                 Add a password
               </h1>
               <p className='text-sm pt-2 font-[500] text-start md:text-center'>
-              Enter the password you would like to associate with your account below.
+                Enter the password you would like to associate with your account below.
               </p>
             </div>
+
             <div className="py-6 md:px-4">
-              <input className='w-full py-2.5 px-4 focus:ring-[#222] outline-[#222] rounded-sm border' type="password" placeholder='Minimum 8 characters required' />
-            <div className="pt-4">
-              <p className='text-[15px] font-semibold text-[#222]'>Password quality: -</p>
-              <p className='text-[#777] text-sm font-[500] pt-1'>
-              Don't use a password from another site, or something too obvious like your pet's name.
-              </p>
-              <div className="flex items-center justify-center pt-6">
-              <button className='bg-[#fb7701] hover:bg-[#fb7601ee] py-3 px-2 rounded-full text-white font-semibold hover:scale-[1.04] transition-all duration-[0.3s] ease-in-out w-full md:w-[80%]'>
-                Submit
-              </button>
+
+              {/* New Password */}
+              <div className="mb-4">
+                <label className='font-semibold'>New password <span>*</span></label>
+                <div className="relative">
+                  <input
+                    className={`w-full py-2.5 px-4 rounded-sm border 
+                  ${password.length < 8 && password.length > 0 ? "border-red-500" : "border-gray-300"}`}
+                    type={showPassword ? "text" : "password"}
+                    placeholder='Minimum 8 characters required'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+
+                  {/* Eye Icon */}
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 text-xl top-1/2 -translate-y-1/2 text-[#fb7701]"
+                  >
+                    {showPassword ? <IoEyeOff /> : <TiEye />}
+                  </button>
+                </div>
+
+                {/* Error */}
+                {password.length > 0 && password.length < 8 && (
+                  <p className="text-red-500 text-sm pt-1">Password must be at least 8 characters.</p>
+                )}
               </div>
-            </div>
+
+              {/* Confirm Password */}
+              <div>
+                <label className='font-semibold'>Confirm new password <span>*</span></label>
+                <div className="relative">
+                  <input
+                    className={`w-full py-2.5 px-4 rounded-sm border
+                  ${confirmPassword && confirmPassword !== password ? "border-red-500" : "border-gray-300"}`}
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder='Minimum 8 characters required'
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+
+                  {/* Eye Icon */}
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute text-xl right-3 top-1/2 -translate-y-1/2 text-[#fb7701]"
+                  >
+                    {showConfirmPassword ? <IoEyeOff /> : <TiEye />}
+                  </button>
+                </div>
+
+                {/* Error */}
+                {confirmPassword && confirmPassword !== password && (
+                  <p className="text-red-500 text-sm pt-1">Passwords do not match.</p>
+                )}
+              </div>
+
+              {/* Password Strength */}
+              <div className="pt-4">
+                <p className='text-[15px] font-semibold text-[#222]'>
+                  Password quality: {passwordStrength()}
+                </p>
+                <p className='text-[#777] text-sm font-[500] pt-1'>
+                  Don't use a password from another site, or something too obvious like your pet's name.
+                </p>
+
+                {/* Submit Button */}
+                <div className="flex items-center justify-center pt-6">
+                  <button
+                    disabled={!isFormValid()}
+                    onClick={handleSubmit}
+                    className={`py-3 px-2 rounded-full text-white font-semibold w-full md:w-[80%]
+                    transition-all duration-300 
+                  ${isFormValid() ? "bg-[#fb7701] hover:bg-[#fb7601ee] hover:scale-[1.04]" : "bg-gray-400 cursor-not-allowed"}`}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+
             </div>
           </>
+
         );
       case "2fa":
-        return <p>Two-factor authentication setup...</p>;
+        return (
+          <>
+            <>
+              <div className="flex flex-col items-center text-center justify-center md:px-12">
+                <h1 className="text-[18px] md:text-[22px] font-semibold">
+                  Add a password
+                </h1>
+                <p className="text-sm pt-2 font-[500] text-start md:text-center">
+                  Enter the password you would like to associate with your account below.
+                </p>
+              </div>
+
+              <div className="py-6 md:px-4">
+
+                {/* New Password */}
+                <div className="mb-4">
+                  <input
+                    id="newpassword"
+                    className="w-full py-2.5 px-4 focus:ring-[#222] outline-[#222] rounded-sm border"
+                    type="password"
+                    placeholder="Minimum 8 characters required"
+                  />
+                </div>
+                {/* Password Quality */}
+                <div className="pt-4">
+                  <p className="text-[15px] font-semibold text-[#222]">
+                    Password quality: -
+                  </p>
+                  <p className="text-[#777] text-sm font-[500] pt-1">
+                    Don't use a password from another site, or something too obvious
+                    like your pet's name.
+                  </p>
+
+                  <div className="flex items-center justify-center pt-6">
+                    <button
+                      className="
+            bg-[#fb7701] hover:bg-[#fb7601ee]
+            py-3 px-2 rounded-full text-white font-semibold
+            hover:scale-[1.04] transition-all duration-[0.3s] ease-in-out
+            w-full md:w-[80%]
+          "
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </>
+
+          </>
+        );
       case "facebook":
         return <p>Connect your Facebook account...</p>;
       case "apple":
@@ -220,7 +372,9 @@ const AccountSecurity = () => {
                 Protect your account by adding an extra layer of security.
               </p>
             </div>
-            <button className='bg-[#fb7701] text-[14px] md:text-[16px] w-28 md:w-22 hover:bg-[#fb7601ee] py-1 px-2 rounded-full text-white font-[500] hover:scale-[1.04] transition-all duration-[0.3s] ease-in-out'>
+            <button
+              onClick={() => openModal("2fa")}
+              className='bg-[#fb7701] text-[14px] md:text-[16px] w-28 md:w-22 hover:bg-[#fb7601ee] py-1 px-2 rounded-full text-white font-[500] hover:scale-[1.04] transition-all duration-[0.3s] ease-in-out'>
               Turn on
             </button>
           </div>

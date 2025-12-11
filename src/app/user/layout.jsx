@@ -262,7 +262,7 @@ export default function UserLayout({ children }) {
             </div>
             {isOrdersPage || isBrowsingPage &&
                 <>
-                    <div className="explore-interest pt-2 pb-20 hidden xl:block">
+                    <div className="explore-interest pt-2 pb-12 hidden xl:block">
                         <h3 className="text-[#222] font-bold pb-3 text-[22px] px-2">Explore your interests</h3>
                         <ExploreInterestProducts />
                     </div>

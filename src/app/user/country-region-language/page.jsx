@@ -220,10 +220,12 @@ const CountryRegionLanguage = () => {
 
           <div className="">
             <div className="tabs-main px-3 border-t-6 border-t-[#f5f5f5]">
+            <Link href="/user/payment-methods">
               <div className="flex items-center justify-between gap-2 py-3 border-b border-b-gray-200">
                 <p className="text-[#000] font-semibold text-[15px]">Your payment methods</p>
                 <FaChevronRight className="text-[#777] text-[14px]" />
               </div>
+              </Link>
               <div className="py-3 border-b border-b-gray-200">
                 <div
                   onClick={() => toggleTab("country")}
@@ -322,10 +324,12 @@ const CountryRegionLanguage = () => {
                   <FaChevronRight className="text-[#777] text-[14px]" />
                 </div>
               </div>
+              <Link href="/user/notifications">
               <div className="flex items-center justify-between gap-2 py-3">
                 <p className="text-[#000] font-semibold text-[15px]">Notifications</p>
                 <FaChevronRight className="text-[#777] text-[14px]" />
               </div>
+              </Link>
             </div>
 
             <div className="tabs-main px-3 border-t-6 border-t-[#f5f5f5]">

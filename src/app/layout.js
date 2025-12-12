@@ -40,6 +40,18 @@ export const metadata = {
     "We are online Fashion Shopping site in Pakistan, we offer clothings, Shoes, Bags & accessories very affordable and competitive price with best quality you will love it!",
 };
 
+// export const toastWithSound = (message, options = {}) => {
+//   try {
+//     const audio = new Audio("/notification-tune.wav");
+//     audio.volume = 1;
+//     audio.play();
+//   } catch (err) {
+//     console.log("Sound blocked or failed:", err);
+//   }
+
+//   toast(message, options);
+// };
+
 export default function RootLayout({ children }) {
   if (typeof window !== "undefined") {
     window.addEventListener("error", (e) => {

@@ -53,16 +53,16 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster
-          position="top-center"
-          containerStyle={{
-            zIndex: 999999999999999,
-          }}
-        />
         <LanguageProvider>
           <FaviconLoader />
           <UserProvider>
             <CartProvider>
+              <Toaster
+                position="top-center"
+                containerStyle={{
+                  zIndex: 999999999999999,
+                }}
+              />
               <LayoutContent>{children}</LayoutContent>
               <CartSidebar />
             </CartProvider>

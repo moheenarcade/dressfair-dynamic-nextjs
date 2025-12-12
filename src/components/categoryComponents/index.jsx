@@ -29,7 +29,7 @@ const CategroyComponents = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  console.log(subcategoryList , "subcategory list here ")
+  // console.log(subcategoryList , "subcategory list here ")
   const toSlug = (slug) =>
     slug.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-");
 

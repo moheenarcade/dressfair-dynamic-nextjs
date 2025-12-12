@@ -68,7 +68,7 @@ const Header = () => {
     const [categories, setCategories] = useState([]);
     const [activeCategory, setActiveCategory] = useState(categories?.[0] || null);
 
-    console.log(categories, "category list");
+    // console.log(categories, "category list");
 
     const handleLogout = () => {
         logout();

@@ -298,12 +298,12 @@ const AddPaymentCardModal = ({ isOpen, onClose }) => {
                     <div className="pt-4">
                         <p className="inline mr-2 text-[#0a8800] text-[14px] font-semibold">
                             <RiSecurePaymentFill className="text-[#088901] text-2xl inline mr-1" />
-                            Temu protects your card information
+                            Dressfair protects your card information
                         </p>
                         <ul className="flex flex-col gap-x-2">
                             <li className="text-[#555] text-[14px] pt-1 font-[500] flex items-start gap-1">
                                 <LuCheck className="text-lg text-[#088901]" />
-                                Temu follows the Payment Card Industry Data Security Standard (PCI DSS) when handling card data
+                                Dressfair follows the Payment Card Industry Data Security Standard (PCI DSS) when handling card data
                             </li>
                             <li className="text-[#555] text-[14px] pt-1 font-[500] flex items-start gap-1">
                                 <LuCheck className="text-lg text-[#088901]" />
@@ -315,7 +315,7 @@ const AddPaymentCardModal = ({ isOpen, onClose }) => {
                             </li>
                             <li className="text-[#555] text-[14px] pt-1 font-[500] flex items-start gap-1">
                                 <LuCheck className="text-lg text-[#088901]" />
-                                Temu never sells your card information
+                                Dressfair never sells your card information
                             </li>
                         </ul>
                         <div className="pt-2 flex flex-wrap gap-2">

@@ -267,7 +267,7 @@ const CartMain = () => {
                             </p>
                             <p className="text-[#222] text-[14px]">
                                 <span className="text-[#0A8800]">
-                                    Temu is committed to protecting your payment information.
+                                    Dressfair is committed to protecting your payment information.
                                 </span>
                                 We follow PCI DSS standards, use strong encryption, and perform regular reviews of its system to protect your privacy.
                             </p>
@@ -325,10 +325,10 @@ const CartMain = () => {
                             <div className="pt-4">
                                 <p className="inline mr-2 text-[#222] text-[14px] font-bold">
                                     <RiSecurePaymentFill className="text-[#088901] text-2xl inline" />
-                                    Temu Purchase Protection
+                                    Dressfair Purchase Protection
                                 </p>
                                 <p className="text-[#555] text-[14px] pt-1 font-[400]">
-                                    Shop confidently on Temu knowing that if something goes wrong, we've always got your back.
+                                    Shop confidently on Dressfair knowing that if something goes wrong, we've always got your back.
                                 </p>
                                 <Link href="#" className="flex font-[400] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
                                     See program terms<LuChevronRight />
@@ -358,7 +358,7 @@ const CartMain = () => {
 
                                 <Link href="#" className="flex font-bold hover:text-black w-fit items-center gap-1 text-[#222] text-[14px] pt-1">
                                     <RiSecurePaymentFill className="text-[#088901] text-2xl inline" />
-                                    Temu's Tree Planting Program <LuChevronRight />
+                                    Dressfair's Tree Planting Program <LuChevronRight />
                                 </Link>
                             </div>
                         </div>

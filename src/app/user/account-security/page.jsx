@@ -330,7 +330,7 @@ const AccountSecurity = () => {
                   Your account is protected
                 </h1>
                 <p className='text-[12px] md:text-sm text-start text-[#222] font-[500] flex items-center gap-1'>
-                  Your Temu account is protected by advanced security. Keeping this information up-to-date safeguards your account even more.</p>
+                  Your Dressfair account is protected by advanced security. Keeping this information up-to-date safeguards your account even more.</p>
               </div>
             </div>
             <div className="pt-6">
@@ -365,17 +365,17 @@ const AccountSecurity = () => {
           {deleteStep === 1 && (
             <>
               <div className="">
-                <p className='text-md font-semibold'>How to delete your Temu account</p>
+                <p className='text-md font-semibold'>How to delete your Dressfair account</p>
                 <p className='text-sm font-[500] py-1 md:py-2'>
-                  Dear Temu customer,
+                  Dear Dressfair customer,
                 </p>
                 <p className='text-sm font-[500]'>
-                  You are about to submit a request for us to permanently delete your Temu account. If you proceed, Temu will delete the data and content in your account in accordance with applicable law and as described in the Privacy Policy. This includes communication records, files, and images, as well as any unused coupons and credits, which will no longer be usable after your account is deleted. Please be aware that you will no longer be able to make purchases on the Temu app or Temu.com once your account is deleted.
+                  You are about to submit a request for us to permanently delete your Dressfair account. If you proceed, Dressfair will delete the data and content in your account in accordance with applicable law and as described in the Privacy Policy. This includes communication records, files, and images, as well as any unused coupons and credits, which will no longer be usable after your account is deleted. Please be aware that you will no longer be able to make purchases on the Dressfair app or Dressfair.com once your account is deleted.
                 </p>
               </div>
               <div className="pt-4 md:pt-6">
                 <p className='text-[15px] font-semibold'>
-                  Before permanently deleting your Temu account, we recommend that you:
+                  Before permanently deleting your Dressfair account, we recommend that you:
                 </p>
                 <ul className='pt-3 list-disc pl-3 flex flex-col gap-1 md:gap-2'>
                   <li className='text-[13px] font-[500]'>
@@ -403,7 +403,7 @@ const AccountSecurity = () => {
                       htmlFor="deleteConfirm" 
                       className='text-sm font-[500] cursor-pointer'
                     >
-                      I want to permanently delete my Temu account.
+                      I want to permanently delete my Dressfair account.
                     </label>
                   </div> */}
 
@@ -430,7 +430,7 @@ const AccountSecurity = () => {
   </svg>
 
   <label htmlFor="deleteConfirm" className="text-sm font-[500] cursor-pointer">
-    I want to permanently delete my Temu account.
+    I want to permanently delete my Dressfair account.
   </label>
 </div>
 
@@ -584,7 +584,7 @@ const AccountSecurity = () => {
               Your account is protected
             </h1>
             <p className='text-[12px] md:text-sm text-start text-[#222] font-[500] flex items-center gap-1'>
-              Your Temu account is protected by advanced security. Keeping this information up-to-date safeguards your account even more.
+              Your Dressfair account is protected by advanced security. Keeping this information up-to-date safeguards your account even more.
             </p>
           </div>
         </div>

@@ -46,7 +46,7 @@ const GetMobileAppModel = ({ isOpen, onClose }) => {
                             <IoClose className="text-2xl" />
                         </button>
                         <h2 className="text-[24px] font-extrabold text-[rgb(0, 0, 0)] mb-4 text-center">
-                            Get the Temu App to enjoy
+                            Get the Dressfair App to enjoy
                         </h2>
                         <div className="flex justify-evenly items-center">
                             <div className="flex flex-col justify-center items-center">

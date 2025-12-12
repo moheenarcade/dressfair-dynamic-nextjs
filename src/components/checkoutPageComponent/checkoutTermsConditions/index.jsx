@@ -44,12 +44,12 @@ const CheckoutTermConditions = () => {
                 <div className="pt-4">
                     <p className="inline mr-2 text-[#0a8800] text-[14px] font-semibold">
                         <RiSecurePaymentFill className="text-[#088901] text-2xl inline mr-1" />
-                        Temu protects your card information
+                        Dressfair protects your card information
                     </p>
                     <ul className="flex flex-col gap-x-2">
                         <li className="text-[#555] text-[14px] pt-1 font-[500] flex items-start gap-1">
                             <LuCheck className="text-lg text-[#088901]" />
-                            Temu follows the Payment Card Industry Data Security Standard (PCI DSS) when handling card data
+                            Dressfair follows the Payment Card Industry Data Security Standard (PCI DSS) when handling card data
                         </li>
                         <li className="text-[#555] text-[14px] pt-1 font-[500] flex items-start gap-1">
                             <LuCheck className="text-lg text-[#088901]" />
@@ -61,7 +61,7 @@ const CheckoutTermConditions = () => {
                         </li>
                         <li className="text-[#555] text-[14px] pt-1 font-[500] flex items-start gap-1">
                             <LuCheck className="text-lg text-[#088901]" />
-                            Temu never sells your card information
+                            Dressfair never sells your card information
                         </li>
                     </ul>
                     <div className="pt-2 flex flex-wrap gap-2">
@@ -91,10 +91,10 @@ const CheckoutTermConditions = () => {
                 <div className="pt-4">
                     <p className="inline mr-2 text-[#088901] text-[14px] font-semibold">
                         <RiSecurePaymentFill className="text-[#088901] text-2xl inline" />
-                        Temu Purchase Protection
+                        Dressfair Purchase Protection
                     </p>
                     <p className="text-[#555] text-[14px] pt-1 font-[500]">
-                        Shop confidently on Temu knowing that if something goes wrong, we've always got your back.
+                        Shop confidently on Dressfair knowing that if something goes wrong, we've always got your back.
                     </p>
                     <Link href="#" className="flex font-[500] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
                         See program terms<LuChevronRight />

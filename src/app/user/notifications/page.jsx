@@ -83,7 +83,7 @@ const Notifications = () => {
                 <div className="py-6 border-b border-b-gray-200">
                   <p className="text-[15px] md:text-[17px] text-[#222] font-[500] mb-2">In-app notifications</p>
                   <p className="text-start text-[#757575] text-[14px] font-[500]">
-                    Open the TEMU App and update notification settings.
+                    Open the Dressfair App and update notification settings.
                   </p>
                 </div>
 
@@ -131,7 +131,7 @@ const Notifications = () => {
                   OK
                 </button>
                 <p className="mt-4 text-[12px] text-[#999] leading-snug">
-                  Click OK to consent to receive Temu marketing messages via this email...
+                  Click OK to consent to receive Dressfair marketing messages via this email...
                 </p>
               </div>
             )}
@@ -150,7 +150,7 @@ const Notifications = () => {
             <div className="pt-6 border-b border-b-gray-200">
               <p className="text-[15px] md:text-[17px] text-[#222] font-[500] mb-2">Push</p>
               <p className="text-start text-[#757575] text-[14px] font-[500]">
-                Open the TEMU App on your device and go to your notification settings to make adjustments.
+                Open the Dressfair App on your device and go to your notification settings to make adjustments.
               </p>
               <Image className="mx-auto w-60 mt-4" src={PromotionalModel} alt="promotion" width={100} height={100} />
             </div>
@@ -185,7 +185,7 @@ const Notifications = () => {
             <div className="pt-6 border-b border-b-gray-200">
               <p className="text-[15px] md:text-[17px] text-[#222] font-[500] mb-2">Push</p>
               <p className="text-start text-[#757575] text-[14px] font-[500]">
-                Open the TEMU App on your device and go to your notification settings to make adjustments.
+                Open the Dressfair App on your device and go to your notification settings to make adjustments.
               </p>
               <Image className="mx-auto w-60 mt-4" src={PromotionalModel} alt="promotion" width={100} height={100} />
             </div>

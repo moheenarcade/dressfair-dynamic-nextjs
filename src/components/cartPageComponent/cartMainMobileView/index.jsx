@@ -305,7 +305,7 @@ const CartMainMobileView = () => {
                         <SwiperSlide>
                             <div className="flex flex-col gap-1 justify-start items-center text-center px-2">
                                 <Image width={20} height={20} src="/safepaymentgreenicon.webp" alt="safe payment" />
-                                <p className="text-[#777] font-[500] text-[13px] leading-[15px]">Temu Purchase Protection</p>
+                                <p className="text-[#777] font-[500] text-[13px] leading-[15px]">Dressfair Purchase Protection</p>
                             </div>
                         </SwiperSlide>
                         <SwiperSlide>
@@ -317,7 +317,7 @@ const CartMainMobileView = () => {
                         <SwiperSlide>
                             <div className="flex flex-col gap-1 justify-start items-center text-center px-2">
                                 <Image width={20} height={20} src="/safepaymentgreenicon.webp" alt="safe payment" />
-                                <p className="text-[#777] font-[500] text-[13px] leading-[15px]">Temu's Tree Planting Program</p>
+                                <p className="text-[#777] font-[500] text-[13px] leading-[15px]">Dressfair's Tree Planting Program</p>
                             </div>
                         </SwiperSlide>
                     </Swiper>

@@ -29,7 +29,7 @@ const Permissions = () => {
             </div>
             <div className="">
               <h1 className='text-[#0a8800] font-semibold text-md md:text-lg'>
-                The Temu App will only access certain device features with your permission
+                The Dressfair App will only access certain device features with your permission
               </h1>
 
             </div>
@@ -45,7 +45,7 @@ const Permissions = () => {
                 </p>
               </div>
               <p className='text-[#777] md:text-[#222] text-sm pt-1 md:pt-3'>
-                On iOS devices, the Temu App will only access your camera with your permission so that you can use it for item reviews, image searches, etc. On Android devices, the Temu App does not request permission to access your camera. You can still use the Android system's built-in camera app to take photos for leave a review, search items, etc., without Temu accessing your camera.
+                On iOS devices, the Dressfair App will only access your camera with your permission so that you can use it for item reviews, image searches, etc. On Android devices, the Dressfair App does not request permission to access your camera. You can still use the Android system's built-in camera app to take photos for leave a review, search items, etc., without Dressfair accessing your camera.
               </p>
             </div>
             <div className="Activities  border border-gray-200 rounded-md p-2 md:p-4 relative">
@@ -80,11 +80,11 @@ const Permissions = () => {
           <IoIosLock className='text-2xl text-[#0a8800]' />
         </div>
         <div className="">
-          <h1 className='text-[#0a8800] font-semibold text-md md:text-lg'>Temu DOES NOT obtain your permissions on the browser
+          <h1 className='text-[#0a8800] font-semibold text-md md:text-lg'>Dressfair DOES NOT obtain your permissions on the browser
           </h1>
           {!hideMoreTab && (
             <p className='text-[12px] md:text-sm text-start text-[#222] font-[500] flex items-center gap-1'>
-              To learn about the permissions of Temu App,
+              To learn about the permissions of Dressfair App,
               <button onClick={() => setHideMoretab(true)} className='text-[#fb7701] flex items-center gap-1'>
                 click here
                 <FiChevronRight />
@@ -119,7 +119,7 @@ const Permissions = () => {
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" fill="#fc3310" className="stopIcon-FGX6G"><path d="M512 28.4c267.1 0 483.6 216.5 483.6 483.6 0 267.1-216.5 483.6-483.6 483.6-267.1 0-483.6-216.5-483.6-483.6 0-267.1 216.5-483.6 483.6-483.6z m-299.1 220.6c-61.7 70.1-99.2 162.2-99.1 263 0 219.9 178.3 398.2 398.2 398.2 100.8 0 192.8-37.4 263-99.1z m299.1-135.2c-88.4 0-170 28.8-236.1 77.5l556.8 556.8c48.7-66.1 77.5-147.7 77.5-236.1 0-219.9-178.3-398.2-398.2-398.2z"></path></svg>
             </div>
             <p className='text-[#777] md:text-[#222] text-sm pt-1 md:pt-3'>
-              Temu does not request to access your microphone on the browser. Even though the browser may request access to your microphone permissions in situations like leaving a review with video, etc. Temu will only use the microphone permissions you grant to the Chrome browser to take videos.
+              Dressfair does not request to access your microphone on the browser. Even though the browser may request access to your microphone permissions in situations like leaving a review with video, etc. Dressfair will only use the microphone permissions you grant to the Chrome browser to take videos.
             </p>
           </div>
           <div className="Location  border border-gray-200 rounded-md p-2 md:p-4">
@@ -131,7 +131,7 @@ const Permissions = () => {
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" fill="#fc3310" className="stopIcon-FGX6G"><path d="M512 28.4c267.1 0 483.6 216.5 483.6 483.6 0 267.1-216.5 483.6-483.6 483.6-267.1 0-483.6-216.5-483.6-483.6 0-267.1 216.5-483.6 483.6-483.6z m-299.1 220.6c-61.7 70.1-99.2 162.2-99.1 263 0 219.9 178.3 398.2 398.2 398.2 100.8 0 192.8-37.4 263-99.1z m299.1-135.2c-88.4 0-170 28.8-236.1 77.5l556.8 556.8c48.7-66.1 77.5-147.7 77.5-236.1 0-219.9-178.3-398.2-398.2-398.2z"></path></svg>
             </div>
             <p className='text-[#777] md:text-[#222] text-sm pt-1 md:pt-3'>
-              In most countries/regions, such as Pakistan, the US, the UK, etc., Temu does not request access to your location on the browser. For users in the Middle East only, the browser might request access to your location permissions. Temu will only use the location permissions you grant to the Chrome browser to make it easier for users to accurately fill in their shipping address.
+              In most countries/regions, such as Pakistan, the US, the UK, etc., Dressfair does not request access to your location on the browser. For users in the Middle East only, the browser might request access to your location permissions. Dressfair will only use the location permissions you grant to the Chrome browser to make it easier for users to accurately fill in their shipping address.
             </p>
           </div>
           <div className="Photos  border border-gray-200 rounded-md p-2 md:p-4">
@@ -143,7 +143,7 @@ const Permissions = () => {
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" fill="#fc3310" className="stopIcon-FGX6G"><path d="M512 28.4c267.1 0 483.6 216.5 483.6 483.6 0 267.1-216.5 483.6-483.6 483.6-267.1 0-483.6-216.5-483.6-483.6 0-267.1 216.5-483.6 483.6-483.6z m-299.1 220.6c-61.7 70.1-99.2 162.2-99.1 263 0 219.9 178.3 398.2 398.2 398.2 100.8 0 192.8-37.4 263-99.1z m299.1-135.2c-88.4 0-170 28.8-236.1 77.5l556.8 556.8c48.7-66.1 77.5-147.7 77.5-236.1 0-219.9-178.3-398.2-398.2-398.2z"></path></svg>
             </div>
             <p className='text-[#777] md:text-[#222] text-sm pt-1 md:pt-3'>
-              Temu does not request access to your photos on the browser. Even though the browser may request access to your photos permissions in situations like leaving a review, searching items, etc., Temu will only use the photo permissions you grant to the Chrome browser to upload images.
+              Dressfair does not request access to your photos on the browser. Even though the browser may request access to your photos permissions in situations like leaving a review, searching items, etc., Dressfair will only use the photo permissions you grant to the Chrome browser to upload images.
             </p>
           </div>
           <div className="Camera border border-gray-200 rounded-md p-2 md:p-4">
@@ -154,7 +154,7 @@ const Permissions = () => {
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" fill="#fc3310" className="stopIcon-FGX6G"><path d="M512 28.4c267.1 0 483.6 216.5 483.6 483.6 0 267.1-216.5 483.6-483.6 483.6-267.1 0-483.6-216.5-483.6-483.6 0-267.1 216.5-483.6 483.6-483.6z m-299.1 220.6c-61.7 70.1-99.2 162.2-99.1 263 0 219.9 178.3 398.2 398.2 398.2 100.8 0 192.8-37.4 263-99.1z m299.1-135.2c-88.4 0-170 28.8-236.1 77.5l556.8 556.8c48.7-66.1 77.5-147.7 77.5-236.1 0-219.9-178.3-398.2-398.2-398.2z"></path></svg>
             </div>
             <p className='text-[#777] md:text-[#222] text-sm pt-1 md:pt-3'>
-              Temu does not request permission to access your camera on the browser. Even when we use the camera to leave a review, search items, etc., Temu will only use the camera permissions you grant to the Chrome browser to take photos.
+              Dressfair does not request permission to access your camera on the browser. Even when we use the camera to leave a review, search items, etc., Dressfair will only use the camera permissions you grant to the Chrome browser to take photos.
             </p>
           </div>
           <div className="Others border border-gray-200 rounded-md p-2 md:p-4">
@@ -165,14 +165,14 @@ const Permissions = () => {
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" fill="#fc3310" className="stopIcon-FGX6G"><path d="M512 28.4c267.1 0 483.6 216.5 483.6 483.6 0 267.1-216.5 483.6-483.6 483.6-267.1 0-483.6-216.5-483.6-483.6 0-267.1 216.5-483.6 483.6-483.6z m-299.1 220.6c-61.7 70.1-99.2 162.2-99.1 263 0 219.9 178.3 398.2 398.2 398.2 100.8 0 192.8-37.4 263-99.1z m299.1-135.2c-88.4 0-170 28.8-236.1 77.5l556.8 556.8c48.7-66.1 77.5-147.7 77.5-236.1 0-219.9-178.3-398.2-398.2-398.2z"></path></svg>
             </div>
             <p className='text-[#777] md:text-[#222] text-sm pt-1 md:pt-3'>
-              In addition to the above device features, Temu will not request access to any other device features, such as your calendar, reminders, etc.
+              In addition to the above device features, Dressfair will not request access to any other device features, such as your calendar, reminders, etc.
             </p>
           </div>
         </div>
 
         <div className="pb-6 md:pb-12">
           <p className='text-[#777] md:text-[#222] text-sm pt-6'>
-            Temu believes in being transparent and requesting a minimal amount of permissions. You can also learn more about how we operate to protect our user's privacy in the <Link href="#" className='text-black underline'>Privacy policy,</Link> which includes details about how we handle information that does not involve requesting permission or personal privacy.
+            Dressfair believes in being transparent and requesting a minimal amount of permissions. You can also learn more about how we operate to protect our user's privacy in the <Link href="#" className='text-black underline'>Privacy policy,</Link> which includes details about how we handle information that does not involve requesting permission or personal privacy.
           </p>
         </div>
       </div>

@@ -64,7 +64,7 @@ const MobileChekoutListBottomModal = ({
                 <div className="border-b border-b-gray-200 pb-3 px-3">
                   <p className="text-center text-lg text-[#000] font-[600]">Price details</p>
                   <p className="text-[#0a8800] flex justify-center items-center gap-1 text-[14px] text-center font-[500]">
-                    <IoMdCheckmark className="text-xl" /> Temu purchase protection
+                    <IoMdCheckmark className="text-xl" /> Dressfair purchase protection
                   </p>
                 </div>
                 <div className="absolute right-2 top-0">

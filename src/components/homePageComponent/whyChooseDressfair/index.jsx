@@ -74,7 +74,7 @@ const mainItems = [
 
 const reminderItems = [
     {
-        text: "Security reminder: Please be wary of scam messages and links. Temu won't ask for extra fees via SMS or email.",
+        text: "Security reminder: Please be wary of scam messages and links. Dressfair won't ask for extra fees via SMS or email.",
         icon: <BsBellFill />,
         linkText: "View",
     },

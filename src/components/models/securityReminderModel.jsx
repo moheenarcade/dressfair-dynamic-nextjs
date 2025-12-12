@@ -63,7 +63,7 @@ export default function SecurityReminderModel({ isOpen, onClose }) {
                         <div className="flex flex-col text-center justify-center items-center pt-4">
                             <p className="text-xl text-[#222] font-bold">Security reminder</p>
                             <p className="text-sm py-4 font-[500]">
-                            Temu values your privacy and security. We will never send requests for extra payments by SMS or email. If you receive any requests claiming to be from Temu, we strongly suggest you ignore them and do not click on any links they may contain. Here are some <span className="text-[#fb7701] underline"> common fraud cases</span> for reference.
+                            Dressfair values your privacy and security. We will never send requests for extra payments by SMS or email. If you receive any requests claiming to be from Dressfair, we strongly suggest you ignore them and do not click on any links they may contain. Here are some <span className="text-[#fb7701] underline"> common fraud cases</span> for reference.
 
                             </p>
                             <button onClick={onClose} className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">

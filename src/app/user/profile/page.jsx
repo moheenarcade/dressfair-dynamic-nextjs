@@ -237,7 +237,7 @@ const Profile = () => {
           <div className="px-3 text-center py-6 bg-[#f6f6f6]">
             <p className='text-[#0a8800] flex justify-center gap-1 text-[15px] font-[500]'>
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1.4rem" height="1.4rem" fill="currentColor"><path d="M512 87c111.7 0 202.8 87.8 208.3 198.2l0.2 10.4 0 54.9 36.2 0c54.6 0 99.2 42.2 103.2 95.8l0.3 7.7 0 379.5c0 54.6-42.2 99.2-95.8 103.2l-7.7 0.3-489.4 0c-54.6 0-99.2-42.2-103.2-95.8l-0.3-7.7 0-379.5c0-54.6 42.2-99.2 95.8-103.2l7.7-0.3 36.2 0 0-54.9c0-111.7 87.8-202.8 198.1-208.3l10.4-0.3z m244.7 345.4l-489.4 0c-10.6 0-19.4 7.6-21.2 17.7l-0.3 3.9 0 379.5c0 10.6 7.6 19.4 17.6 21.2l3.9 0.3 489.4 0c10.6 0 19.4-7.6 21.2-17.6l0.3-3.9 0-379.5c0-10.6-7.6-19.4-17.6-21.2l-3.9-0.4z m-234.5 110.4c24 0 43.5 19.5 43.6 43.6l0 114.7c0 24-19.5 43.5-43.6 43.5-24 0-43.5-19.5-43.5-43.5l0-114.7c0-24 19.5-43.5 43.5-43.6z m-10.2-373.8c-67.1 0-122 52.2-126.3 118.2l-0.3 8.4 0 54.9 253.2 0 0-54.9c0-64.3-48-117.4-110.1-125.6l-8.2-0.8-8.3-0.2z"></path></svg>
-              Temu protects your personal information <br />and keeps it private and safe.
+              Dressfair protects your personal information <br />and keeps it private and safe.
             </p>
             <p className='text-[#aaa] text-[16px] font-[500] pt-3'>
               How we use your profile avatar and username

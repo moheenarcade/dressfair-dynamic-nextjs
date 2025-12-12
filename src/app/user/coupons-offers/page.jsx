@@ -105,7 +105,7 @@ const CoupensOffers = () => {
                 </div>
                 <div className="border border-[#949494] rounded-sm px-2 py-2 cursor-pointer hover:scale-[1.01] transition-all duration-[0.3s] ease-in-out flex items-center justify-between">
                   <p className='text-sm font-[500]'>
-                    Temu's exclusive coupon for specific item
+                    Dressfair's exclusive coupon for specific item
                   </p>
                   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" class="_2O9fTBL7"><path d="M320 215.8c-18.2-18.9-17.6-49 1.3-67.2 17-16.4 43.1-17.5 61.5-3.8l5.8 5.1 315.4 328.7c15.7 16.3 17.4 41.1 5.3 59.3l-5.2 6.5-315.5 329.6c-18.2 19-48.3 19.6-67.2 1.5-17.1-16.3-19.3-42.4-6.4-61.2l4.9-6 284-296.6-283.9-295.9z"></path></svg>
                 </div>

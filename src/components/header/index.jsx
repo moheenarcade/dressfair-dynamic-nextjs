@@ -725,7 +725,7 @@ const Header = () => {
                                                         src={Counrty}
                                                         alt="country flag"
                                                     />
-                                                    <span>You are shopping on Temu Pakistan.</span>
+                                                    <span>You are shopping on Dressfair Pakistan.</span>
                                                 </p>
                                                 <Link href="/user/country-region-language">
                                                     <button className='mt-3 py-1 px-2 rounded-full font-semibold text-md border hover:border-black hover:scale-[1.02] transition-all duration-500 ease-in-out border-gray-500 w-full text-center'>

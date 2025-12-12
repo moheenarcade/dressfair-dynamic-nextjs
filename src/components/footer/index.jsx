@@ -15,10 +15,10 @@ const faqsData = [
   {
     title: "Company info",
     items: [
-      "About Temu",
+      "About Dressfair",
       "Contact us",
       "Press",
-      "Temu's Tree Planting Program",
+      "Dressfair's Tree Planting Program",
       "Affiliate & Influencer Program: Join to Earn",
     ],
   },
@@ -80,7 +80,7 @@ const Footer = () => {
                   Press
                 </li>
                 <li className='text-[#bbb] text-[13px] cursor-pointer hover:text-white hover:underline transition-all duration-[0.5s] ease-in-out'>
-                  Temu's Tree Planting Program
+                  Dressfair's Tree Planting Program
                 </li>
               </ul>
             </div>

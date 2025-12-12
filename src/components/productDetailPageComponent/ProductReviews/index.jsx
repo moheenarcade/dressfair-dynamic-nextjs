@@ -19,7 +19,7 @@ const reviews = [
     flag: "/flags/fr.png",
     date: "Aug 13, 2025",
     rating: 5,
-    text: "Both of my orders arrived on time, with fast delivery. Thank you, Temu. I am very happy with the delivery and my two pairs of shoes.",
+    text: "Both of my orders arrived on time, with fast delivery. Thank you, Dressfair. I am very happy with the delivery and my two pairs of shoes.",
     avatar: "/deals-product5.avif",
   },
   {

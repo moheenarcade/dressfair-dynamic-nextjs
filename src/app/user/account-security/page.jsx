@@ -391,7 +391,7 @@ const AccountSecurity = () => {
                 
                 {/* Checkbox and Continue Button */}
                 <div className="flex flex-col justify-start items-start pt-4 md:pt-6">
-                  <div className="flex items-center gap-2 mb-4">
+                  {/* <div className="flex items-center gap-2 mb-4">
                     <input
                       type="checkbox"
                       id="deleteConfirm"
@@ -405,7 +405,35 @@ const AccountSecurity = () => {
                     >
                       I want to permanently delete my Temu account.
                     </label>
-                  </div>
+                  </div> */}
+
+<div className="flex items-center gap-2 mb-4 relative">
+  <input
+    type="checkbox"
+    id="deleteConfirm"
+    checked={isDeleteConfirmed}
+    onChange={(e) => setIsDeleteConfirmed(e.target.checked)}
+    className="peer w-5 h-5 rounded-full appearance-none 
+               border border-gray-300 cursor-pointer 
+               checked:bg-[#fb7701] checked:border-[#fb7701]"
+  />
+
+  {/* Check Icon */}
+  <svg
+    className="absolute left-[2px] top-[2px] w-4 h-4 text-white hidden peer-checked:block pointer-events-none"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    viewBox="0 0 24 24"
+  >
+    <path d="M5 13l4 4L19 7" />
+  </svg>
+
+  <label htmlFor="deleteConfirm" className="text-sm font-[500] cursor-pointer">
+    I want to permanently delete my Temu account.
+  </label>
+</div>
+
                   
                   <button
                     onClick={() => {

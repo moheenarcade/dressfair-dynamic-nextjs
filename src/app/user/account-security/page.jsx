@@ -21,6 +21,12 @@ const AccountSecurity = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [deleteStep, setDeleteStep] = useState(1); // 1: initial, 2: confirmation, 3: final
+  const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
+  const [deleteReason, setDeleteReason] = useState("");
+  const [passwordForDelete, setPasswordForDelete] = useState("");
+  const [showDeletePassword, setShowDeletePassword] = useState(false);
+
   const handleOtpChange = (value, index) => {
     if (!/^[0-9]?$/.test(value)) return; // allow only numbers
 
@@ -65,11 +71,23 @@ const AccountSecurity = () => {
   const openModal = (type) => {
     setActiveModal(type);
     setIsModalOpen(true);
+
+    if (type === "deleteaccount") {
+      setDeleteStep(1);
+      setIsDeleteConfirmed(false);
+      setDeleteReason("");
+      setPasswordForDelete("");
+    }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setActiveModal("");
+
+    setDeleteStep(1);
+    setIsDeleteConfirmed(false);
+    setDeleteReason("");
+    setPasswordForDelete("");
   };
 
   // Modal Content Based on Button
@@ -300,10 +318,227 @@ const AccountSecurity = () => {
 
           </>
         );
-      case "facebook":
-        return <p>Connect your Facebook account...</p>;
-      case "apple":
-        return <p>Connect your Apple ID...</p>;
+      case "Signinactivity":
+        return (
+          <>
+            <div className="flex flex-row justify-center md:justify-start gap-2 border-b border-b-gray-200 pb-6">
+              <div className="bg-[#0a88000f] w-12 h-12 rounded-full flex justify-center items-center">
+                <Image width={100} height={100} src="/securepayment.avif" alt="secure account" />
+              </div>
+              <div className="w-full">
+                <h1 className='text-[#0a8800] font-semibold text-md md:text-lg'>
+                  Your account is protected
+                </h1>
+                <p className='text-[12px] md:text-sm text-start text-[#222] font-[500] flex items-center gap-1'>
+                  Your Temu account is protected by advanced security. Keeping this information up-to-date safeguards your account even more.</p>
+              </div>
+            </div>
+            <div className="pt-6">
+              <p className='font-semibold text-md text-[#222]'>
+                Review sign in activity for this account and sign out on any you don't recognize.
+              </p>
+              <div className="mt-4 border border-gray-200 rounded-sm p-4">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+                  <div className="">
+                    <div className='flex items-center gap-1 pb-2'>
+                      <Image className='w-6' width={50} height={50} src="/googlechromelogo.avif" alt='google chrome logo' />
+                      <p className='font-semibold text-[15px]'>Chrome on Mac OS X computer</p>
+                    </div>
+                    <p className='text-gray-600 text-sm font-[500] mb-1'>
+                      Signed in since: Dec 11, 2025, 6:47 pm PKT
+                    </p>
+                    <p className='text-gray-600 text-sm font-[500]'>
+                      IP address: 119.73.124.213 (Islamabad, Pakistan)
+                    </p>
+                  </div>
+                  <p className='text-sm text-[#fb7701]'>
+                    This session
+                  </p>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      case "deleteaccount":
+        return (
+          <>
+          {deleteStep === 1 && (
+            <>
+              <div className="">
+                <p className='text-md font-semibold'>How to delete your Temu account</p>
+                <p className='text-sm font-[500] py-1 md:py-2'>
+                  Dear Temu customer,
+                </p>
+                <p className='text-sm font-[500]'>
+                  You are about to submit a request for us to permanently delete your Temu account. If you proceed, Temu will delete the data and content in your account in accordance with applicable law and as described in the Privacy Policy. This includes communication records, files, and images, as well as any unused coupons and credits, which will no longer be usable after your account is deleted. Please be aware that you will no longer be able to make purchases on the Temu app or Temu.com once your account is deleted.
+                </p>
+              </div>
+              <div className="pt-4 md:pt-6">
+                <p className='text-[15px] font-semibold'>
+                  Before permanently deleting your Temu account, we recommend that you:
+                </p>
+                <ul className='pt-3 list-disc pl-3 flex flex-col gap-1 md:gap-2'>
+                  <li className='text-[13px] font-[500]'>
+                    Review your account one more time and confirm that all information in your account can be deleted forever. Please make sure to save any information in your account that you need for your records before permanently deleting your account.
+                  </li>
+                  <li className='text-[13px] font-[500] text-[#fb7701]'>
+                    Check that there are no incomplete or post-sale orders, or ongoing processes in your account, as you will not have access to them after you delete your account.
+                  </li>
+                  <li className='text-[13px] font-[500] text-[#fb7701]'>
+                    Use any available coupons and credits before deleting your account, as they will not be available anymore once the account is deleted.
+                  </li>
+                </ul>
+                
+                {/* Checkbox and Continue Button */}
+                <div className="flex flex-col justify-start items-start pt-4 md:pt-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <input
+                      type="checkbox"
+                      id="deleteConfirm"
+                      checked={isDeleteConfirmed}
+                      onChange={(e) => setIsDeleteConfirmed(e.target.checked)}
+                      className="w-4 h-4 text-[#fb7701] bg-gray-100 border-gray-300 rounded-full focus:ring-[#fb7701] focus:ring-0"
+                    />
+                    <label 
+                      htmlFor="deleteConfirm" 
+                      className='text-sm font-[500] cursor-pointer'
+                    >
+                      I want to permanently delete my Temu account.
+                    </label>
+                  </div>
+                  
+                  <button
+                    onClick={() => {
+                      if (isDeleteConfirmed) {
+                        setDeleteStep(2);
+                      } else {
+                        // Show validation message
+                        alert("Please check the box to confirm you want to delete your account.");
+                      }
+                    }}
+                    disabled={!isDeleteConfirmed}
+                    className={`w-fit border  rounded-full font-[500] py-1.5 px-6 hover:scale-[1.02] hover:shadow-lg transition-all duration-[0.3s] ease-in-out 
+                      ${isDeleteConfirmed ? 'bg-[#fb7701] text-white hover:bg-[#fb7601ee] hover:border-[#fb7601ee]' : 'border-gray-500 bg-gray-200 text-gray-500 cursor-not-allowed'}`}
+                  >
+                    Continue
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+    
+          {deleteStep === 2 && (
+            <>
+              <div className="">
+                <p className='text-md font-semibold mb-4'>Confirm Account Deletion</p>
+                
+                {/* Reason for deletion */}
+                <div className="mb-6">
+                  <label className='block text-sm font-semibold mb-2'>
+                    Please tell us why you're deleting your account (optional)
+                  </label>
+                  <textarea
+                    value={deleteReason}
+                    onChange={(e) => setDeleteReason(e.target.value)}
+                    className="w-full h-24 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#fb7701]"
+                    placeholder="Share your feedback to help us improve..."
+                  />
+                </div>
+                
+                {/* Password verification */}
+                <div className="mb-6">
+                  <label className='block text-sm font-semibold mb-2'>
+                    Enter your password to confirm deletion
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showDeletePassword ? "text" : "password"}
+                      value={passwordForDelete}
+                      onChange={(e) => setPasswordForDelete(e.target.value)}
+                      className="w-full py-2.5 px-4 rounded-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#fb7701]"
+                      placeholder="Enter your password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowDeletePassword(!showDeletePassword)}
+                      className="absolute right-3 text-xl top-1/2 -translate-y-1/2 text-[#fb7701]"
+                    >
+                      {showDeletePassword ? <IoEyeOff /> : <TiEye />}
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Warning message */}
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                  <p className='text-sm text-red-600 font-semibold mb-2'>⚠️ Warning: This action cannot be undone</p>
+                  <p className='text-xs text-red-600'>
+                    Once you delete your account, all your data will be permanently removed. This includes:
+                  </p>
+                  <ul className='text-xs text-red-600 list-disc pl-5 mt-2'>
+                    <li>Order history and tracking information</li>
+                    <li>Saved addresses and payment methods</li>
+                    <li>Wishlists and saved items</li>
+                    <li>All account settings and preferences</li>
+                  </ul>
+                </div>
+                
+                {/* Action buttons */}
+                <div className="flex gap-3">
+                  <button
+                    onClick={closeModal}
+                    className="flex-1 border border-gray-500 text-gray-700 rounded-full font-[500] py-2 px-2 md:px-4 hover:bg-gray-100 transition-all duration-[0.3s]"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (passwordForDelete.length < 6) {
+                        alert("Please enter your password to confirm deletion.");
+                        return;
+                      }
+                      setDeleteStep(3);
+                    }}
+                    className="flex-1 bg-red-600 hover:bg-red-700 text-white rounded-full font-[500] py-2 px-2 md:px-4 hover:scale-[1.02] transition-all duration-[0.3s]"
+                  >
+                    Permanently Delete Account
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+    
+          {deleteStep === 3 && (
+            <>
+              <div className="text-center py-8">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+                
+                <h2 className='text-xl font-semibold mb-3 text-green-600'>
+                  Deletion Request Received
+                </h2>
+                
+                <p className='text-sm text-gray-600 mb-4'>
+                  Your account deletion request has been submitted successfully. We'll process it within 7 business days.
+                </p>
+                
+                <p className='text-xs text-gray-500 mb-6'>
+                  You will receive a confirmation email shortly. If you change your mind, you can cancel this request within the next 24 hours by contacting support.
+                </p>
+                
+                <button
+                  onClick={closeModal}
+                  className="w-fit bg-[#fb7701] hover:bg-[#fb7601ee] text-white rounded-full font-[500] py-2 px-8 hover:scale-[1.02] transition-all duration-[0.3s]"
+                >
+                  Close
+                </button>
+              </div>
+            </>
+          )}
+        </>
+        );
       default:
         return null;
     }
@@ -423,7 +658,9 @@ const AccountSecurity = () => {
             </p>
             <div className="flex items-center justify-between gap-2 pt-3">
               <div className="flex items-center gap-1">
-                <button className='text-[14px] font-[500] hover:underline'>
+                <button
+                  onClick={() => openModal("Signinactivity")}
+                  className='text-[14px] font-[500] hover:underline'>
                   Review sign in activity for this account
                 </button>
                 <GoChevronRight />
@@ -433,7 +670,9 @@ const AccountSecurity = () => {
           <div className=" py-3 lg:py-5 pt-8">
             <div className="flex items-center justify-between gap-2 pt-3">
               <div className="flex items-center gap-1">
-                <button className='text-[14px] font-[500] hover:underline'>
+                <button
+                  onClick={() => openModal("deleteaccount")}
+                  className='text-[14px] font-[500] hover:underline'>
                   Delete your Dressfair account
                 </button>
                 <GoChevronRight />

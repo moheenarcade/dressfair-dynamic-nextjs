@@ -22,6 +22,8 @@ import 'swiper/css/navigation';
 import ManageCartBottomModal from "@/components/models/ManageCartBottomModal";
 import ShareCartBottomModal from "@/components/models/ShareCartBottomModal";
 import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
 
 const CartMainMobileView = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,6 +33,9 @@ const CartMainMobileView = () => {
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const [isManageModalOpen, setIsManageModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+    const params = useParams();
+    const { country, withCountry } = useCountry();
+
     const {
         cartItems,
         updateQty,
@@ -159,6 +164,7 @@ const CartMainMobileView = () => {
 
                     <div className="cart-items pt-4 flex flex-col gap-5 pb-4">
                         {cartItems?.map((item) => (
+                             
                             <div key={item.id} className="single-item flex gap-1 items-center">
                                 <button
                                     className=" "
@@ -173,6 +179,7 @@ const CartMainMobileView = () => {
                                     )}
                                 </button>
                                 <div className="flex gap-4">
+                                <Link href={withCountry(`/p/${item.product_sku}`)}>
                                     <div className="border border-gray-100 overflow-hidden rounded-md">
                                         <Image
                                             className="w-[100px] lg:w-[280px] h-auto"
@@ -182,12 +189,15 @@ const CartMainMobileView = () => {
                                             alt="product banner"
                                         />
                                     </div>
+                                </Link>
 
                                     <div className="flex flex-col justify-between">
                                         <div className="flex gap-2 items-start">
+                                        <Link href={withCountry(`/p/${item.product_sku}`)}>
                                             <p className="line-clamp-1 md:line-clamp-2 text-[#666] text-[12px] md:text-md lg:text-xl font-[500]">
                                                 {item.name}
                                             </p>
+                                        </Link>
                                             <button onClick={() => handleRemoveItem(item)}>
                                                 <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" aria-hidden="true" fill="#888"><path d="M603.4 96c47.7 0 86.9 36.4 91.3 82.9l0.5 8.8-0.1 75.1 168.9 0c24.7 0 44.8 20.1 44.8 44.8 0 22.7-16.9 41.4-38.7 44.4l-6.1 0.4-20.5 0-46.2 436.2c-5.5 52.1-47.2 92.3-98.5 96.9l-9.7 0.4-354.2 0c-52.4 0-96.8-37.2-106.7-87.7l-1.5-9.6-46.2-436.2-20.5 0c-24.7 0-44.8-20.1-44.8-44.8 0-22.7 16.9-41.4 38.7-44.3l6.1-0.5 169 0 0-75.1c0-47.7 36.4-86.9 82.9-91.3l8.8-0.4 182.7 0z m149.9 256.4l-482.7 0 45.2 426.7c0.9 8.4 7.1 15 15 16.8l4.1 0.4 354.2 0c8.4 0 15.7-5.4 18.2-13.1l0.9-4.1 45.1-426.7z m-149.9-166.8l-182.7 0c-0.8 0-1.5 0.4-1.8 1.1l-0.3 1 0 75.1 186.9 0 0.1-75.1c0-0.8-0.4-1.5-1.1-1.8l-1.1-0.3z"></path></svg>
                                             </button>
@@ -246,6 +256,7 @@ const CartMainMobileView = () => {
                                     </div>
                                 </div>
                             </div>
+                         
                         ))}
                     </div>
                 </div>
@@ -344,7 +355,7 @@ const CartMainMobileView = () => {
                             <FaChevronUp className="text-md" />
                         </div>
                     </button>
-                    <Link href="/checkout" className="w-[65%]">
+                    <Link href={withCountry("/checkout")} className="w-[65%]">
                         <button className="bg-[#fb5d01] w-full hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold flex flex-col justify-center text-[13px] py-1 px-5 lg:px-6 rounded-full transition-all duration-300 ease-in-out">
                             <span className="text-[15px] md:text-xl">Last day for 62.9% off</span>
                             <span className="text-[12px] md:text-md">Checkout (14) | 10 : 46  : 37</span>

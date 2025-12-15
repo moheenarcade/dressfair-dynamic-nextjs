@@ -3,16 +3,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react'
 import { LuCheck, LuChevronRight } from "react-icons/lu";
-import Product1 from "../../../../public/delas-prodcuct2.avif";
+import Product1 from "../../../../../public/delas-prodcuct2.avif";
 import { RiStarFill } from "react-icons/ri";
-import DealTimer from '../../../components/homePageComponent/dealTimer/index';
-import Product2 from "../../../../public/deals-product3.avif";
-import Product3 from "../../../../public/deals-product4.avif";
-import Product4 from "../../../../public/delas-prodcuct2.avif";
-import Product5 from "../../../../public/dealsproduct1.avif";
+import DealTimer from '@/components/homePageComponent/dealTimer/index';
+import Product2 from "../../../../../public/deals-product3.avif";
+import Product3 from "../../../../../public/deals-product4.avif";
+import Product4 from "../../../../../public/delas-prodcuct2.avif";
+import Product5 from "../../../../../public/dealsproduct1.avif";
 import { motion, AnimatePresence } from "framer-motion";
 import { BiCartAdd, BiDotsHorizontalRounded } from 'react-icons/bi';
 import { FiChevronRight } from 'react-icons/fi';
+import { useParams } from 'next/navigation';
+import { useCountry } from '@/context/CountryContext';
 
 // Generate random dates for different timer states
 const getRandomDate = (hoursFromNow) => {
@@ -161,6 +163,8 @@ const BrowsingHistory = () => {
   const [randomRating] = useState(getRandomRating());
   const [randomSold] = useState(getRandomSold());
   const [openDropdown, setOpenDropdown] = useState(null);
+  const params = useParams();
+  const { country, withCountry } = useCountry();
 
   const toggleDropdown = (index) => {
     setOpenDropdown(openDropdown === index ? null : index);
@@ -213,7 +217,7 @@ const BrowsingHistory = () => {
           <div className=" grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-4 gap-1">
             {products?.slice(0, 4).map((product) => (
               <div key={product.id}>
-                <Link href="#">
+                <Link href={withCountry("#")}>
                   <div className="single-product p-2 group transition-all duration-500 ease-in-out cursor-pointer hover:bg-white rounded-md hover:shadow-[0px_4px_24px_0px_rgba(0,0,0,0.1)]">
                     <div className="product-img overflow-hidden w-full object-cover h-[250px] bg-[#00000008] flex items-center justify-center">
                       <Image
@@ -303,7 +307,7 @@ const BrowsingHistory = () => {
         <div className="block xl:hidden">
           <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-2">
             {products?.slice(0, 4).map((product, index) => (
-              <Link key={index} href={`/p/${product.sku}`}>
+              <Link key={index} href={withCountry(`/p/${product.sku}`)}>
                 <div
                   className="single-product xl:p-2 group transition-all duration-500 ease-in-out cursor-pointer hover:bg-white rounded-md hover:shadow-[0px_4px_24px_0px_rgba(0,0,0,0.1)]"
                 >
@@ -364,8 +368,8 @@ const BrowsingHistory = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-4 gap-1">
             {products?.slice(0, 2).map((product) => (
               <div key={product.id}>
-                <Link href="#">
-                  <div className="single-product p-2 group transition-all duration-500 ease-in-out cursor-pointer hover:bg-white rounded-md hover:shadow-[0px_4px_24px_0px_rgba(0,0,0,0.1)]">
+                <Link href={withCountry("#")}>
+                <div className="single-product p-2 group transition-all duration-500 ease-in-out cursor-pointer hover:bg-white rounded-md hover:shadow-[0px_4px_24px_0px_rgba(0,0,0,0.1)]">
                     <div className="product-img overflow-hidden w-full h-[250px] bg-[#00000008] flex items-center justify-center">
                       <Image
                         className='w-full h-full object-cover group-hover:scale-[1.2] transition-all duration-500 ease-in-out'
@@ -454,7 +458,7 @@ const BrowsingHistory = () => {
         <div className="block xl:hidden">
           <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-2">
             {products?.slice(0, 4).map((product, index) => (
-              <Link key={index} href={`/p/${product.sku}`}>
+              <Link key={index} href={withCountry(`/p/${product.sku}`)}>
                 <div
                   className="single-product xl:p-2 group transition-all duration-500 ease-in-out cursor-pointer hover:bg-white rounded-md hover:shadow-[0px_4px_24px_0px_rgba(0,0,0,0.1)]"
                 >

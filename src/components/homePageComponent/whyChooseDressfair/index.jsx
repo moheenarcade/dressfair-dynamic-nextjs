@@ -4,6 +4,8 @@ import { FaChevronRight } from "react-icons/fa6";
 import { BsBellFill } from "react-icons/bs";
 import Link from "next/link";
 import SecurityReminderModel from "@/components/models/securityReminderModel";
+import { useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
 
 const mainItems = [
     {
@@ -82,13 +84,15 @@ const reminderItems = [
 
 const WhyChooseDressfair = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+  const params = useParams();
+  const { country, withCountry } = useCountry();
 
     return (
         <>
             <div className="why-choose-dressfair container mx-auto px-2 2xl:px-22 py-8">
                 <div className="border-[#0A8800] rounded-lg border overflow-hidden mb-4">
                     {mainItems.map((item, idx) => (
-                        <Link href="#" key={idx} >
+                        <Link href={withCountry("#")} key={idx} >
                             <div className="bg-[#0A8800] hover:bg-[#0A6803] cursor-pointer transition-ll duration-500 ease-in-out flex items-center justify-between py-2 px-6 text-white font-semibold text-[15px]">
                                 <p className="flex items-center gap-2">
                                     {item.icon} {item.title}

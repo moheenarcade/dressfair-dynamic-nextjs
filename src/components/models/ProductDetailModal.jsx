@@ -21,10 +21,13 @@ import { getProductDetails } from "@/lib/api";
 import Loader from "../loader";
 import { toast } from 'react-hot-toast';
 import { IoIosArrowDown } from "react-icons/io";
+import { useCountry } from "@/context/CountryContext";
 
 export default function ProductDetailModal({ isOpen, onClose, productSku }) {
     const { openCart, addToCart } = useCart();
     const { slug } = useParams();
+    const params = useParams();
+    const { country, withCountry } = useCountry();
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [loading, setLoading] = useState(true);
     const [productDetail, setProductDetail] = useState(null);
@@ -459,7 +462,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                             </button>
 
                                             <div className="pt-2 text-[15px]">
-                                                <Link href={`/p/${productDetail?.sku}`} className="flex hover:underline items-center gap-1">
+                                                <Link href={withCountry(`/p/${productDetail?.sku}`)} className="flex hover:underline items-center gap-1">
                                                     All details <FaChevronRight className="text-[13px]" />
                                                 </Link>
                                             </div>

@@ -6,9 +6,13 @@ import Image from 'next/image';
 import Link from "next/link";
 import ProductBanner from "../../../public/Solid_gray.png";
 import { getLocalCategories } from "@/lib/api";
+import { useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
 
 const MobileCategories = ({ onClose, categories }) => {
     const [activeCategory, setActiveCategory] = useState(categories?.[0] || null);
+    const params = useParams();
+    const { country, withCountry } = useCountry();
 
     useEffect(() => {
         const storedSlug = sessionStorage.getItem("selectedCategorySlug");
@@ -83,7 +87,7 @@ const MobileCategories = ({ onClose, categories }) => {
                                         <>
                                             <Link
                                                 key={sub.slug}
-                                                href={`/c/${sub?.slug && sub.slug ? sub.slug : activeCategory?.slug}`}
+                                                href={withCountry(`/c/${sub?.slug && sub.slug ? sub.slug : activeCategory?.slug}`)}
                                                 onClick={() => {
                                                     sessionStorage.setItem(
                                                         "selectedCategorySlug",

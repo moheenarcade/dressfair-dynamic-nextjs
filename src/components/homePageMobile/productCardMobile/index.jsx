@@ -7,6 +7,8 @@ import Link from 'next/link';
 import MobileAddToCartBottomModal from '@/components/models/MobileAddToCartBottomModal';
 import { CgClose } from 'react-icons/cg';
 import ProductColorSize from '@/components/productDetailPageComponent/productColorSize';
+import { useParams } from 'next/navigation';
+import { useCountry } from '@/context/CountryContext';
 
 const getRandomRating = () => {
 
@@ -24,13 +26,16 @@ const ProductCardMobile = ({ products = [] }) => {
     const [randomRating] = useState(getRandomRating());
     const [randomSold] = useState(getRandomSold());
     const [selectedProductSku, setSelectedProductSku] = useState(null);
+  const params = useParams();
+  const { country, withCountry } = useCountry();
+
 
     // console.log(products, "mobile product list ")
     return (
         <>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-2">
                 {products.map((product, index) => (
-                    <Link key={index} href={`/p/${product.sku}`}>
+                    <Link key={index} href={withCountry(`/p/${product.sku}`)}>
                         <div
                             className="single-product xl:p-2 group transition-all duration-500 ease-in-out cursor-pointer hover:bg-white rounded-md hover:shadow-[0px_4px_24px_0px_rgba(0,0,0,0.1)]"
                         >

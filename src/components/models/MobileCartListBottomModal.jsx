@@ -12,24 +12,29 @@ import 'swiper/css/navigation';
 import Link from "next/link";
 import { FaChevronUp } from "react-icons/fa6";
 import { useCart } from "@/context/CartContext";
+import { useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
 
 const MobileCartListBottomModal = ({
   isOpen,
   onClose,
 }) => {
-      const {
-          cartItems,
-          updateQty,
-          toggleSingle,
-          toggleSelectAll,
-          isCartOpen,
-          closeCart,
-          subtotal,
-          totalQty,
-          allSelected,
-          removeItem,
-  
-      } = useCart();
+  const {
+    cartItems,
+    updateQty,
+    toggleSingle,
+    toggleSelectAll,
+    isCartOpen,
+    closeCart,
+    subtotal,
+    totalQty,
+    allSelected,
+    removeItem,
+
+  } = useCart();
+  const params = useParams();
+  const { country, withCountry } = useCountry();
+
 
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
@@ -111,16 +116,18 @@ const MobileCartListBottomModal = ({
                     >
                       {cartItems?.map((item) => (
                         <SwiperSlide key={item.id}>
-                          <div className="single-item shadow-lg p-1 border border-gray-200 rounded-sm">
-                            <Image className="w-full" width={100} height={100} src={item.images[0] || "/placeholder.png"} alt="product banner" />
-                            <div className="flex items-center justify-start gap-1">
-                              <p className="text-[14px] font-[600] text-center"><span className="text-[11px]">Rs.</span>{item.sale_price}</p>
-                              <p className="text-[#8d8c8c] text-[13px] font-semibold relative w-fit"><span className="absolute top-[9px] bg-[#FB7701] w-full h-[2px]"></span>Rs.{item.price}</p>
-                            </div>
-                            {/* <p className="text-[#fb7701] text-[13px] font-[500]">
+                          <Link href={withCountry(`/p/${item.product_sku}`)}>
+                            <div className="single-item shadow-lg p-1 border border-gray-200 rounded-sm">
+                              <Image className="w-full" width={100} height={100} src={item.images[0] || "/placeholder.png"} alt="product banner" />
+                              <div className="flex items-center justify-start gap-1">
+                                <p className="text-[14px] font-[600] text-center"><span className="text-[11px]">Rs.</span>{item.sale_price}</p>
+                                <p className="text-[#8d8c8c] text-[13px] font-semibold relative w-fit"><span className="absolute top-[9px] bg-[#FB7701] w-full h-[2px]"></span>Rs.{item.price}</p>
+                              </div>
+                              {/* <p className="text-[#fb7701] text-[13px] font-[500]">
                               47% OFF
                             </p> */}
-                          </div>
+                            </div>
+                          </Link>
                         </SwiperSlide>
                       ))}
                     </Swiper>
@@ -176,7 +183,7 @@ const MobileCartListBottomModal = ({
                         <FaChevronUp className="text-md" />
                       </div>
                     </button>
-                    <Link href="/checkout" className="w-[65%]">
+                    <Link href={withCountry("/checkout")} className="w-[65%]">
                       <button className="bg-[#fb5d01] w-full hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold flex flex-col justify-center text-[13px] py-1 px-5 lg:px-6 rounded-full transition-all duration-300 ease-in-out">
                         <span className="text-[15px] md:text-xl">Last day for 62.9% off</span>
                         <span className="text-[12px] md:text-md">Checkout (14) | 10 : 46  : 37</span>

@@ -1,11 +1,15 @@
 "use client"
+import { useCountry } from '@/context/CountryContext';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import React, { useState } from 'react'
 import { FiChevronRight } from 'react-icons/fi';
 import { IoIosLock } from 'react-icons/io';
 
 const Permissions = () => {
   const [hideMoreTab, setHideMoretab] = useState(false);
+            const params = useParams();
+            const { country, withCountry } = useCountry();
 
   return (
     <div className='permission-main px-4 lg:px-0'>
@@ -172,7 +176,7 @@ const Permissions = () => {
 
         <div className="pb-6 md:pb-12">
           <p className='text-[#777] md:text-[#222] text-sm pt-6'>
-            Dressfair believes in being transparent and requesting a minimal amount of permissions. You can also learn more about how we operate to protect our user's privacy in the <Link href="#" className='text-black underline'>Privacy policy,</Link> which includes details about how we handle information that does not involve requesting permission or personal privacy.
+            Dressfair believes in being transparent and requesting a minimal amount of permissions. You can also learn more about how we operate to protect our user's privacy in the <Link href={withCountry("#")} className='text-black underline'>Privacy policy,</Link> which includes details about how we handle information that does not involve requesting permission or personal privacy.
           </p>
         </div>
       </div>

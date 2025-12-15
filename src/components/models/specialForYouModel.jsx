@@ -3,6 +3,8 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
 
 
 const backdrop = {
@@ -16,6 +18,9 @@ const modal = {
 };
 
 const SpecialForYouModel = ({ isOpen, onClose }) => {
+        const params = useParams();
+        const { country, withCountry } = useCountry();
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -55,7 +60,7 @@ const SpecialForYouModel = ({ isOpen, onClose }) => {
                                     <li className="font-[600]">Rs.280 Credit for delay</li>
                                     <p className="text-[13px]">
                                         If your order isn't delivered on or before the latest delivery date provided to you, as a gesture of courtesy, we offer you a Rs.280 credit (Standard Shipping) within 48 hours of that date. The credit will be issued to your Dressfair credit balance and can be used on your next order. Under specific circumstances, including but not limited to natural disasters and other unforeseeable circumstances, you may not be able to receive compensation for late delivery.
-                                        <Link href="#">
+                                        <Link href={withCountry("#")}>
                                             For more exceptions and details about the policy, please refer to our policy page
                                         </Link>
                                     </p>

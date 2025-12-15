@@ -12,6 +12,8 @@ import 'swiper/css/navigation';
 import Link from "next/link";
 import { FaChevronUp } from "react-icons/fa6";
 import { useCart } from "@/context/CartContext";
+import { useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
 
 const MobileChekoutListBottomModal = ({
   isOpen,
@@ -30,6 +32,10 @@ const MobileChekoutListBottomModal = ({
           removeItem,
   
       } = useCart();
+          const params = useParams();
+          const { country, withCountry } = useCountry();
+
+
   // Disable scroll when modal is open
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
@@ -118,7 +124,7 @@ const MobileChekoutListBottomModal = ({
                     </div>
                     <div className="pt-2 pb-3">
                       <p className='text-[#555555] font-[400] text-[13px]'>
-                        By submitting your order, you agree to our <Link href="#" className='text-[#0065BE] underline'>Terms of Use</Link> and <Link href="#" className='text-[#0065BE] underline'>Privacy Policy</Link>.
+                        By submitting your order, you agree to our <Link href={withCountry("#")} className='text-[#0065BE] underline'>Terms of Use</Link> and <Link href={withCountry("#")}  className='text-[#0065BE] underline'>Privacy Policy</Link>.
                       </p>
                     </div>
                   </div>
@@ -139,7 +145,7 @@ const MobileChekoutListBottomModal = ({
                         <FaChevronUp className="text-md" />
                       </div>
                     </button>
-                    <Link href="#" className="w-[65%]">
+                    <Link href={withCountry("#")}  className="w-[65%]">
                       <button className="bg-[#fb5d01] py-3  w-full hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold flex flex-col justify-center text-lg py-1 px-5 lg:px-6 rounded-full transition-all duration-300 ease-in-out">
 
                         Submit order ({totalQty})

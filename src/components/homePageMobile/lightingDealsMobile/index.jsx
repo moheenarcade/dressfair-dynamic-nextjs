@@ -16,6 +16,8 @@ import Product2 from "../../../../public/deals-product3.avif";
 import Product3 from "../../../../public/deals-product4.avif";
 import Product4 from "../../../../public/delas-prodcuct2.avif";
 import Product5 from "../../../../public/dealsproduct1.avif";
+import { useParams } from 'next/navigation';
+import { useCountry } from '@/context/CountryContext';
 
 // Generate random dates for different timer states
 const getRandomDate = (hoursFromNow) => {
@@ -137,8 +139,11 @@ const products = [
 
 const LightingDealsMobile = () => {
     const swiperRef = useRef(null);
-        const tabsContainerRef = useRef(null);
-    
+    const tabsContainerRef = useRef(null);
+    const params = useParams();
+    const { country, withCountry } = useCountry();
+
+
     return (
         <>
             <div className='px-3 lg:px-0 pb-2'>
@@ -156,10 +161,10 @@ const LightingDealsMobile = () => {
                 </div>
             </div>
 
-            <div className="lighting-deals-cards relative px-3 lg:px-0 pb-1"   ref={tabsContainerRef}
-               onTouchStart={(e) => e.stopPropagation()}
-               onTouchMove={(e) => e.stopPropagation()}
-               onTouchEnd={(e) => e.stopPropagation()}
+            <div className="lighting-deals-cards relative px-3 lg:px-0 pb-1" ref={tabsContainerRef}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onTouchEnd={(e) => e.stopPropagation()}
             >
                 <Swiper
                     ref={swiperRef}
@@ -196,7 +201,7 @@ const LightingDealsMobile = () => {
                 >
                     {products.map((product) => (
                         <SwiperSlide key={product.id}>
-                            <Link href="#">
+                            <Link href={withCountry("#")}>
                                 <div className="single-lighting-deals-card group">
                                     <div className="product-img overflow-hidden w-full bg-[#00000008] flex items-center justify-center">
                                         <Image
@@ -211,7 +216,7 @@ const LightingDealsMobile = () => {
                                                 Rs.<span className='text-[13px] md:text-[18px] delas-price-mobile'>{product.price.toLocaleString()}</span>
                                             </p>
                                             <p className='text-[10px] md:text-[14px] mobile-sold-num font-semibold text-[#555]'>
-                                             {product.sold}+sold
+                                                {product.sold}+sold
                                             </p>
                                         </div>
                                     </div>
@@ -223,7 +228,7 @@ const LightingDealsMobile = () => {
                     ))}
                 </Swiper>
 
-               
+
             </div>
 
             <div className="bg-[#f6f6f6] h-[4px] w-full"></div>

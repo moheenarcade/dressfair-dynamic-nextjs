@@ -1,6 +1,8 @@
 "use client"
+import { useCountry } from '@/context/CountryContext';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import React from 'react';
 import { LuCheck, LuChevronRight } from 'react-icons/lu';
 import { MdLock } from 'react-icons/md';
@@ -8,6 +10,8 @@ import { RiSecurePaymentFill } from 'react-icons/ri';
 import { TbTruckDelivery } from 'react-icons/tb';
 
 const CheckoutTermConditions = () => {
+    const params = useParams();
+    const { country, withCountry } = useCountry();
 
     return (
         <>
@@ -36,7 +40,7 @@ const CheckoutTermConditions = () => {
                             <li className="text-[#555] text-[14px] pt-1 font-[500] flex items-center gap-1"><LuCheck className="text-lg text-[#088901]" />30-day no delivery refund</li>
                         </div>
                     </ul>
-                    <Link href="#" className="flex font-[500] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
+                    <Link href={withCountry("#")} className="flex font-[500] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
                         Learn more <LuChevronRight />
                     </Link>
                 </div>
@@ -83,7 +87,7 @@ const CheckoutTermConditions = () => {
                     <p className="text-[#555] text-[14px] pt-1 font-[500]">
                         Protecting your privacy is important to us! Please be assured that your information will be kept secured and uncompromised. We will only use your information in accordance with our privacy policy to provide and improve our services to you.
                     </p>
-                    <Link href="#" className="flex font-[500] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
+                    <Link href={withCountry("#")} className="flex font-[500] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
                         Learn more <LuChevronRight />
 
                     </Link>
@@ -96,7 +100,7 @@ const CheckoutTermConditions = () => {
                     <p className="text-[#555] text-[14px] pt-1 font-[500]">
                         Shop confidently on Dressfair knowing that if something goes wrong, we've always got your back.
                     </p>
-                    <Link href="#" className="flex font-[500] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
+                    <Link href={withCountry("#")} className="flex font-[500] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
                         See program terms<LuChevronRight />
                     </Link>
                 </div>

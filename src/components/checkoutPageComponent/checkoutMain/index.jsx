@@ -12,6 +12,8 @@ import CoupenCode from '../coupenCode';
 import CheckoutTermConditions from '../checkoutTermsConditions';
 import AddressModal from '@/components/models/AddressModal';
 import EditAddressModal from '@/components/models/EditAddressModal';
+import { useParams } from 'next/navigation';
+import { useCountry } from '@/context/CountryContext';
 
 const paymentMethods = [
     {
@@ -71,12 +73,16 @@ const CheckoutMain = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [selectedAddressToEdit, setSelectedAddressToEdit] = useState(null);
 
+    const params = useParams();
+    const { country, withCountry } = useCountry();
+
+    
     return (
         <>
             <h1 aria-label="Shopping cart"></h1>
             <div className="breadcrupms pb-3">
                 <ul className="flex items-center gap-1 text-[#777] text-sm pt-6">
-                    <Link href="/"><li>Home</li></Link>
+                    <Link href={withCountry("/")}><li>Home</li></Link>
                     <GoChevronRight />
                     <li className="text-black">Checkout</li>
                 </ul>
@@ -237,7 +243,7 @@ const CheckoutMain = () => {
                             </div>
                             <div className="pt-2 pb-3 border-b border-b-gray-200">
                                 <p className='text-[#555555] font-[400] text-[13px]'>
-                                    By submitting your order, you agree to our <Link href="#" className='text-[#0065BE] underline'>Terms of Use</Link> and <Link href="#" className='text-[#0065BE] underline'>Privacy Policy</Link>.
+                                    By submitting your order, you agree to our <Link href={withCountry("#")} className='text-[#0065BE] underline'>Terms of Use</Link> and <Link href={withCountry("#")} className='text-[#0065BE] underline'>Privacy Policy</Link>.
                                 </p>
                             </div>
                             <div className="py-6">

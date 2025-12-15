@@ -14,6 +14,7 @@ import { fetchAndSaveCategories, getCatalogue, getLocalCategories, getSubCategor
 import Loader from '../loader';
 import { FaChevronDown } from 'react-icons/fa6';
 import ProductBanner from "../../../public/Solid_gray.png";
+import { useCountry } from '@/context/CountryContext';
 
 const CategroyComponents = () => {
   const params = useParams();
@@ -28,7 +29,9 @@ const CategroyComponents = () => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const { country, withCountry } = useCountry();
 
+  
   // console.log(subcategoryList , "subcategory list here ")
   const toSlug = (slug) =>
     slug.toLowerCase().replace(/&/g, "and").replace(/\s+/g, "-");
@@ -138,12 +141,12 @@ const CategroyComponents = () => {
       <div className="hidden xl:block">
         {subcategory && (
           <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-6 px-2">
-            <Link href="/" className="hover:text-gray-700">
+            <Link href={withCountry("/")} className="hover:text-gray-700">
               Home
             </Link>
             <LuChevronRight />
             <Link
-              href={`/c/${toSlug(category.slug)}`}
+              href={withCountry(`/c/${toSlug(category.slug)}`)}
               className="hover:text-gray-700"
             >
               {category.name}
@@ -163,7 +166,7 @@ const CategroyComponents = () => {
       {activeCategory && !subcategory && subcategoryList.length > 0 && (
         <div className="grid grid-cols-4 md:grid-cols-7 lg:grid-cols-12 gap-4 pt-6 pb-6 mb-6 border-b border-b-gray-300 px-2">
           {subcategoryList.map((sub, index) => (
-            <Link key={index} href={`/c/${activeCategory.slug}/${sub.slug}`}>
+            <Link key={index} href={withCountry(`/c/${activeCategory.slug}/${sub.slug}`)}>
             <div className="single-cat group cursor-pointer flex flex-col items-center">
               <Image
                 className="w-[90%] h-auto rounded-full group-hover:scale-[1.05] transition-all duration-300 ease-in-out"

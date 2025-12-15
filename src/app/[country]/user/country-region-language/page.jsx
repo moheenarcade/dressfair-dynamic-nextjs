@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select, { components } from "react-select";
 import { useLanguage } from "@/context/LanguageContext";
 import Link from "next/link";
@@ -8,6 +8,9 @@ import { GoChevronRight } from "react-icons/go";
 import { FaChevronRight } from "react-icons/fa6";
 import ShareAppBottomModal from "@/components/models/ShareAppBottomModal";
 import { HiOutlineHome } from "react-icons/hi2";
+import { useRouter, usePathname, useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
+
 
 const customSelectStyles = {
   control: (provided, state) => ({
@@ -48,16 +51,23 @@ const customSelectStyles = {
   }),
 };
 
+const COUNTRY_MAP = {
+  ae: { value: "ae", label: "United Arab Emirates (UAE)", flag: "🇦🇪" },
+  sa: { value: "sa", label: "Saudi Arabia (KSA)", flag: "🇸🇦" },
+  om: { value: "om", label: "Oman", flag: "🇴🇲" },
+  pk: { value: "pk", label: "Pakistan", flag: "🇵🇰" },
+};
 
 const CountryRegionLanguage = () => {
+  const router = useRouter();
+  const pathname = usePathname();
   const { language, setLanguage } = useLanguage();
   const [openTab, setOpenTab] = useState(null);
   const [openShare, setOpenShare] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState({
-    value: "ae",
-    label: "United Arab Emirates (UAE)",
-    flag: "🇦🇪",
-  });
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const params = useParams();
+  const { country, setCountry, withCountry } = useCountry();
+
   const initialLang = language
     ? language
     : localStorage.getItem("language") || "en";
@@ -81,6 +91,19 @@ const CountryRegionLanguage = () => {
 
   ];
 
+
+  useEffect(() => {
+    if (!pathname) return;
+
+    const segments = pathname.split("/").filter(Boolean);
+    const urlCountry = segments[0]; // ae / pk / om
+
+    if (COUNTRY_MAP[urlCountry]) {
+      setSelectedCountry(COUNTRY_MAP[urlCountry]);
+    }
+  }, [pathname]);
+
+
   const Option = (props) => (
     <components.Option {...props}>
       <span className="mr-2">{props.data.flag}</span>
@@ -99,18 +122,38 @@ const CountryRegionLanguage = () => {
     setOpenTab((prev) => (prev === tab ? null : tab));
   };
 
+// Inside your CountryRegionLanguage component, update the changeCountry function:
+
+const changeCountry = (newCountry) => {
+  const segments = pathname.split("/").filter(Boolean);
+  
+  // If we're at the root country path like /ae, just go to new country root
+  if (segments.length === 1 && COUNTRY_MAP[segments[0]]) {
+    router.push(`/${newCountry}`);
+  } else {
+    // Replace the country segment and keep the rest
+    const newSegments = [newCountry, ...segments.slice(1)];
+    router.push("/" + newSegments.join("/"));
+  }
+  
+  setSelectedCountry(COUNTRY_MAP[newCountry]);
+};
+
   return (
     <>
       <div className="country-lang-mian px-3 lg:px-0 hidden lg:block">
         <div className="country-sec w-full lg:w-[70%] 2xl:w-[43%]">
           <div className="mb-4 md:mb-6">
             <label className="font-semibold">Country/Region</label>
+          
             <Select
               options={countryOptions}
               value={selectedCountry}
-              onChange={setSelectedCountry}
+              onChange={(option) => {
+                setSelectedCountry(option);
+                changeCountry(option.value);
+              }}
               placeholder="Select your country"
-              className="mt-1"
               components={{ Option, SingleValue }}
               styles={customSelectStyles}
             />
@@ -159,7 +202,7 @@ const CountryRegionLanguage = () => {
         <div className="block lg:hidden ">
           <div className="fixed w-full top-0 bg-white right-0 left-0 z-[99999] border-b border-b-gray-200">
             <div className="flex items-center justify-between py-4 px-3">
-              <Link href="/user/orders/all-orders">
+              <Link href={withCountry("/user/orders/all-orders")}>
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="text-3xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M15.28 5.22a.75.75 0 0 1 0 1.06L9.56 12l5.72 5.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.75.75 0 0 1 1.06 0Z"></path></svg>
               </Link>
               <p className="font-semibold text-[19px]">Settings</p>
@@ -220,11 +263,11 @@ const CountryRegionLanguage = () => {
 
           <div className="">
             <div className="tabs-main px-3 border-t-6 border-t-[#f5f5f5]">
-            <Link href="/user/payment-methods">
-              <div className="flex items-center justify-between gap-2 py-3 border-b border-b-gray-200">
-                <p className="text-[#000] font-semibold text-[15px]">Your payment methods</p>
-                <FaChevronRight className="text-[#777] text-[14px]" />
-              </div>
+              <Link href={withCountry("/user/payment-methods")}>
+                <div className="flex items-center justify-between gap-2 py-3 border-b border-b-gray-200">
+                  <p className="text-[#000] font-semibold text-[15px]">Your payment methods</p>
+                  <FaChevronRight className="text-[#777] text-[14px]" />
+                </div>
               </Link>
               <div className="py-3 border-b border-b-gray-200">
                 <div
@@ -235,8 +278,8 @@ const CountryRegionLanguage = () => {
                   <div className="flex items-center gap-1">
                     {/* Show selected country label + flag */}
                     <span className="text-[#777] uppercase text-[16px] font-[500] flex items-center gap-1">
-                      <span>{selectedCountry.flag}</span>
-                      <span>{selectedCountry.value}</span>
+                      <span>{selectedCountry?.flag}</span>
+                      <span>{selectedCountry?.value}</span>
                     </span>
                     <FaChevronRight
                       className={`text-[#777] text-[14px] transition-transform duration-300 ${openTab === "country" ? "rotate-90" : ""
@@ -253,18 +296,23 @@ const CountryRegionLanguage = () => {
                   {countryOptions.map((c) => (
                     <div
                       key={c.value}
+                      // onClick={() => {
+                      //   setSelectedCountry(c); // update selected country
+                      //   setOpenTab(null);
+                      // }}
                       onClick={() => {
-                        setSelectedCountry(c); // update selected country
+                        setSelectedCountry(c);
+                        changeCountry(c.value);
                         setOpenTab(null);
                       }}
-                      className={`flex items-center justify-between p-2 rounded-md cursor-pointer ${selectedCountry.value === c.value ? "bg-gray-100" : "hover:bg-gray-50"
+                      className={`flex items-center justify-between p-2 rounded-md cursor-pointer ${selectedCountry?.value === c.value ? "bg-gray-100" : "hover:bg-gray-50"
                         }`}
                     >
                       <div className="flex items-center gap-2">
                         <span>{c.flag}</span>
                         <span className="text-[14px]">{c.label}</span>
                       </div>
-                      {selectedCountry.value === c.value && (
+                      {selectedCountry?.value === c.value && (
                         <span className="text-green-600 text-sm">✔</span>
                       )}
                     </div>
@@ -324,11 +372,11 @@ const CountryRegionLanguage = () => {
                   <FaChevronRight className="text-[#777] text-[14px]" />
                 </div>
               </div>
-              <Link href="/user/notifications">
-              <div className="flex items-center justify-between gap-2 py-3">
-                <p className="text-[#000] font-semibold text-[15px]">Notifications</p>
-                <FaChevronRight className="text-[#777] text-[14px]" />
-              </div>
+              <Link href={withCountry("/user/notifications")}>
+                <div className="flex items-center justify-between gap-2 py-3">
+                  <p className="text-[#000] font-semibold text-[15px]">Notifications</p>
+                  <FaChevronRight className="text-[#777] text-[14px]" />
+                </div>
               </Link>
             </div>
 
@@ -360,9 +408,9 @@ const CountryRegionLanguage = () => {
             </div>
           </div>
 
-          <Link href="/">
+          <Link href={withCountry("/")}>
             <div className="w-12 h-12 right-4 fixed bottom-10 bg-white shadow-lg border border-gray-200 rounded-full flex items-center justify-center">
-              <HiOutlineHome className="text-2xl"/>
+              <HiOutlineHome className="text-2xl" />
             </div>
           </Link>
         </div>

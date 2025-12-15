@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AiOutlineSecurityScan } from "react-icons/ai";
 import { BsCreditCard2Front } from "react-icons/bs";
@@ -15,26 +15,30 @@ import { motion, AnimatePresence } from "framer-motion";
 import OrdersNavbar from "./orders/ordersNavbar";
 import ExploreInterestProducts from "@/components/productDetailPageComponent/exploreInterestProducts";
 import ProductListingMobile from "@/components/homePageMobile/productListingMobile";
+import { useCountry } from "@/context/CountryContext";
 
 export default function UserLayout({ children }) {
     const pathname = usePathname();
     const [isOrdersOpen, setIsOrdersOpen] = useState(false);
+    const params = useParams();
+    const { country, withCountry } = useCountry();
 
     useEffect(() => {
-        if (pathname.includes('/user/orders/')) {
+        if (pathname.includes(withCountry('/user/orders/')
+        )) {
             setIsOrdersOpen(true);
         } else {
             setIsOrdersOpen(false);
         }
-    }, [pathname]);
+    }, [pathname , country]);
 
     const dropdownVariants = {
         hidden: { height: 0, opacity: 0 },
         visible: { height: "auto", opacity: 1 },
     };
 
-    const isOrdersPage = pathname.includes('/user/orders/');
-    const isBrowsingPage = pathname.includes('/user/browsing-history')
+    const isOrdersPage = pathname.includes(withCountry('/user/orders/'));
+    const isBrowsingPage = pathname.includes(withCountry('/user/browsing-history'))
     const breadcrumbs = {
         "/user/profile": "Profile",
         "/user/orders/all-orders": "Your orders",
@@ -71,7 +75,7 @@ export default function UserLayout({ children }) {
             <div className="flex">
                 <aside className="hidden lg:block w-[220px] py-6">
                     <nav className="flex flex-col gap-1">
-                        <Link href="/user/orders/all-orders">
+                        <Link href={withCountry("/user/orders/all-orders")}>
                             <button
                                 onClick={() => setIsOrdersOpen(!isOrdersOpen)}
                                 className={`flex items-center justify-between w-full text-[#222] text-[14px] font-[500] rounded-sm gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3`}
@@ -95,38 +99,38 @@ export default function UserLayout({ children }) {
                                     className="flex flex-col mt-1 gap-1 text-[#888] text-[12px]"
                                 >
                                     <Link
-                                        href="/user/orders/all-orders"
-                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/orders/all-orders" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
+                                        href={withCountry("/user/orders/all-orders")}
+                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/orders/all-orders") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
                                     >
                                         All Orders
                                     </Link>
                                     <Link
-                                        href="/user/orders/processing"
-                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/orders/processing" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
+                                        href={withCountry("/user/orders/processing")}
+                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/orders/processing") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
                                     >
                                         Processing
                                     </Link>
                                     <Link
-                                        href="/user/orders/shipped"
-                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/orders/shipped" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
+                                        href={withCountry("/user/orders/shipped")}
+                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/orders/shipped") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
                                     >
                                         Shipped
                                     </Link>
                                     <Link
-                                        href="/user/orders/delivered"
-                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/orders/delivered" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
+                                        href={withCountry("/user/orders/delivered")}
+                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/orders/delivered") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
                                     >
                                         Delivered
                                     </Link>
                                     <Link
-                                        href="/user/orders/returns"
-                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/orders/returns" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
+                                        href={withCountry("/user/orders/returns")}
+                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/orders/returns") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
                                     >
                                         Returns
                                     </Link>
                                     <Link
-                                        href="/user/orders/cancel"
-                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/orders/cancel" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
+                                        href={withCountry("/user/orders/cancel")}
+                                        className={`flex items-center justify-between pl-[38px] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/orders/cancel") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent"}`}
                                     >
                                         Cancel
                                     </Link>
@@ -134,8 +138,8 @@ export default function UserLayout({ children }) {
                             )}
                         </AnimatePresence>
                         <Link
-                            href="/user/your-reviews"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/your-reviews" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"}
+                            href={withCountry("/user/your-reviews")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/your-reviews") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"}
                                 `}
                         >
                             <div className="flex items-center gap-1">
@@ -145,8 +149,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/profile"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/profile" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/profile")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/profile") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -154,8 +158,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/coupons-offers"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/coupons-offers" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/coupons-offers")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/coupons-offers") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -163,8 +167,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/credit-balance"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/credit-balance" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/credit-balance")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/credit-balance") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -172,8 +176,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/followed-stores"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/followed-stores" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/followed-stores")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/followed-stores") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -183,8 +187,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/browsing-history"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/browsing-history" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/browsing-history")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/browsing-history") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -194,8 +198,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/addresses"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/addresses" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/addresses")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/addresses") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -205,8 +209,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/country-region-language"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/country-region-language" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/country-region-language")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/country-region-language") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -214,8 +218,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/payment-methods"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/payment-methods" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/payment-methods")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/payment-methods") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -223,8 +227,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/account-security"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/account-security" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/account-security")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/account-security") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -232,8 +236,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/permissions"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/permissions" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/permissions")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/permissions") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">
@@ -243,8 +247,8 @@ export default function UserLayout({ children }) {
                             </div>
                         </Link>
                         <Link
-                            href="/user/notifications"
-                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === "/user/notifications" ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
+                            href={withCountry("/user/notifications")}
+                            className={`flex items-center justify-between text-[#222] text-[14px] font-[500] gap-1 transition-all duration-300 ease-in-out hover:bg-gray-200 py-2 px-3 border-l-4 ${pathname === withCountry("/user/notifications") ? "bg-[#fff7f0] border-l-[#fb7701]" : "border-l-transparent rounded-sm"
                                 }`}
                         >
                             <div className="flex items-center gap-1">

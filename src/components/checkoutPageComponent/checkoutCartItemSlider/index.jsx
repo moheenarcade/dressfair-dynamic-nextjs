@@ -10,6 +10,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import CartItemsDetailcheckoutDisktopModel from '@/components/models/cartItemsDetailcheckoutDisktopModel';
 import toast from 'react-hot-toast';
+import { useParams } from 'next/navigation';
+import { useCountry } from '@/context/CountryContext';
 
 const CheckoutCartItemSlider = () => {
     const {
@@ -27,7 +29,9 @@ const CheckoutCartItemSlider = () => {
     } = useCart();
         const [openQty, setOpenQty] = useState(false);
             const [showCartItemsModel, setShowCartItemsModel] = useState(false);
-        
+            const params = useParams();
+            const { country, withCountry } = useCountry();
+
         const [selectedQty, setSelectedQty] = useState(1);
         const qtyOptions = [0, 1, 2, 3, 4, 5];
 
@@ -107,6 +111,7 @@ const CheckoutCartItemSlider = () => {
                     >
                           {cartItems?.map((item) => (
                             <SwiperSlide key={item.id}>
+                             <Link href={withCountry(`/p/${item.product_sku}`)}>
                                 <div className="checkout-single-item cursor-pointer hover:shadow-md">
                                     <Image width="200" height="200"  src={item.images[0] || "/placeholder.png"} alt="product banner" />
                                     <div className="price-sec flex flex-wrap items-center gap-1 py-1">
@@ -116,6 +121,7 @@ const CheckoutCartItemSlider = () => {
                                         </p>
                                     </div>
                                 </div>
+                                </Link>
                             </SwiperSlide>
                         ))}
                     </Swiper>

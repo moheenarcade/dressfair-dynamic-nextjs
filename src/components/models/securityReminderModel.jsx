@@ -18,13 +18,13 @@ import PriceSection from "../../../public/priceicons.avif";
 import ProductColorSize from "../productDetailPageComponent/productColorSize";
 import { FaChevronRight } from "react-icons/fa6";
 import { useCart } from "@/context/CartContext";
-
+import { useCountry } from "@/context/CountryContext";
 
 export default function SecurityReminderModel({ isOpen, onClose }) {
     const { slug } = useParams();
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-
-
+    const params = useParams();
+    const { country, withCountry } = useCountry();
 
     return (
         <AnimatePresence>
@@ -69,7 +69,7 @@ export default function SecurityReminderModel({ isOpen, onClose }) {
                             <button onClick={onClose} className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">
                                 Ok
                             </button>
-                            <Link href="#" className="text-[#777] text-[14px] font-[500] pt-3 hover:underline px-12">If you come across anything suspicious, please report it in time</Link>
+                            <Link href={withCountry("#")} className="text-[#777] text-[14px] font-[500] pt-3 hover:underline px-12">If you come across anything suspicious, please report it in time</Link>
                         </div>
                     </motion.div>
                 </>

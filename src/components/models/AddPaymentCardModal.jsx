@@ -10,11 +10,17 @@ import { FiEdit } from "react-icons/fi";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import { LuCheck } from "react-icons/lu";
 import EditAddressModal from "./EditAddressModal";
+import { useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
 
 const AddPaymentCardModal = ({ isOpen, onClose }) => {
+    const params = useParams();
+    const { country, withCountry } = useCountry();
+
+
     if (!isOpen) return null;
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-      const [selectedAddressToEdit, setSelectedAddressToEdit] = useState(null);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedAddressToEdit, setSelectedAddressToEdit] = useState(null);
 
     const [form, setForm] = useState({
         cardNumber: "",
@@ -127,7 +133,7 @@ const AddPaymentCardModal = ({ isOpen, onClose }) => {
                     {/* Header */}
                     <h2 className="text-xl font-bold text-center">Add a new card</h2>
 
-                    <Link href="#" className='pt-1 flex justify-center items-center gap-1 text-[#0a8800] text-[13px] font-[500]'>
+                    <Link href={withCountry("#")} className='pt-1 flex justify-center items-center gap-1 text-[#0a8800] text-[13px] font-[500]'>
                         <IoMdLock />
                         All data is safeguarded
                         <GoChevronRight />
@@ -235,7 +241,7 @@ const AddPaymentCardModal = ({ isOpen, onClose }) => {
                             <div>
                                 <label className="text-sm font-semibold flex items-center gap-1 mt-1">
                                     <span>*</span> CVV
-                                 
+
                                 </label>
 
                                 <input
@@ -269,18 +275,18 @@ const AddPaymentCardModal = ({ isOpen, onClose }) => {
                                     test, test address, ARIF WALA, Punjab Pakistan
                                 </p>
                             </div>
-                            <button 
-                               onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedAddressToEdit({
-                                    name: "test",
-                                    phone: "+92 433 4343434",
-                                    address: "test address",
-                                    city: "ARIF WALA, Punjab Pakistan",
-                                });
-                                setIsEditModalOpen(true);
-                            }}
-                            className="flex items-center gap-1 text-[14px] font-[500] hover:scale-[1.05] hover:bg-gray-100 px-2 py-px rounded-md transition-all duration-[0.5s] ease-in-out">
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedAddressToEdit({
+                                        name: "test",
+                                        phone: "+92 433 4343434",
+                                        address: "test address",
+                                        city: "ARIF WALA, Punjab Pakistan",
+                                    });
+                                    setIsEditModalOpen(true);
+                                }}
+                                className="flex items-center gap-1 text-[14px] font-[500] hover:scale-[1.05] hover:bg-gray-100 px-2 py-px rounded-md transition-all duration-[0.5s] ease-in-out">
                                 <FiEdit />
                                 Edit
                             </button>

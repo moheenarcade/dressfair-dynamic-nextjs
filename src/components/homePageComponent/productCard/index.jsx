@@ -6,6 +6,8 @@ import Image from "next/image";
 import { BiCartAdd } from "react-icons/bi";
 import { RiStarFill } from "react-icons/ri";
 import ProductDetailModal from "@/components/models/ProductDetailModal";
+import { useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
 
 const messages = [
   { title: "Best-Selling Item", subtitle: "in Temporary Tattoos" },
@@ -42,6 +44,10 @@ const ProductCard = ({ products = [], gridClass }) => {
 
 const SingleProduct = ({ product }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+   const params = useParams();
+   const { country, withCountry } = useCountry();
+
+  
   const [activeMessageIndex, setActiveMessageIndex] = useState(
     Math.floor(Math.random() * messages.length)
   );
@@ -73,7 +79,7 @@ const SingleProduct = ({ product }) => {
 
   return (
     <>
-      <Link href={`/p/${product.sku}`}>
+      <Link href={withCountry(`/p/${product.sku}`)}>
         <div className="single-product p-2 group transition-all duration-500 ease-in-out cursor-pointer hover:bg-white rounded-md hover:shadow-[0px_4px_24px_0px_rgba(0,0,0,0.1)]">
           <div className="product-banner w-full h-[260px]">
             <Image

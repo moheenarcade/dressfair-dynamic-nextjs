@@ -30,7 +30,7 @@ const SearchBarHeader = () => {
     const { t } = useTranslation();
     const { language, toggleLanguage } = useLanguage();
     const pathname = usePathname();
-    const isHomePage = pathname === '/' || pathname === '/home';
+    // const isHomePage = pathname === '/' || pathname === '/home';
     const [searchText, setSearchText] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
     const [recentItems, setRecentItems] = useState(recentItemsMock);
@@ -38,6 +38,23 @@ const SearchBarHeader = () => {
     const [isDeleteMode, setIsDeleteMode] = useState(false);
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
+
+
+    const withCountry = (path = "") => `/${country}${path}`;
+    // const isHomePage = pathname === '/' || pathname === '/home';
+    // Split pathname into segments
+    const segments = pathname.split("/").filter(Boolean); // removes empty strings
+    const firstSegment = segments[0]; // could be 'ae', 'pk', etc.
+    const secondSegment = segments[1]; // in case of /ae/home
+
+    const countryPrefixes = ["ae", "pk", "om", "sa"];
+
+    // Check for home page with optional country
+    const isHomePage =
+        (firstSegment === undefined) ||                 // '/'
+        (firstSegment === "home") ||                    // '/home'
+        (countryPrefixes.includes(firstSegment) && !secondSegment) || // '/ae'
+        (countryPrefixes.includes(firstSegment) && secondSegment === "home");
 
     // Close dropdown when clicking outside
     useEffect(() => {

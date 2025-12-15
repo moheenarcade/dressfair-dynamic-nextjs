@@ -19,6 +19,8 @@ import { RiSecurePaymentFill } from "react-icons/ri";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { TbTruckDelivery } from "react-icons/tb";
 import { toast } from "react-hot-toast";
+import { useParams } from "next/navigation";
+import { useCountry } from "@/context/CountryContext";
 
 
 const CartMain = () => {
@@ -40,6 +42,8 @@ const CartMain = () => {
     const [openQty, setOpenQty] = useState(false);
     const [selectedQty, setSelectedQty] = useState(1);
     const qtyOptions = [0, 1, 2, 3, 4, 5];
+    const params = useParams();
+    const { country, withCountry } = useCountry();
 
     // Local state to manage which dropdown is open
     const [openQtyId, setOpenQtyId] = useState(null);
@@ -87,7 +91,7 @@ const CartMain = () => {
             <h1 aria-label="Shopping cart"></h1>
             <div className="breadcrupms pb-3">
                 <ul className="flex items-center gap-1 text-[#777] text-sm pt-6">
-                    <Link href="/"><li>Home</li></Link>
+                    <Link href={withCountry("/")}><li>Home</li></Link>
                     <GoChevronRight />
                     <li className="text-black">Cart</li>
                 </ul>
@@ -122,6 +126,7 @@ const CartMain = () => {
 
                         <div className="cart-items pt-4 flex flex-col gap-5 border-t border-t-gray-200 mt-4 pb-10">
                             {cartItems?.map((item) => (
+
                                 <div key={`${item.product_id}-${item.color.sku}-${item.size.product_option_id}`} className="single-item flex gap-4 items-center">
                                     <button
                                         className=" "
@@ -136,21 +141,26 @@ const CartMain = () => {
                                         )}
                                     </button>
                                     <div className="flex gap-4 w-full">
-                                        <div className="border border-gray-100 overflow-hidden rounded-md">
-                                            <Image
-                                                className="w-[120px] h-auto"
-                                                width={100}
-                                                height={100}
-                                                src={item.images[0] || "/placeholder.png"}
-                                                alt="product banner"
-                                            />
-                                        </div>
+                                        <Link href={withCountry(`/p/${item.product_sku}`)}>
+                                            <div className="border border-gray-100 overflow-hidden rounded-md">
+                                                <Image
+                                                    className="w-[120px] h-auto"
+                                                    width={100}
+                                                    height={100}
+                                                    src={item.images[0] || "/placeholder.png"}
+                                                    alt="product banner"
+                                                />
+                                            </div>
+                                        </Link>
 
                                         <div className="flex flex-col justify-between w-full">
                                             <div className="flex gap-2 items-start w-full justify-between">
-                                                <p className="line-clamp-1 text-[#222] text-[15px] font-[400]">
-                                                    {item.name}
-                                                </p>
+                                                <Link href={withCountry(`/p/${item.product_sku}`)}>
+                                                    <p className="line-clamp-1 text-[#222] text-[15px] font-[400]">
+                                                        {item.name}
+                                                    </p>
+                                                </Link>
+
                                                 <button onClick={() => handleRemoveItem(item)}>
                                                     <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.4rem" height="1.4rem" aria-hidden="true" fill="#888"><path d="M603.4 96c47.7 0 86.9 36.4 91.3 82.9l0.5 8.8-0.1 75.1 168.9 0c24.7 0 44.8 20.1 44.8 44.8 0 22.7-16.9 41.4-38.7 44.4l-6.1 0.4-20.5 0-46.2 436.2c-5.5 52.1-47.2 92.3-98.5 96.9l-9.7 0.4-354.2 0c-52.4 0-96.8-37.2-106.7-87.7l-1.5-9.6-46.2-436.2-20.5 0c-24.7 0-44.8-20.1-44.8-44.8 0-22.7 16.9-41.4 38.7-44.3l6.1-0.5 169 0 0-75.1c0-47.7 36.4-86.9 82.9-91.3l8.8-0.4 182.7 0z m149.9 256.4l-482.7 0 45.2 426.7c0.9 8.4 7.1 15 15 16.8l4.1 0.4 354.2 0c8.4 0 15.7-5.4 18.2-13.1l0.9-4.1 45.1-426.7z m-149.9-166.8l-182.7 0c-0.8 0-1.5 0.4-1.8 1.1l-0.3 1 0 75.1 186.9 0 0.1-75.1c0-0.8-0.4-1.5-1.1-1.8l-1.1-0.3z"></path></svg>
                                                 </button>
@@ -212,6 +222,7 @@ const CartMain = () => {
                                         </div>
                                     </div>
                                 </div>
+
                             ))}
                         </div>
                         <div className="cart-explore-more-pro">
@@ -247,7 +258,7 @@ const CartMain = () => {
                         </div>
                     </div>
 
-                    <Link href="/checkout" className="hover:bg-[#fb7701] hover:scale-[1.03] text-md transition-all duration-300 ease-in-out w-full py-[10px] px-4 rounded-full border border-transparent text-white bg-[#fb5d01] text-md font-semibold">
+                    <Link href={withCountry("/checkout")} className="hover:bg-[#fb7701] hover:scale-[1.03] text-md transition-all duration-300 ease-in-out w-full py-[10px] px-4 rounded-full border border-transparent text-white bg-[#fb5d01] text-md font-semibold">
                         <button className="w-full">  Checkout ({totalQty})</button>
                     </Link>
                     <p className="text-[13px] text-[#555555] flex items-start pt-3">
@@ -316,7 +327,7 @@ const CartMain = () => {
                                 <p className="text-[#555] text-[14px] pt-1 font-[400]">
                                     Protecting your privacy is important to us! Please be assured that your information will be kept secured and uncompromised. We will only use your information in accordance with our privacy policy to provide and improve our services to you.
                                 </p>
-                                <Link href="#" className="flex font-[400] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
+                                <Link href={withCountry("#")} className="flex font-[400] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
                                     Learn more <LuChevronRight />
 
                                 </Link>
@@ -330,7 +341,7 @@ const CartMain = () => {
                                 <p className="text-[#555] text-[14px] pt-1 font-[400]">
                                     Shop confidently on Dressfair knowing that if something goes wrong, we've always got your back.
                                 </p>
-                                <Link href="#" className="flex font-[400] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
+                                <Link href={withCountry("#")} className="flex font-[400] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
                                     See program terms<LuChevronRight />
                                 </Link>
                             </div>
@@ -349,14 +360,14 @@ const CartMain = () => {
                                         <li className="text-[#555] text-[14px] pt-1 font-[400] flex items-center gap-1"><LuCheck className="text-lg text-[#088901]" />30-day no delivery refund</li>
                                     </p>
                                 </ul>
-                                <Link href="#" className="flex font-[400] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
+                                <Link href={withCountry("#")} className="flex font-[400] hover:text-black w-fit items-center gap-1 text-[#555] text-[14px] pt-1">
                                     Learn more <LuChevronRight />
 
                                 </Link>
                             </div>
                             <div className="pt-4">
 
-                                <Link href="#" className="flex font-bold hover:text-black w-fit items-center gap-1 text-[#222] text-[14px] pt-1">
+                                <Link href={withCountry("#")} className="flex font-bold hover:text-black w-fit items-center gap-1 text-[#222] text-[14px] pt-1">
                                     <RiSecurePaymentFill className="text-[#088901] text-2xl inline" />
                                     Dressfair's Tree Planting Program <LuChevronRight />
                                 </Link>

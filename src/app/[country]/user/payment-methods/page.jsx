@@ -1,21 +1,26 @@
 "use client"
 import CheckoutTermConditions from '@/components/checkoutPageComponent/checkoutTermsConditions';
 import AddPaymentCardModal from '@/components/models/AddPaymentCardModal';
+import { useCountry } from '@/context/CountryContext';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import React, { useState } from 'react'
 import { GoChevronRight } from 'react-icons/go';
 import { IoMdLock } from 'react-icons/io';
 
 const PaymentMethods = () => {
   const [showModal, setShowModal] = useState(false);
+      const params = useParams();
+      const { country, withCountry } = useCountry();
+
 
   return (
     <>
       <div className='payment-main px-4 lg:px-0'>
         <div className="">
           <h1 className='text-[#000] text-[20px] font-semibold'>Your payment methods</h1>
-          <Link href="#" className='pt-1 flex items-center gap-1 text-[#0a8800] text-[15px] font-[500]'>
+          <Link href={withCountry("#")} className='pt-1 flex items-center gap-1 text-[#0a8800] text-[15px] font-[500]'>
             <IoMdLock />
             All data is safeguarded
             <GoChevronRight />

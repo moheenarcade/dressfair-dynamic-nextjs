@@ -14,6 +14,8 @@ import { FaChevronRight, FaChevronUp } from 'react-icons/fa6';
 import MobileChekoutListBottomModal from '@/components/models/MobileChekoutListBottomModal';
 import MobileChekoutAddressList from '@/components/models/MobileChekoutAddressList';
 import CartItemsDetailCheckoutMobile from '@/components/models/cartItemsDetailCheckoutMobile';
+import { useParams } from 'next/navigation';
+import { useCountry } from '@/context/CountryContext';
 
 const paymentMethods = [
     {
@@ -76,9 +78,8 @@ const CheckOutMainMobileView = () => {
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const [showMobileAddressModel, setShowMobileAddressModel] = useState(false);
     const [showCartItemsModel, setShowCartItemsModel] = useState(false);
-
-
-
+    const params = useParams();
+    const { country, withCountry } = useCountry();
 
 
     useEffect(() => {
@@ -142,7 +143,7 @@ const CheckOutMainMobileView = () => {
 
             <div className="checkout-header fixed w-full top-0 bg-white right-0 left-0 z-[99999]">
                 <div className="flex items-center justify-between py-2 px-3">
-                   <Link href="/cart"> <GoChevronLeft className='text-3xl' /></Link>
+                   <Link href={withCountry("/cart")}> <GoChevronLeft className='text-3xl' /></Link>
                     <p className='font-semibold text-[19px]'>
                         Checkout ({totalQty})
                     </p>
@@ -302,7 +303,7 @@ const CheckOutMainMobileView = () => {
                 </div>
                 <div className="pt-2 pb-3 border-b-4 mb-4 border-b-gray-100">
                     <p className='text-[#555555] font-[400] text-[13px]'>
-                        By submitting your order, you agree to our <Link href="#" className='text-[#0065BE] underline'>Terms of Use</Link> and <Link href="#" className='text-[#0065BE] underline'>Privacy Policy</Link>.
+                        By submitting your order, you agree to our <Link href={withCountry("#")} className='text-[#0065BE] underline'>Terms of Use</Link> and <Link href={withCountry("#")}  className='text-[#0065BE] underline'>Privacy Policy</Link>.
                     </p>
                 </div>
 
@@ -329,7 +330,7 @@ const CheckOutMainMobileView = () => {
                             <FaChevronUp className="text-md" />
                         </div>
                     </button>
-                    <Link href="#" className="w-[65%] ">
+                    <Link href={withCountry("#")} className="w-[65%] ">
                         <button className="bg-[#fb5d01] py-3  w-full hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold flex flex-col justify-center text-lg py-1 px-5 lg:px-6 rounded-full transition-all duration-300 ease-in-out">
 
                             Submit order ({totalQty})
@@ -360,8 +361,6 @@ const CheckOutMainMobileView = () => {
                 setShowMobileAddressModel={setShowMobileAddressModel}
 
             />
-
-
 
         </>
     )

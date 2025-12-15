@@ -27,6 +27,7 @@ import WhiteLoader from "@/components/whiteLoader";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
 import { toast } from 'react-hot-toast';
+import { useCountry } from "@/context/CountryContext";
 
 const product = {
     title: "Men's Winter Casual PU Leather Jacket",
@@ -44,6 +45,9 @@ const ProductDetailMain = ({ productDetail }) => {
     const [selectedProductSku, setSelectedProductSku] = useState(null);
     // const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSizeObj, setSelectedSizeObj] = useState();
+            const params = useParams();
+            const { country, withCountry } = useCountry();
+
     const [validationError, setValidationError] = useState({
         color: false,
         size: false
@@ -304,9 +308,9 @@ const ProductDetailMain = ({ productDetail }) => {
                     <div className="w-full lg:w-[52%] flex flex-col ">
                         <div className="breadcrupms pb-3 hidden lg:block">
                             <ul className="flex items-center gap-1 text-[#777] text-sm">
-                                <Link href="/"><li>Home</li></Link>
+                                <Link href={withCountry("/")}><li>Home</li></Link>
                                 <GoChevronRight />
-                                <Link href="#"><li>Mens clothing</li></Link>
+                                <Link href={withCountry("#")}><li>Mens clothing</li></Link>
                                 <GoChevronRight />
                                 <li className="text-black">Mens winter clothing</li>
                             </ul>
@@ -360,7 +364,7 @@ const ProductDetailMain = ({ productDetail }) => {
                         <div className="prices-sec flex items-center flex-wrap gap-2 pt-3 pb-4 px-2 lg:px-0">
 
                             {/* If sale_price exists show old price with line-through */}
-                            {currentProduct.sale_price ? (
+                            {currentProduct?.sale_price ? (
                                 <p className="text-[#000000] text-[20px] font-semibold relative">
                                     <span className="absolute top-[15px] bg-[#FB7701] w-full h-[2.5px]"></span>
                                     {currentProduct.price}

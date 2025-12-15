@@ -3,9 +3,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 export const COUNTRY_MAP = {
-  ae: { value: "ae", label: "United Arab Emirates", flag: "🇦🇪" },
-  sa: { value: "sa", label: "Saudi Arabia", flag: "🇸🇦" },
-  om: { value: "om", label: "Oman", flag: "🇴🇲" },
+  ae: { value: "ae", label: "United Arab Emirates", flag: "🇦🇪" , store_id: 2 },
+  sa: { value: "sa", label: "Saudi Arabia", flag: "🇸🇦" , store_id: 5},
+  om: { value: "om", label: "Oman", flag: "🇴🇲" , store_id: 3},
 };
 
 const CountryContext = createContext(null);
@@ -42,6 +42,7 @@ export const CountryProvider = ({ children }) => {
     // Save to localStorage
     if (typeof window !== "undefined") {
       localStorage.setItem("selectedCountry", currentCountry);
+      localStorage.setItem("store_id", COUNTRY_MAP[currentCountry]?.store_id?.toString() || "2");
     }
   }, [pathname]);
 
@@ -58,9 +59,15 @@ export const CountryProvider = ({ children }) => {
       
       if (typeof window !== "undefined") {
         localStorage.setItem("selectedCountry", newCountry);
+        localStorage.setItem("store_id", COUNTRY_MAP[newCountry]?.store_id?.toString() || "2");
       }
     }
   };
+
+   // Function to get current store_id
+   const getStoreId = () => {
+    return COUNTRY_MAP[country]?.store_id || 1;
+  };  
 
   return (
     <CountryContext.Provider value={{ 
@@ -69,7 +76,8 @@ export const CountryProvider = ({ children }) => {
       setCountry: changeCountryAndSave, 
       withCountry,
       changeCountryAndSave,
-      COUNTRY_MAP
+      COUNTRY_MAP,
+      getStoreId
     }}>
       {children}
     </CountryContext.Provider>

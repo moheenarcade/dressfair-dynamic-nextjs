@@ -304,7 +304,7 @@ const Header = () => {
 
                                             {/* Right Side Subcategories */}
                                             <div className="w-3/4 p-4 overflow-y-auto">
-                                                <h3 className="font-bold text-lg mb-4">{activeCategory?.name}</h3>
+                                                <h3 className="font-bold text-lg mb-4 dark:text-[#222]">{activeCategory?.name}</h3>
                                                 {activeCategory?.sub_categories?.length > 0 ? (
                                                     <div className="grid grid-cols-5 gap-4">
                                                         {activeCategory.sub_categories.map((sub) => (
@@ -329,7 +329,7 @@ const Header = () => {
                                                                         height={80}
                                                                         className="w-[80px] h-[80px] rounded-full object-cover"
                                                                     />
-                                                                    <p className="mt-2 text-[14px]">{sub.name}</p>
+                                                                    <p className="mt-2 text-[14px] dark:text-[#222]">{sub.name}</p>
                                                                 </Link>
                                                             </>
                                                         ))}
@@ -782,21 +782,21 @@ const Header = () => {
                             </p>
                         </div>
 
-                        <button className='menu-icons-mobile' onClick={() => setMobileCategory(prev => !prev)}>
+                        <button className='menu-icons-mobile dark:text-[#222]' onClick={() => setMobileCategory(prev => !prev)}>
                             <TfiMenuAlt className="text-2xl" />
                         </button>
                         <div className="relative user-dropdown-container">
 
                             <button
                                 ref={buttonRef}
-                                className="menu-icons-mobile"
+                                className="menu-icons-mobile dark:text-[#222]"
                                 onClick={() => setShowMobileUser(prev => !prev)}
                             >
                                 <FaRegUser className="text-2xl" />
                             </button>
 
                         </div>
-                        <button className='relative'>
+                        <button className='relative dark:text-[#222]'>
                             <Link href={withCountry("/cart")}>
                                 <FiShoppingCart className="text-2xl" />
                             </Link>

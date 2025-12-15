@@ -84,7 +84,7 @@ const ProductCardMobile = ({ products = [] }) => {
                                             setSelectedProductSku(product.sku);
                                             setIsModalOpen(true);
                                         }}
-                                        className="border hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-2 py-[1px] flex justify-center items-center">
+                                        className="dark:text-[#222] border hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-2 py-[1px] flex justify-center items-center">
                                         <BiCartAdd className="text-xl" />
                                     </button>
                                 </div>

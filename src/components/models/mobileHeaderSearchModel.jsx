@@ -68,14 +68,14 @@ const MobileHeaderSearchModel = ({ isOpen, onClose }) => {
 
 
                         {/* Modal Content */}
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4 dark:text-[#222]">
                             <button className="" onClick={onClose}>
                                 <FaChevronLeft className="text-2xl" />
                             </button>
                             <div className="grow flex justify-center min-w-[200px]">
                                 <div className="bg-white border-2 border-black rounded-full flex items-center justify-between pl-4 pr-px w-full max-w-[500px] h-[43px]">
                                     <input
-                                        className="h-full w-full text-[16px] rounded-full outline-0 font-[500]"
+                                        className="dark:text-[#222] h-full w-full text-[16px] rounded-full outline-0 font-[500]"
                                         type="search"
                                         placeholder="Search Dressfair"
                                     />
@@ -88,7 +88,7 @@ const MobileHeaderSearchModel = ({ isOpen, onClose }) => {
 
 
                         {/* Recent Searches */}
-                        <div className="pt-4 recent-search">
+                        <div className="pt-4 recent-search dark:text-[#222]">
                             <div className="flex justify-between items-center">
                                 <p className="text-black font-semibold text-md">Recently searched</p>
                                 {isDeleteMode ? (
@@ -134,7 +134,7 @@ const MobileHeaderSearchModel = ({ isOpen, onClose }) => {
                             </div>
                         </div>
 
-                        <div className="pt-4 popular-right-now">
+                        <div className="pt-4 popular-right-now dark:text-[#222]">
                             <p className="text-black font-semibold text-md">
                                 Popular right now
                             </p>

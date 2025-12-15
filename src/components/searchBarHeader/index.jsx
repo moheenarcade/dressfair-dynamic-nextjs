@@ -92,7 +92,7 @@ const SearchBarHeader = () => {
             <div className={`${isHomePage ? "border-white" : "border-black"} bg-white border-2 rounded-full flex items-center justify-between ${language === "ar" ? "pr-4 pl-1" : "pl-4 pr-1"}  w-full h-[43px] `}>
                 <input
                     ref={inputRef}
-                    className="h-full w-full text-[14px] rounded-full outline-0"
+                    className="h-full w-full text-[14px] rounded-full outline-0 dark:text-[#222]"
                     type="search"
                     placeholder={t('Search_Dressfair')}
                     value={searchText}

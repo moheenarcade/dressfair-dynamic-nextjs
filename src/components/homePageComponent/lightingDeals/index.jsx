@@ -222,7 +222,7 @@ const LightingDeals = () => {
                                             />
                                         ))}
                                     </div>
-                                    <p className='text-[13px]'>{product.reviewCount}</p>
+                                    <p className='text-[13px] dark:text-gray-600'>{product.reviewCount}</p>
                                 </div>
                                 {/* <h3 className="product-name text-sm font-medium mt-1 line-clamp-2 min-h-[2.5rem]">
                                     {product.name}

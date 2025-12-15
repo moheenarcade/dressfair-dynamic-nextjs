@@ -32,7 +32,7 @@ const ProductDetails = ({ productDescription }) => {
         }`}
       >
         <div
-          className="product-description"
+          className="product-description dark:text-[#222]"
           dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
         />
 

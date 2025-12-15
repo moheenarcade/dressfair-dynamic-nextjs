@@ -338,7 +338,7 @@ const ProductDetailMain = ({ productDetail }) => {
                             </button>
                         </div>
 
-                        <div className="flex items-center justify-between px-2 lg:px-0">
+                        <div className="flex items-center justify-between px-2 lg:px-0 dark:text-[#757575]">
                             <div className="flex items-center gap-1">
                                 <p className="text-[#757575] text-[15px]">2.8K+ sold</p>
                                 <div className="bg-black h-3 w-px"></div>
@@ -524,7 +524,7 @@ ${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
                                     className="select-qty-option relative w-[100px]"
                                     onClick={() => setOpenQty(!openQty)}
                                 >
-                                    <div className="border border-[#aaa] font-semibold rounded-sm px-3 py-1 text-sm cursor-pointer flex justify-between items-center bg-white">
+                                    <div className="dark:text-[#222] border border-[#aaa] font-semibold rounded-sm px-3 py-1 text-sm cursor-pointer flex justify-between items-center bg-white">
                                         <span>{quantity}</span>
                                         <span className={`transform transition-transform duration-300 ${openQty ? "rotate-180" : ""}`}>
                                             <IoIosArrowDown />
@@ -544,7 +544,7 @@ ${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
                                                     <motion.li
                                                         key={qty}
                                                         whileHover={{ backgroundColor: "#f3f3f3" }}
-                                                        className="px-3 py-2 text-sm cursor-pointer font-semibold"
+                                                        className="px-3 py-2 text-sm cursor-pointer font-semibold dark:text-[#222]"
                                                         onClick={() => handleQtySelect(qty)}
                                                     >
                                                         {qty}
@@ -593,8 +593,8 @@ ${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
                 </div>
                 <div className="review-sec pt-2 border-t border-t-gray-300 px-2 lg:px-0 flex flex-col gap-2 justify-between block lg:hidden">
                     <div className="flex items-center gap-2 border-b border-b-gray-300 pb-2">
-                        <div className="product-rating flex items-center gap-[1px]">
-                            <p className="text-[18px] font-semibold tetx-[#222]">
+                        <div className="product-rating flex items-center gap-[1px] dark:text-[#222]">
+                            <p className="text-[18px] font-semibold text-[#222]">
                                 4.7
                             </p>
                             <FaStar className="text-lg" />
@@ -603,7 +603,7 @@ ${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
                             <FaStar className="text-lg" />
                             <FaStar className="text-lg" />
                         </div>
-                        <p className="">
+                        <p className="dark:text-[#222]">
                             (1,232)
                         </p>
                     </div>

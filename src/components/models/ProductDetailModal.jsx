@@ -222,7 +222,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                     >
                         <div className="flex justify-between items-center relative">
                             <div></div>
-                            <button onClick={handleModalClose} className="hover:scale-[1.08] transition-all duration-300 ease-in-out text-2xl absolute -top-3 -right-3">
+                            <button onClick={handleModalClose} className="dark:text-[#222] hover:scale-[1.08] transition-all duration-300 ease-in-out text-2xl absolute -top-3 -right-3">
                                 <IoClose />
                             </button>
                         </div>
@@ -423,7 +423,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                                     className="select-qty-option relative w-[100px]"
                                                     onClick={() => setOpenQty(!openQty)}
                                                 >
-                                                    <div className="border border-[#aaa] font-semibold rounded-sm px-3 py-1 text-sm cursor-pointer flex justify-between items-center bg-white">
+                                                    <div className="dark:text-[#222] border border-[#aaa] font-semibold rounded-sm px-3 py-1 text-sm cursor-pointer flex justify-between items-center bg-white">
                                                         <span>{quantity}</span>
                                                         <span className={`transform transition-transform duration-300 ${openQty ? "rotate-180" : ""}`}>
                                                             <IoIosArrowDown />
@@ -443,7 +443,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                                                     <motion.li
                                                                         key={qty}
                                                                         whileHover={{ backgroundColor: "#f3f3f3" }}
-                                                                        className="px-3 py-2 text-sm cursor-pointer font-semibold"
+                                                                        className="px-3 py-2 text-sm cursor-pointer font-semibold dark:text-[#222]"
                                                                         onClick={() => handleQtySelect(qty)}
                                                                     >
                                                                         {qty}
@@ -462,7 +462,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                             </button>
 
                                             <div className="pt-2 text-[15px]">
-                                                <Link href={withCountry(`/p/${productDetail?.sku}`)} className="flex hover:underline items-center gap-1">
+                                                <Link href={withCountry(`/p/${productDetail?.sku}`)} className="flex hover:underline items-center gap-1 dark:text-[#222]">
                                                     All details <FaChevronRight className="text-[13px]" />
                                                 </Link>
                                             </div>

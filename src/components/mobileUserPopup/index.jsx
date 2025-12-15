@@ -38,12 +38,12 @@ const MobileUserPopup = ({ onOpenSignIn, onClose }) => {
                                     </div>
                                     <p className='text-black font-semibold text-md line-clamp-1 whitespace-nowrap max-w-[120px]'>user name</p>
                                 </div>
-                                <button className='flex items-center gap-1 border border-black rounded-full py-1 px-2'>
+                                <button className='dark:text-[#222] flex items-center gap-1 border border-black rounded-full py-1 px-2'>
                                     <RiMessage3Line /> Messages
                                 </button>
                             </div>
                         )}
-                        <div className="flex justify-center items-center text-center text-[13px] gap-4 pt-4">
+                        <div className="dark:text-[#222] flex justify-center items-center text-center text-[13px] gap-4 pt-4">
                             <Link href={withCountry("/user/orders/all-orders")} onClick={onClose}>
                                 <div className="flex items-center flex-col">
                                     <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
@@ -73,7 +73,7 @@ const MobileUserPopup = ({ onOpenSignIn, onClose }) => {
 
                     <div className='w-full h-2 bg-[#f6f6f6]'>
                     </div>
-                    <ul className='px-4'>
+                    <ul className='px-4 dark:text-[#222]'>
                         <Link href={withCountry("/user/your-reviews")} onClick={onClose}>
                             <li className='cursor-pointer flex items-center gap-1 text-[15px] font-normal py-3 border-b border-b-gray-200'>
                                 <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" className="icon-33dOL"><path d="M725.3 179.2c89.5 0 162.1 72.6 162.2 162.1l0 299.2c0 89.3-72.2 161.8-161.6 162.1l-110.7 0.4c-3.1 0-6.1 1.4-8.2 3.7l-49.5 55.4c-37.5 42-102 45.6-144 8-2.9-2.6-5.6-5.3-8.2-8.2l-49.1-55.2c-2.1-2.4-5.1-3.7-8.3-3.7l-99.9-0.4c-85.2-0.3-154.1-69.5-154.1-154.7l0-306.6c0-89.5 72.6-162.1 162.1-162.1z m0 68.3l-469.3 0c-51.8 0-93.9 42-93.9 93.8l0 306.6c0 47.6 38.5 86.3 86.2 86.4l99.9 0.4c22.5 0.1 44 9.8 59 26.6l49.1 55.2 2.7 2.7c13.9 12.4 35.2 11.2 47.6-2.6l49.5-55.4c15-16.8 36.4-26.4 58.8-26.5l110.8-0.4c51.7-0.2 93.5-42.2 93.5-93.8l0-299.2c0-51.8-42-93.9-93.9-93.8z m-272.9 112.4c10.4-21.1 36-29.8 57.1-19.4 8.4 4.2 15.2 11 19.4 19.4l22.5 45.6c1.9 3.8 5.5 6.4 9.6 7l50.3 7.3c23.3 3.4 39.5 25 36.1 48.3-1.3 9.3-5.7 17.9-12.4 24.4l-36.4 35.5c-3 2.9-4.4 7.2-3.7 11.3l8.6 50.1c4 23.2-11.6 45.3-34.8 49.3-9.2 1.6-18.8 0.1-27.1-4.3l-45-23.7c-3.7-2-8.2-2-11.9 0l-45 23.7c-20.9 11-46.7 2.9-57.6-17.9-4.4-8.3-5.9-17.8-4.3-27.1l8.6-50.1c0.7-4.2-0.7-8.4-3.7-11.3l-36.3-35.5c-16.9-16.4-17.2-43.5-0.8-60.3 6.5-6.7 15.1-11.1 24.4-12.4l50.3-7.3c4.2-0.6 7.8-3.2 9.6-7z m38.3 57.4l-7.2 14.6c-10.6 21.4-31 36.2-54.6 39.7l-16.1 2.3 11.6 11.3c15.4 15 23.2 35.9 21.8 57.2l-0.9 7-2.8 16 14.4-7.5c19-10 41.4-11 61.1-3l6.4 3 14.4 7.5-2.8-16c-3.6-21.2 2.3-42.7 16-59l4.9-5.2 11.6-11.3-16-2.3c-21.5-3.1-40.3-15.7-51.5-34l-3.2-5.7-7.1-14.6z"></path></svg>

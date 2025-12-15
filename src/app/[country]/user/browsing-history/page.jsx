@@ -295,7 +295,7 @@ const BrowsingHistory = () => {
                           />
                         ))}
                       </div>
-                      <p className='text-[13px]'>{product.reviewCount}</p>
+                      <p className='text-[13px] dark:text-gray-600'>{product.reviewCount}</p>
                     </div>
 
                   </div>
@@ -349,7 +349,7 @@ const BrowsingHistory = () => {
                       </p>
                       <button
 
-                        className="border hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-2 py-[1px] flex justify-center items-center">
+                        className="dark:text-[#222] border hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-2 py-[1px] flex justify-center items-center">
                         <BiCartAdd className="text-xl" />
                       </button>
                     </div>
@@ -446,7 +446,7 @@ const BrowsingHistory = () => {
                           />
                         ))}
                       </div>
-                      <p className='text-[13px]'>{product.reviewCount}</p>
+                      <p className='text-[13px] dark:text-gray-600'>{product.reviewCount}</p>
                     </div>
 
                   </div>
@@ -500,7 +500,7 @@ const BrowsingHistory = () => {
                       </p>
                       <button
 
-                        className="border hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-2 py-[1px] flex justify-center items-center">
+                        className="dark:text-[#222] border hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-2 py-[1px] flex justify-center items-center">
                         <BiCartAdd className="text-xl" />
                       </button>
                     </div>
@@ -552,7 +552,7 @@ const BrowsingHistory = () => {
                     <p className='text-[#222] font-[600]'><span className='text-[12px]'>RS.</span>5,833</p>
                     <p className='line-through text-gray-400 text-sm font-[500]'>10,007</p>
                   </div>
-                  <button className="border hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-2 py-[1px] flex justify-center items-center">
+                  <button className="dark:text-[#222] border hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-2 py-[1px] flex justify-center items-center">
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="text-xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="19.5" r="1.5"></circle><circle cx="17.5" cy="19.5" r="1.5"></circle><path d="M13 13h2v-2.99h2.99v-2H15V5.03h-2v2.98h-2.99v2H13V13z"></path><path d="M10 17h8a1 1 0 0 0 .93-.64L21.76 9h-2.14l-2.31 6h-6.64L6.18 4.23A2 2 0 0 0 4.33 3H2v2h2.33l4.75 11.38A1 1 0 0 0 10 17z"></path></svg>
                   </button>
                 </div>

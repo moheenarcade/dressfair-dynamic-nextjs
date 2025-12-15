@@ -132,12 +132,12 @@ const CartMainMobileView = () => {
                             </span>
                         </p>
                         <button onClick={() => setShowMoreMenu(!showMoreMenu)}>
-                            <BsThreeDots className="text-2xl" />
+                            <BsThreeDots className="text-2xl dark:text-[#222]" />
                         </button>
 
 
                         {showMoreMenu && (
-                            <div className="absolute right-0 top-8 bg-white shadow-md border border-gray-200 rounded-md w-[160px] py-2 z-[9999]">
+                            <div className="dark:text-[#222] absolute right-0 top-8 bg-white shadow-md border border-gray-200 rounded-md w-[160px] py-2 z-[9999]">
 
                                 <button
                                     onClick={() => {
@@ -212,7 +212,7 @@ const CartMainMobileView = () => {
                                             </div>
                                             <div className="select-qty-option relative w-[90px]">
                                                 <div
-                                                    className="border border-[#aaa] font-semibold rounded-sm px-3 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
+                                                    className="dark:text-[#222] border border-[#aaa] font-semibold rounded-sm px-3 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
                                                     onClick={() =>
                                                         toggleQtyDropdown(`${item.product_id}-${item.color.sku}-${item.size.product_option_id}`)
                                                     }
@@ -241,7 +241,7 @@ const CartMainMobileView = () => {
                                                                 <motion.li
                                                                     key={qty}
                                                                     whileHover={{ backgroundColor: "#f3f3f3" }}
-                                                                    className={`px-3 py-2 text-sm cursor-pointer font-semibold ${qty === 0 ? "text-red-500 hover:text-red-600" : ""
+                                                                    className={`px-3 py-2 text-sm cursor-pointer font-semibold dark:text-[#222] ${qty === 0 ? "text-red-500 hover:text-red-600" : ""
                                                                         }`}
                                                                     onClick={() => handleUpdateQty(item, qty)}
                                                                 >
@@ -348,11 +348,11 @@ const CartMainMobileView = () => {
                         {/* <span className="text-[#000000] text-[16px] md:text-xl font-[500] line-through">
                             154,992
                         </span> */}
-                        <div className="flex items-center mx-auto">
+                        <div className="flex gap-1 items-center mx-auto">
                             <span className="text-[14px] font-[600] text-[#FB7701]">
                                 Rs. <span className="text-[18px] md:text-2xl">{subtotal}</span>
                             </span>
-                            <FaChevronUp className="text-md" />
+                            <FaChevronUp className="text-md dark:text-[#222]" />
                         </div>
                     </button>
                     <Link href={withCountry("/checkout")} className="w-[65%]">

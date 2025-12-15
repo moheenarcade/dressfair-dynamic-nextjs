@@ -148,7 +148,7 @@ const ProductColorSize = ({
                     className="select-qty-option relative w-[100px]"
                     onClick={() => setOpenQty(!openQty)}
                 >
-                    <div className="border border-[#aaa] font-semibold rounded-sm px-3 py-1 text-sm cursor-pointer flex justify-between items-center bg-white">
+                    <div className="dark:text-[#222] border border-[#aaa] font-semibold rounded-sm px-3 py-1 text-sm cursor-pointer flex justify-between items-center bg-white">
                         <span>{selectedQty}</span>
                         <span className={`transform transition-transform duration-300 ${openQty ? "rotate-180" : ""}`}>
                             <IoIosArrowDown />
@@ -168,7 +168,7 @@ const ProductColorSize = ({
                                     <motion.li
                                         key={qty}
                                         whileHover={{ backgroundColor: "#f3f3f3" }}
-                                        className="px-3 py-2 text-sm cursor-pointer font-semibold"
+                                        className="px-3 py-2 text-sm cursor-pointer font-semibold dark:text-[#222]"
                                         onClick={() => handleQtySelect(qty)}
                                     >
                                         {qty}

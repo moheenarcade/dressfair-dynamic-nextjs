@@ -50,7 +50,7 @@ export default function SecurityReminderModel({ isOpen, onClose }) {
                     >
                         <div className="flex justify-between items-center relative">
                             <div></div>
-                            <button onClick={onClose} className="hover:scale-[1.08] transition-all duration-300 ease-in-out text-2xl absolute -top-3 -right-3">
+                            <button onClick={onClose} className="dark:text-[#222] hover:scale-[1.08] transition-all duration-300 ease-in-out text-2xl absolute -top-3 -right-3">
                                 <IoClose />
                             </button>
                         </div>

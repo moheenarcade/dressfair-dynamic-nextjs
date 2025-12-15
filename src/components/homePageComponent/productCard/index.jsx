@@ -125,7 +125,7 @@ const SingleProduct = ({ product }) => {
                   e.stopPropagation();
                   setIsModalOpen(true);
                 }}
-                className="border-[1.2px] hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-3 py-0.5 flex justify-center items-center">
+                className="border-[1.2px] dark:text-black hover:scale-[1.05] transition-all duration-500 ease-in-out border-black rounded-full px-3 py-0.5 flex justify-center items-center">
                 <BiCartAdd className="text-2xl" />
               </button>
             </div>

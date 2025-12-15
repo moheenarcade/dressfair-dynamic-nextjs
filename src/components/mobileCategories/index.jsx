@@ -104,7 +104,7 @@ const MobileCategories = ({ onClose, categories }) => {
                                                     height={80}
                                                     className="w-[80px] h-[80px] rounded-full object-cover"
                                                 />
-                                                <p className="mt-2 text-[14px]">{sub.name}</p>
+                                                <p className="mt-2 text-[14px] dark:text-[#222]">{sub.name}</p>
                                             </Link>
                                         </>
                                     ))}

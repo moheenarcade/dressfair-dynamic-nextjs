@@ -109,7 +109,7 @@ export const ProductReviews = () => {
       })}
 
       <div className="flex justify-center">
-        <button className="py-2 px-8 font-semibold text-sm lg:text-md hover:border-black hover:scale-[1.02] transition-all duration-300 ease-in-out  border border-gray-500 rounded-full">
+        <button className="dark:text-[#222] py-2 px-8 font-semibold text-sm lg:text-md hover:border-black hover:scale-[1.02] transition-all duration-300 ease-in-out  border border-gray-500 rounded-full">
             See all reviews
         </button>
       </div>

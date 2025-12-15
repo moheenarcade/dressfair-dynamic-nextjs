@@ -135,7 +135,7 @@ const BuyAgainModal = ({ isOpen, onClose, order }) => {
                                         </div>
                                         <div className="select-qty-option relative w-[60px]">
                                     <div
-                                        className="border border-[#aaa] font-semibold rounded-sm px-3 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
+                                        className="dark:text-[#222] border border-[#aaa] font-semibold rounded-sm px-3 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
                                         onClick={() =>
                                             toggleQtyDropdown(`${item.product_id}-${item.color.sku}-${item.size.product_option_id}`)
                                         }
@@ -164,7 +164,7 @@ const BuyAgainModal = ({ isOpen, onClose, order }) => {
                                                     <motion.li
                                                         key={qty}
                                                         whileHover={{ backgroundColor: "#f3f3f3" }}
-                                                        className={`px-3 py-2 text-sm cursor-pointer font-semibold ${qty === 0 ? "text-red-500 hover:text-red-600" : ""
+                                                        className={`px-3 py-2 text-sm cursor-pointer font-semibold dark:text-[#222] ${qty === 0 ? "text-red-500 hover:text-red-600" : ""
                                                             }`}
                                                         onClick={() => handleUpdateQty(item, qty)}
                                                     >

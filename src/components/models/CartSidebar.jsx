@@ -99,7 +99,7 @@ export default function CartSidebar() {
 
           <div className="free-shipping-tag bg-[#fff3e7] flex items-center p-2 rounded-sm gap-2">
             <FiCheck className="text-[#0b8800] text-lg" />
-            <p className="text-[13px] font-semibold">Free shipping on all orders</p>
+            <p className="text-[13px] font-semibold dark:text-[#222]">Free shipping on all orders</p>
           </div>
 
           <div className="checkout-btns flex flex-col gap-2 pt-4 pb-4 border-b border-b-gray-200">
@@ -170,7 +170,7 @@ export default function CartSidebar() {
                       </p>
                       <div className="select-qty-option relative w-[100px] mx-auto">
                         <div
-                          className="border border-[#aaa] font-semibold rounded-sm px-3 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
+                          className="dark:text-[#222] border border-[#aaa] font-semibold rounded-sm px-3 py-px text-sm cursor-pointer flex justify-between items-center bg-white"
                           onClick={() =>
                             toggleQtyDropdown(`${item.product_id}-${item.color.sku}-${item.size.product_option_id}`)
                           }
@@ -199,7 +199,7 @@ export default function CartSidebar() {
                                 <motion.li
                                   key={qty}
                                   whileHover={{ backgroundColor: "#f3f3f3" }}
-                                  className={`px-3 py-2 text-sm cursor-pointer font-semibold ${qty === 0 ? "text-red-500 hover:text-red-600" : ""
+                                  className={`px-3 py-2 text-sm cursor-pointer font-semibold dark:text-[#222] ${qty === 0 ? "text-red-500 hover:text-red-600" : ""
                                     }`}
                                   onClick={() => handleUpdateQty(item, qty)}
                                 >

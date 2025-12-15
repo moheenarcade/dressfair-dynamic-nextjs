@@ -55,90 +55,9 @@ const COUNTRY_MAP = {
   ae: { value: "ae", label: "United Arab Emirates (UAE)", flag: "🇦🇪" },
   sa: { value: "sa", label: "Saudi Arabia (KSA)", flag: "🇸🇦" },
   om: { value: "om", label: "Oman", flag: "🇴🇲" },
-  pk: { value: "pk", label: "Pakistan", flag: "🇵🇰" },
 };
 
 const CountryRegionLanguage = () => {
-//   const router = useRouter();
-//   const pathname = usePathname();
-//   const { language, setLanguage } = useLanguage();
-//   const [openTab, setOpenTab] = useState(null);
-//   const [openShare, setOpenShare] = useState(false);
-//   const [selectedCountry, setSelectedCountry] = useState(null);
-//   const params = useParams();
-//   const { country, setCountry, withCountry } = useCountry();
-
-//   const initialLang = language
-//     ? language
-//     : localStorage.getItem("language") || "en";
-
-//   const [selectedLanguage, setSelectedLanguage] = useState(() => {
-//     return initialLang === "ar"
-//       ? { value: "ar", label: "Arabic" }
-//       : { value: "en", label: "English" };
-//   });
-
-//   const languageOptions = [
-//     { value: "en", label: "English" },
-//     { value: "ar", label: "Arabic" },
-//   ];
-
-//   const countryOptions = [
-//     { value: "ae", label: "United Arab Emirates (UAE)", flag: "🇦🇪" },
-//     { value: "sa", label: "Saudi Arabia (KSA)", flag: "🇸🇦" },
-//     { value: "om", label: "Oman", flag: "🇴🇲" },
-//     { value: "pk", label: "Pakistan", flag: "🇵🇰" },
-
-//   ];
-
-
-//   useEffect(() => {
-//     if (!pathname) return;
-
-//     const segments = pathname.split("/").filter(Boolean);
-//     const urlCountry = segments[0]; // ae / pk / om
-
-//     if (COUNTRY_MAP[urlCountry]) {
-//       setSelectedCountry(COUNTRY_MAP[urlCountry]);
-//     }
-//   }, [pathname]);
-
-
-//   const Option = (props) => (
-//     <components.Option {...props}>
-//       <span className="mr-2">{props.data.flag}</span>
-//       {props.data.label}
-//     </components.Option>
-//   );
-
-//   const SingleValue = (props) => (
-//     <components.SingleValue {...props}>
-//       <span className="mr-2">{props.data.flag}</span>
-//       {props.data.label}
-//     </components.SingleValue>
-//   );
-
-//   const toggleTab = (tab) => {
-//     setOpenTab((prev) => (prev === tab ? null : tab));
-//   };
-
-// // Inside your CountryRegionLanguage component, update the changeCountry function:
-
-// const changeCountry = (newCountry) => {
-//   const segments = pathname.split("/").filter(Boolean);
-  
-//   // If we're at the root country path like /ae, just go to new country root
-//   if (segments.length === 1 && COUNTRY_MAP[segments[0]]) {
-//     router.push(`/${newCountry}`);
-//   } else {
-//     // Replace the country segment and keep the rest
-//     const newSegments = [newCountry, ...segments.slice(1)];
-//     router.push("/" + newSegments.join("/"));
-//   }
-  
-//   setSelectedCountry(COUNTRY_MAP[newCountry]);
-// };
-
 const router = useRouter();
   const pathname = usePathname();
   const { language, setLanguage } = useLanguage();
@@ -167,7 +86,6 @@ const router = useRouter();
     { value: "ae", label: "United Arab Emirates (UAE)", flag: "🇦🇪" },
     { value: "sa", label: "Saudi Arabia (KSA)", flag: "🇸🇦" },
     { value: "om", label: "Oman", flag: "🇴🇲" },
-    { value: "pk", label: "Pakistan", flag: "🇵🇰" },
   ];
 
   // Initialize country from localStorage on component mount

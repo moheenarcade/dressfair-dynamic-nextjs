@@ -6,7 +6,6 @@ export const COUNTRY_MAP = {
   ae: { value: "ae", label: "United Arab Emirates", flag: "🇦🇪" },
   sa: { value: "sa", label: "Saudi Arabia", flag: "🇸🇦" },
   om: { value: "om", label: "Oman", flag: "🇴🇲" },
-  pk: { value: "pk", label: "Pakistan", flag: "🇵🇰" },
 };
 
 const CountryContext = createContext(null);

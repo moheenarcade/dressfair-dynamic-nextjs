@@ -39,7 +39,7 @@ const Header = () => {
     const pathname = usePathname();
     const { t } = useTranslation();
     const params = useParams();
-    const { country, withCountry } = useCountry();
+    const { country, withCountry ,countryInfo } = useCountry();
 
     const { language, toggleLanguage } = useLanguage();
 
@@ -694,7 +694,8 @@ const Header = () => {
                                 <li className={`${isHomePage ? "text-white" : "text-[#222222]"} relative group py-1 px-3 cursor-pointer font-semibold text-[14px]`}>
                                     <span className={` ${isHomePage ? "bg-[#BA0000]" : "bg-[#eeeeee]"} absolute inset-0 h-[50px] my-auto rounded-full scale-0 origin-center transition-transform duration-500 ease-in-out group-hover:scale-100`}></span>
                                     <span className="relative z-10 flex items-center gap-1">
-                                        <Image className='w-4 h-4 rounded-full' src={Counrty} alt="country flag" />
+                                    <span className="text-xl rounded-full">{countryInfo.flag}</span>
+                                        {/* <Image className='w-4 h-4 rounded-full' src={Counrty} alt="country flag" /> */}
                                         {language === "ar" ? 'العربية' : 'English'}
                                     </span>
 
@@ -730,12 +731,13 @@ const Header = () => {
 
                                             <div className="pt-3">
                                                 <p className="text-gray-600 font-normal flex gap-2">
-                                                    <Image
+                                                    {/* <Image
                                                         className="w-4 h-4 rounded-full inline-block"
                                                         src={Counrty}
                                                         alt="country flag"
-                                                    />
-                                                    <span>You are shopping on Dressfair Pakistan.</span>
+                                                    /> */}
+                                    <span className="text-xl rounded-full">{countryInfo.flag}</span>
+                                                    <span>You are shopping on Dressfair  {countryInfo.label}.</span>
                                                 </p>
                                                 <Link href={withCountry("/user/country-region-language")}>
                                                     <button className='mt-3 py-1 px-2 rounded-full font-semibold text-md border hover:border-black hover:scale-[1.02] transition-all duration-500 ease-in-out border-gray-500 w-full text-center'>

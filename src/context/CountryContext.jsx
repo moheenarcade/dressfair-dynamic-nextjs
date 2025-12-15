@@ -2,8 +2,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const CountryContext = createContext(null);
-
 export const COUNTRY_MAP = {
   ae: { value: "ae", label: "United Arab Emirates", flag: "🇦🇪" },
   sa: { value: "sa", label: "Saudi Arabia", flag: "🇸🇦" },
@@ -11,9 +9,12 @@ export const COUNTRY_MAP = {
   pk: { value: "pk", label: "Pakistan", flag: "🇵🇰" },
 };
 
+const CountryContext = createContext(null);
+
 export const CountryProvider = ({ children }) => {
   const pathname = usePathname();
   const [country, setCountry] = useState("ae");
+  const [countryInfo, setCountryInfo] = useState(COUNTRY_MAP.ae);
 
   useEffect(() => {
     if (!pathname) return;
@@ -24,24 +25,24 @@ export const CountryProvider = ({ children }) => {
     // Check localStorage for saved country first
     const savedCountry = localStorage.getItem("selectedCountry");
     
-    // If URL has a valid country code, use it and save to localStorage
+    let currentCountry = "ae";
+    
+    // Priority 1: Use URL country if valid
     if (COUNTRY_MAP[urlCountry]) {
-      setCountry(urlCountry);
-      localStorage.setItem("selectedCountry", urlCountry);
+      currentCountry = urlCountry;
     }
-    // If no country in URL but we have a saved country, redirect to it
-    else if (savedCountry && COUNTRY_MAP[savedCountry] && pathname === "/") {
-      // We'll let the middleware handle the redirect
-      // Just update context
-      setCountry(savedCountry);
+    // Priority 2: Use saved country if URL doesn't have one
+    else if (savedCountry && COUNTRY_MAP[savedCountry]) {
+      currentCountry = savedCountry;
     }
-    // Otherwise use default and save to localStorage
-    else {
-      const defaultCountry = savedCountry && COUNTRY_MAP[savedCountry] 
-        ? savedCountry 
-        : "ae";
-      setCountry(defaultCountry);
-      localStorage.setItem("selectedCountry", defaultCountry);
+    // Priority 3: Default to "ae"
+    
+    setCountry(currentCountry);
+    setCountryInfo(COUNTRY_MAP[currentCountry]);
+    
+    // Save to localStorage
+    if (typeof window !== "undefined") {
+      localStorage.setItem("selectedCountry", currentCountry);
     }
   }, [pathname]);
 
@@ -54,16 +55,22 @@ export const CountryProvider = ({ children }) => {
   const changeCountryAndSave = (newCountry) => {
     if (COUNTRY_MAP[newCountry]) {
       setCountry(newCountry);
-      localStorage.setItem("selectedCountry", newCountry);
+      setCountryInfo(COUNTRY_MAP[newCountry]);
+      
+      if (typeof window !== "undefined") {
+        localStorage.setItem("selectedCountry", newCountry);
+      }
     }
   };
 
   return (
     <CountryContext.Provider value={{ 
       country, 
+      countryInfo,
       setCountry: changeCountryAndSave, 
       withCountry,
-      changeCountryAndSave 
+      changeCountryAndSave,
+      COUNTRY_MAP
     }}>
       {children}
     </CountryContext.Provider>

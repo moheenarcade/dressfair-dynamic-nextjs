@@ -320,7 +320,7 @@ ${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
 
                             {/* Custom Tooltip */}
                             {hoveredSizeId === sizeObj.product_option_id && (
-                              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-black rounded shadow-md whitespace-nowrap z-[9899999999999]">
+                              <div className="absolute bottom-full left-[115%] -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-black rounded shadow-md whitespace-nowrap z-[9899999999999]">
                                 {Number(sizeObj.available_quantity) > 0
                                   ? `Available quantity: ${sizeObj.available_quantity}`
                                   : "Out of stock"

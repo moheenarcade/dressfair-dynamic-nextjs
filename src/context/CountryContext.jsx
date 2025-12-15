@@ -21,9 +21,27 @@ export const CountryProvider = ({ children }) => {
     const segments = pathname.split("/").filter(Boolean);
     const urlCountry = segments[0];
 
-    // ✅ Sync context with URL country
+    // Check localStorage for saved country first
+    const savedCountry = localStorage.getItem("selectedCountry");
+    
+    // If URL has a valid country code, use it and save to localStorage
     if (COUNTRY_MAP[urlCountry]) {
       setCountry(urlCountry);
+      localStorage.setItem("selectedCountry", urlCountry);
+    }
+    // If no country in URL but we have a saved country, redirect to it
+    else if (savedCountry && COUNTRY_MAP[savedCountry] && pathname === "/") {
+      // We'll let the middleware handle the redirect
+      // Just update context
+      setCountry(savedCountry);
+    }
+    // Otherwise use default and save to localStorage
+    else {
+      const defaultCountry = savedCountry && COUNTRY_MAP[savedCountry] 
+        ? savedCountry 
+        : "ae";
+      setCountry(defaultCountry);
+      localStorage.setItem("selectedCountry", defaultCountry);
     }
   }, [pathname]);
 
@@ -32,8 +50,21 @@ export const CountryProvider = ({ children }) => {
     return `/${country}${formattedPath}`;
   };
 
+  // Function to change country and save to localStorage
+  const changeCountryAndSave = (newCountry) => {
+    if (COUNTRY_MAP[newCountry]) {
+      setCountry(newCountry);
+      localStorage.setItem("selectedCountry", newCountry);
+    }
+  };
+
   return (
-    <CountryContext.Provider value={{ country, setCountry, withCountry }}>
+    <CountryContext.Provider value={{ 
+      country, 
+      setCountry: changeCountryAndSave, 
+      withCountry,
+      changeCountryAndSave 
+    }}>
       {children}
     </CountryContext.Provider>
   );

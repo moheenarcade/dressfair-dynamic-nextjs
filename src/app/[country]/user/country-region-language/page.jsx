@@ -59,14 +59,94 @@ const COUNTRY_MAP = {
 };
 
 const CountryRegionLanguage = () => {
-  const router = useRouter();
+//   const router = useRouter();
+//   const pathname = usePathname();
+//   const { language, setLanguage } = useLanguage();
+//   const [openTab, setOpenTab] = useState(null);
+//   const [openShare, setOpenShare] = useState(false);
+//   const [selectedCountry, setSelectedCountry] = useState(null);
+//   const params = useParams();
+//   const { country, setCountry, withCountry } = useCountry();
+
+//   const initialLang = language
+//     ? language
+//     : localStorage.getItem("language") || "en";
+
+//   const [selectedLanguage, setSelectedLanguage] = useState(() => {
+//     return initialLang === "ar"
+//       ? { value: "ar", label: "Arabic" }
+//       : { value: "en", label: "English" };
+//   });
+
+//   const languageOptions = [
+//     { value: "en", label: "English" },
+//     { value: "ar", label: "Arabic" },
+//   ];
+
+//   const countryOptions = [
+//     { value: "ae", label: "United Arab Emirates (UAE)", flag: "🇦🇪" },
+//     { value: "sa", label: "Saudi Arabia (KSA)", flag: "🇸🇦" },
+//     { value: "om", label: "Oman", flag: "🇴🇲" },
+//     { value: "pk", label: "Pakistan", flag: "🇵🇰" },
+
+//   ];
+
+
+//   useEffect(() => {
+//     if (!pathname) return;
+
+//     const segments = pathname.split("/").filter(Boolean);
+//     const urlCountry = segments[0]; // ae / pk / om
+
+//     if (COUNTRY_MAP[urlCountry]) {
+//       setSelectedCountry(COUNTRY_MAP[urlCountry]);
+//     }
+//   }, [pathname]);
+
+
+//   const Option = (props) => (
+//     <components.Option {...props}>
+//       <span className="mr-2">{props.data.flag}</span>
+//       {props.data.label}
+//     </components.Option>
+//   );
+
+//   const SingleValue = (props) => (
+//     <components.SingleValue {...props}>
+//       <span className="mr-2">{props.data.flag}</span>
+//       {props.data.label}
+//     </components.SingleValue>
+//   );
+
+//   const toggleTab = (tab) => {
+//     setOpenTab((prev) => (prev === tab ? null : tab));
+//   };
+
+// // Inside your CountryRegionLanguage component, update the changeCountry function:
+
+// const changeCountry = (newCountry) => {
+//   const segments = pathname.split("/").filter(Boolean);
+  
+//   // If we're at the root country path like /ae, just go to new country root
+//   if (segments.length === 1 && COUNTRY_MAP[segments[0]]) {
+//     router.push(`/${newCountry}`);
+//   } else {
+//     // Replace the country segment and keep the rest
+//     const newSegments = [newCountry, ...segments.slice(1)];
+//     router.push("/" + newSegments.join("/"));
+//   }
+  
+//   setSelectedCountry(COUNTRY_MAP[newCountry]);
+// };
+
+const router = useRouter();
   const pathname = usePathname();
   const { language, setLanguage } = useLanguage();
   const [openTab, setOpenTab] = useState(null);
   const [openShare, setOpenShare] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(COUNTRY_MAP.ae);
   const params = useParams();
-  const { country, setCountry, withCountry } = useCountry();
+  const { country, changeCountryAndSave, withCountry } = useCountry();
 
   const initialLang = language
     ? language
@@ -88,10 +168,19 @@ const CountryRegionLanguage = () => {
     { value: "sa", label: "Saudi Arabia (KSA)", flag: "🇸🇦" },
     { value: "om", label: "Oman", flag: "🇴🇲" },
     { value: "pk", label: "Pakistan", flag: "🇵🇰" },
-
   ];
 
+  // Initialize country from localStorage on component mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedCountry = localStorage.getItem("selectedCountry");
+      if (savedCountry && COUNTRY_MAP[savedCountry]) {
+        setSelectedCountry(COUNTRY_MAP[savedCountry]);
+      }
+    }
+  }, []);
 
+  // Update selectedCountry when URL changes
   useEffect(() => {
     if (!pathname) return;
 
@@ -100,9 +189,10 @@ const CountryRegionLanguage = () => {
 
     if (COUNTRY_MAP[urlCountry]) {
       setSelectedCountry(COUNTRY_MAP[urlCountry]);
+      // Save to localStorage
+      localStorage.setItem("selectedCountry", urlCountry);
     }
   }, [pathname]);
-
 
   const Option = (props) => (
     <components.Option {...props}>
@@ -122,22 +212,27 @@ const CountryRegionLanguage = () => {
     setOpenTab((prev) => (prev === tab ? null : tab));
   };
 
-// Inside your CountryRegionLanguage component, update the changeCountry function:
-
-const changeCountry = (newCountry) => {
-  const segments = pathname.split("/").filter(Boolean);
-  
-  // If we're at the root country path like /ae, just go to new country root
-  if (segments.length === 1 && COUNTRY_MAP[segments[0]]) {
-    router.push(`/${newCountry}`);
-  } else {
-    // Replace the country segment and keep the rest
-    const newSegments = [newCountry, ...segments.slice(1)];
-    router.push("/" + newSegments.join("/"));
-  }
-  
-  setSelectedCountry(COUNTRY_MAP[newCountry]);
-};
+  const changeCountry = (newCountry) => {
+    // Save to localStorage
+    localStorage.setItem("selectedCountry", newCountry);
+    
+    // Update context
+    if (changeCountryAndSave) {
+      changeCountryAndSave(newCountry);
+    }
+    
+    // Navigate to the new country
+    const segments = pathname.split("/").filter(Boolean);
+    
+    if (segments.length === 1 && COUNTRY_MAP[segments[0]]) {
+      router.push(`/${newCountry}`);
+    } else {
+      const newSegments = [newCountry, ...segments.slice(1)];
+      router.push("/" + newSegments.join("/"));
+    }
+    
+    setSelectedCountry(COUNTRY_MAP[newCountry]);
+  };
 
   return (
     <>

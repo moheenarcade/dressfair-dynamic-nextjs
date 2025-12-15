@@ -138,46 +138,6 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
     };
 
     // Add to cart function
-    // const handleAddToCart = () => {
-
-    //     if (!selectedColor) {
-    //         toast.error("Please select color");
-    //         return;
-    //     }
-
-    //     if (!selectedSizeObj) {
-    //         toast.error("Please select size");
-    //         return;
-    //     }
-
-    //     // Check if selected size is out of stock
-    //     if (isSelectedSizeOutOfStock()) {
-    //         toast.error("This product is out of stock for the selected size");
-    //         return;
-    //     }
-
-    //     // Check if requested quantity is more than available
-    //     if (quantity > Number(selectedSizeObj.available_quantity)) {
-    //         toast.error(`Only ${selectedSizeObj.available_quantity} items available in this size`);
-    //         return;
-    //     }
-
-    //     addToCart(
-    //         productDetail,
-    //         selectedColor,
-    //         selectedSizeObj,
-    //         quantity,
-    //         true
-    //     );
-
-    //     toast.success("Product added to cart successfully!");
-    //     onClose();
-
-    //     // Reset size selection
-    //     setSelectedSizeObj(null);
-    //     setQuantity(1); // optional: reset quantity
-    // };
-
     const handleAddToCart = () => {
         let hasError = false;
 
@@ -233,7 +193,6 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
         setQuantity(1); // optional
     };
 
-
     const productImages = productDetail?.images?.map(img => img.image) || [];
 
     return (
@@ -265,8 +224,8 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                             </button>
                         </div>
 
-
                         <div className="relative">
+                            
                             <div className="flex flex-wrap max-h-[600px] pb-28 overflow-y-auto">
                                 <div className="w-full md:w-[50%] z-[1]">
                                     <div className="flex flex-col pr-4 product-detail-main">
@@ -285,8 +244,8 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                                             src={img}
                                                             alt={`main-${index}`}
                                                             width={600}
-                                                            height={700}
-                                                            className="object-contain w-full h-auto "
+                                                            height={420}
+                                                            className="object-contain w-full h-[420px] "
                                                         />
                                                     </SwiperSlide>
                                                 ))}
@@ -362,9 +321,6 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                                     {getSelectedColorName()}
                                                 </span>
                                             </p>
-
-
-
                                             <div className="colors flex gap-2 flex-wrap pt-2">
                                                 {(productDetail?.colors || []).map((color, index) => (
                                                     <div

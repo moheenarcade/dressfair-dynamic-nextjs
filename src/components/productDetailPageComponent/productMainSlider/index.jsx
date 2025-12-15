@@ -66,8 +66,8 @@ const ProductMainSlider = ({ sliderImages, productDescription }) => {
                                     src={img}
                                     alt={`main-${index}`}
                                     width={600}
-                                    height={700}
-                                    className="object-contain w-full h-auto lg:rounded-xl"
+                                    height={600}
+                                    className="object-contain w-full h-[400px] xl:h-[600px] lg:rounded-xl"
                                 />
                             </SwiperSlide>
                         ))}

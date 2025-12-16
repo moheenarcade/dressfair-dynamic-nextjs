@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 :root {
   --font-temu: miui, system-ui, -apple-system, BlinkMacSystemFont, ".SFNSText-Regular",
     Helvetica, Arial, sans-serif, serif, "Apple Color Emoji",
@@ -36,7 +35,6 @@ button , a {
   cursor: pointer !important;
 }
 
-
 .tabs-main::-webkit-scrollbar {
   display: none;
 }
@@ -67,7 +65,6 @@ button , a {
   overflow: visible;
 }
 
-
 .animate-slideUp {
   animation: slideUp 0.25s ease-out;
 }
@@ -91,14 +88,12 @@ button , a {
   height: 100%;
 }
 
-
 .main-button-buy {
   background-color: #fb5d01;
   font-family: 'Open Sans', sans-serif;
   cursor: pointer;
   position: relative;
   border-radius: 100px;
-
 }
 
 .main-button-buy::after {

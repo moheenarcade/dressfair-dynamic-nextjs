@@ -12,7 +12,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useCountry } from "@/context/CountryContext";
 
-const CartItemsDetailcheckoutDisktopModel = ({ isOpen, onClose, product }) => {
+const CartItemsDetailcheckoutDisktopModel = ({ isOpen, onClose, product , currency }) => {
     const {
         cartItems,
         updateQty,
@@ -149,7 +149,7 @@ const CartItemsDetailcheckoutDisktopModel = ({ isOpen, onClose, product }) => {
                                                 </div>
                                                 <div className="flex justify-between w-full items-center border-b border-b-gray-200 pb-2">
                                                     <div className="text-center text-[#222222] text-[18px] font-semibold py-2 flex items-center gap-1">
-                                                        <span className="text-[14px]">Rs.</span>{item.sale_price}
+                                                        <span className="text-[14px]">{currency || "AED"}.</span>{item.sale_price}
                                                         <p className="text-[#757575] text-[14px] font-normal relative"><span className="absolute top-[10px] bg-[#FB7701] w-full h-[2px]"></span>{item.price}</p>
                                                         <p className="text-[#fb7701] border border-[#fb7701] px-1 p-px rounded-sm text-[12px]">
                                                             -{item.discount_percent}%

@@ -18,6 +18,7 @@ import { useCountry } from "@/context/CountryContext";
 const MobileCartListBottomModal = ({
   isOpen,
   onClose,
+  currency
 }) => {
   const {
     cartItems,
@@ -30,6 +31,8 @@ const MobileCartListBottomModal = ({
     totalQty,
     allSelected,
     removeItem,
+    originalTotal,
+    totalDiscount,
 
   } = useCart();
   const params = useParams();
@@ -120,7 +123,7 @@ const MobileCartListBottomModal = ({
                             <div className="single-item shadow-lg p-1 border border-gray-200 rounded-sm">
                               <Image className="w-full" width={100} height={100} src={item.images[0] || "/placeholder.png"} alt="product banner" />
                               <div className="flex items-center justify-start gap-1">
-                                <p className="text-[14px] font-[600] text-center"><span className="text-[11px]">Rs.</span>{item.sale_price}</p>
+                                <p className="text-[14px] font-[600] text-center"><span className="text-[11px]">{currency || "AED"}.</span>{item.sale_price}</p>
                                 <p className="text-[#8d8c8c] text-[13px] font-semibold relative w-fit"><span className="absolute top-[9px] bg-[#FB7701] w-full h-[2px]"></span>Rs.{item.price}</p>
                               </div>
                               {/* <p className="text-[#fb7701] text-[13px] font-[500]">
@@ -138,21 +141,21 @@ const MobileCartListBottomModal = ({
                   <div className="cart-product-list py-3 border-y border-gray-200">
                     <div className="flex items-center justify-between">
                       <p className="text-black text-[15px] font-[500]">Item(s) total:</p>
-                      <p className="text-[#777777] text-[15px] line-through font-[500]">Rs. {subtotal}</p>
+                      <p className="text-[#777777] text-[15px] line-through font-[500]">{currency || "AED"}. {originalTotal}</p>
                     </div>
                     <div className="flex items-center justify-between pt-1">
                       <p className="text-black text-[15px] font-[500]">Item(s) discount:</p>
-                      <p className="text-[#fb7701] text-[15px] font-[500]">-Rs. {subtotal}</p>
+                      <p className="text-[#fb7701] text-[15px] font-[500]">-{currency || "AED"}. {totalDiscount}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
                     <p className="text-black text-[15px] font-[600]">Total:</p>
                     <p className="text-[#0a8800] text-[17px] font-[600]">
-                      <span className="bg-[#fb7701] py-[2px] px-1 rounded-sm text-[12px] text-white mr-1">
+                      {/* <span className="bg-[#fb7701] py-[2px] px-1 rounded-sm text-[12px] text-white mr-1">
                         62% OFF
-                      </span>
-                      <span className="text-[14px]">Rs.</span>
+                      </span> */}
+                      <span className="text-[14px]">{currency || "AED"}.</span>
                       {subtotal}
                     </p>
                   </div>
@@ -173,12 +176,10 @@ const MobileCartListBottomModal = ({
                     <button
                       onClick={onClose}
                       className="w-[35%] flex flex-col mx-auto">
-                      {/* <span className="text-[#000000] text-[16px] md:text-xl font-[500] line-through">
-                        154,992
-                      </span> */}
+                  
                       <div className="flex items-center mx-auto">
                         <span className="text-[14px] font-[600] text-[#FB7701]">
-                          Rs. <span className="text-[18px] md:text-2xl">{subtotal}</span>
+                        {currency || "AED"}. <span className="text-[18px] md:text-2xl">{subtotal}</span>
                         </span>
                         <FaChevronUp className="text-md" />
                       </div>

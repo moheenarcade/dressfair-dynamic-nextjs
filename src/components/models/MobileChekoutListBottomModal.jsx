@@ -18,6 +18,7 @@ import { useCountry } from "@/context/CountryContext";
 const MobileChekoutListBottomModal = ({
   isOpen,
   onClose,
+  currency
 }) => {
       const {
           cartItems,
@@ -87,7 +88,7 @@ const MobileChekoutListBottomModal = ({
                   <div className="cart-product-list py-3 border-y border-gray-200">
                     <div className="flex items-center justify-between">
                       <p className="text-black text-[15px] font-[500]">Item(s) total:</p>
-                      <p className="text-[#777777] text-[15px] line-through font-[500]">Rs. {subtotal}</p>
+                      <p className="text-[#777777] text-[15px] line-through font-[500]">{currency || "AED"}. {subtotal}</p>
                     </div>
                     {/* <div className="flex items-center justify-between pt-1">
                       <p className="text-black text-[15px] font-[500]">Item(s) discount:</p>
@@ -112,7 +113,7 @@ const MobileChekoutListBottomModal = ({
                         Order total (Applicable taxes included):
                       </p>
                       <p className='text-[#0A8800] text-[20px] font-bold'>
-                        <span className='text-[15px]'>Rs.</span>{subtotal}
+                        <span className='text-[15px]'>{currency || "AED"}.</span>{subtotal}
                       </p>
                     </div>
                     <div className="border border-[#0a8800] rounded-md p-2 mt-1 relative">
@@ -140,7 +141,7 @@ const MobileChekoutListBottomModal = ({
                       </span> */}
                       <div className="flex items-center mx-auto">
                         <span className="text-[14px] font-[600] text-[#FB7701]">
-                          Rs. <span className="text-[18px] md:text-2xl">{subtotal}</span>
+                        {currency || "AED"}. <span className="text-[18px] md:text-2xl">{subtotal}</span>
                         </span>
                         <FaChevronUp className="text-md" />
                       </div>

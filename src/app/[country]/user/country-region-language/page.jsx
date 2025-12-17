@@ -65,7 +65,7 @@ const router = useRouter();
   const [openShare, setOpenShare] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(COUNTRY_MAP.ae);
   const params = useParams();
-  const { country, changeCountryAndSave, withCountry } = useCountry();
+  const { country, changeCountryAndSave, withCountry , countryInfo } = useCountry();
 
   const initialLang = language
     ? language
@@ -76,6 +76,17 @@ const router = useRouter();
       ? { value: "ar", label: "Arabic" }
       : { value: "en", label: "English" };
   });
+    const [currency, setCurrency] = useState("");
+    const [configData, setConfigData] = useState(null);
+
+    useEffect(() => {
+        const data = localStorage.getItem("configData");
+        if (data) {
+            const parsed = JSON.parse(data);
+            setConfigData(parsed);
+            if (parsed.currency_code) setCurrency(parsed.currency_code);
+        }
+    }, []);
 
   const languageOptions = [
     { value: "en", label: "English" },
@@ -148,7 +159,7 @@ const router = useRouter();
       const newSegments = [newCountry, ...segments.slice(1)];
       router.push("/" + newSegments.join("/"));
     }
-    
+    router.push(`/${newCountry}`);
     setSelectedCountry(COUNTRY_MAP[newCountry]);
   };
 
@@ -205,7 +216,7 @@ const router = useRouter();
           <div className="curency mb-4 md:mb-6">
             <label className="font-semibold mt-4 block">Currency</label>
             <p className="border border-gray-300 rounded-sm h-[45px] px-3 py-2 mt-1">
-              PKR : Rs.
+              {countryInfo?.label} : {currency || "AED"}.
             </p>
           </div>
         </div>
@@ -381,7 +392,7 @@ const router = useRouter();
               <div className="flex items-center justify-between gap-2 py-3 border-b border-b-gray-200">
                 <p className="text-[#000] font-semibold text-[15px]">Currency</p>
                 <div className="flex items-center gap-1 ">
-                  <p className="text-[#777] text-[16px] font-[500]">PKR</p>
+                  <p className="text-[#777] text-[16px] font-[500]">{currency || "AED"}</p>
                   <FaChevronRight className="text-[#777] text-[14px]" />
                 </div>
               </div>

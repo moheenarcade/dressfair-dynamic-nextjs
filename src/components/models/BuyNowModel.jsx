@@ -192,10 +192,6 @@ const BuyNowModel = ({ isOpen, onClose, product }) => {
       
         try {
           console.log("ORDER PAYLOAD:", payload);
-      
-          // 🔹 Example API call (replace later)
-          // await axios.post("/api/place-order", payload);
-      
           toast.success("Order placed successfully 🎉");
       
           // Optional: reset + close

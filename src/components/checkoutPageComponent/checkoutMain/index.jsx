@@ -52,7 +52,7 @@ const paymentMethods = [
     },
 ];
 
-const CheckoutMain = () => {
+const CheckoutMain = ({currency}) => {
     const {
         cartItems,
         updateQty,
@@ -138,7 +138,7 @@ const CheckoutMain = () => {
                             <p className='text-[#0A8800] text-[16px] font-[600] py-3'>Shipping: FREE</p>
                             <div className="">
                                 <p className='flex items-center cursor-pointer text-[#000000] text-[13px] font-[500]'>Delivery: 7-17 business days <FiChevronRight /></p>
-                                <p className='flex items-center gap-1 text-[12px] py-1 cursor-pointer text-[#757575] font-[500]'>Get a Rs.280 Credit for late delivery
+                                <p className='flex items-center gap-1 text-[12px] py-1 cursor-pointer text-[#757575] font-[500]'>Get a {currency || "AED"}.280 Credit for late delivery
                                     <svg className="cursorPointer _2vX5r2QW" alt="" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024" width="1em" height="1em" fill="#cdcdcd"><path d="M512 7.3c278.7 0 504.7 226 504.7 504.7 0 278.7-226 504.7-504.7 504.7-278.7 0-504.7-226-504.7-504.7 0-278.7 226-504.7 504.7-504.7z m-16 679.1c-35 0-63.3 28.3-63.3 63.3 0 35 28.3 63.3 63.3 63.3 35 0 63.3-28.3 63.3-63.3 0-35-28.3-63.3-63.3-63.3z m6.5-496.8c-62.5 0-111.4 17.7-147.7 53.2-18.8 18-33.9 50.6-45.3 98-5.1 21.3 8 42.7 29.3 47.8 3 0.7 6.1 1.1 9.2 1.1 26.4 0 49.3-18.4 54.9-44.3 3.9-18 8.7-30.8 14.4-38.4 16-23.6 42.2-34.6 79.3-34.6 28.7 0 51.5 7.6 67.5 23.6 15.2 16 23.6 38 23.6 65.8 0 21.1-7.6 41.4-22.8 59.9l-10.1 11.8c-54.9 48.9-87.8 84.4-98.7 107.2-4.7 9-8.5 23.7-11.7 44.3-3.6 23.9 12.9 46.2 36.8 49.8 2.2 0.3 4.3 0.5 6.5 0.5 26.4 0 49.1-18.6 54.4-44.4 2-9.7 4.3-17.1 6.8-22.3 7.6-15.2 18.6-29.5 33.8-42.2 40.5-35.4 65-58.2 72.5-66.7 20.3-27 31.2-61.6 31.3-103.8 0-51.5-16.9-92-50.7-121.5-33.8-30.4-78.5-44.7-133.3-44.8z"></path></svg>
                                 </p>
                                 <p className='flex items-center cursor-pointer text-[13px] text-[#757575] font-[500]'>Courier company:   TCS,   Leopards,  etc. <FiChevronRight /></p>
@@ -146,7 +146,7 @@ const CheckoutMain = () => {
                         </div>
                     </div>
                     <div className="border-b border-b-gray-200 pb-3">
-                        <CheckoutCartItemSlider />
+                        <CheckoutCartItemSlider currency={currency} />
                     </div>
                     <div className="payment-method mt-4 border-b border-b-gray-200 pb-3">
                         <p className='text-[#222] font-[600] text-[16px] mb-3'>Payment methods</p>
@@ -210,15 +210,15 @@ const CheckoutMain = () => {
                         <div className="border-b border-b-gray-200 pb-4">
                             <div className="flex items-center justify-between mb-3">
                                 <p className="text-[14px] text-[#222] font-semibold">Item(s) total:</p>
-                                <p className="text-[15px] text-[#555] line-through ">Rs. {originalTotal}</p>
+                                <p className="text-[15px] text-[#555] line-through ">{currency || "AED"}. {originalTotal}</p>
                             </div>
                             <div className="flex items-center justify-between mb-3">
                                 <p className="text-[14px] text-[#222] font-semibold">Item(s) discount:</p>
-                                <p className="text-[15px] font-semibold text-[#fb7701]">-Rs.{totalDiscount}</p>
+                                <p className="text-[15px] font-semibold text-[#fb7701]">-{currency || "AED"}.{totalDiscount}</p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <p className="text-[14px] text-[#222] font-semibold">Subtotal:</p>
-                                <p className="text-[15px] text-[#222] font-[500]">Rs.{subtotal}</p>
+                                <p className="text-[15px] text-[#222] font-[500]">{currency || "AED"}.{subtotal}</p>
                             </div>
                         </div>
                         <div className="flex items-center justify-between py-3 border-b border-b-gray-200">
@@ -231,7 +231,7 @@ const CheckoutMain = () => {
                                     Order total (Applicable taxes included):
                                 </p>
                                 <p className='text-[#0A8800] text-[20px] font-bold'>
-                                    <span className='text-[15px]'>Rs.</span>{subtotal}
+                                    <span className='text-[15px]'>{currency || "AED"}.</span>{subtotal}
                                 </p>
                             </div>
                             <div className="border border-[#0a8800] rounded-md p-2 mt-1 relative">

@@ -33,7 +33,8 @@ const MobileChekoutAddressList = ({
   toggleQtyDropdown,
   updateQty,
   qtyOptions,
-  setIsModalOpen
+  setIsModalOpen,
+  
 }) => {
   // Disable scroll when modal is open
   useEffect(() => {

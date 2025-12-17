@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 import { useParams } from 'next/navigation';
 import { useCountry } from '@/context/CountryContext';
 
-const CheckoutCartItemSlider = () => {
+const CheckoutCartItemSlider = ({currency}) => {
     const {
         cartItems,
         updateQty,
@@ -115,9 +115,9 @@ const CheckoutCartItemSlider = () => {
                                 <div className="checkout-single-item cursor-pointer hover:shadow-md">
                                     <Image width="200" height="200"  src={item.images[0] || "/placeholder.png"} alt="product banner" />
                                     <div className="price-sec flex flex-wrap items-center gap-1 py-1">
-                                        <p className="text-sm font-semibold text-[#fb7701]"><span className="text-[16px]">Rs.{item.sale_price}</span></p>
+                                        <p className="text-sm font-semibold text-[#fb7701]"><span className="text-[16px]">{currency || "AED"}.{item.sale_price}</span></p>
                                         <p className="text-[13px] font-semibold text-[#767676]">
-                                            <span className="line-through">Rs. {item.price}</span>
+                                            <span className="line-through">{currency || "AED"}. {item.price}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -131,6 +131,7 @@ const CheckoutCartItemSlider = () => {
             <CartItemsDetailcheckoutDisktopModel
              isOpen={showCartItemsModel}
              onClose={() => setShowCartItemsModel(false)}
+             currency={currency}
             />
         </>
     )

@@ -39,7 +39,7 @@ const Header = () => {
     const pathname = usePathname();
     const { t } = useTranslation();
     const params = useParams();
-    const { country, withCountry ,countryInfo } = useCountry();
+    const { country, withCountry, countryInfo } = useCountry();
 
     const { language, toggleLanguage } = useLanguage();
 
@@ -83,7 +83,18 @@ const Header = () => {
         (firstSegment === "home") ||                    // '/home'
         (countryPrefixes.includes(firstSegment) && !secondSegment) || // '/ae'
         (countryPrefixes.includes(firstSegment) && secondSegment === "home");
+    const [currency, setCurrency] = useState("");
+    const [configData, setConfigData] = useState(null);
+    console.log(countryInfo, "countryInfocountryInfocountryInfo")
 
+    useEffect(() => {
+        const data = localStorage.getItem("configData");
+        if (data) {
+            const parsed = JSON.parse(data);
+            setConfigData(parsed);
+            if (parsed.currency_code) setCurrency(parsed.currency_code);
+        }
+    }, []);
     const handleLogout = () => {
         logout();
         setShowUserDropdown(false);
@@ -694,7 +705,7 @@ const Header = () => {
                                 <li className={`${isHomePage ? "text-white" : "text-[#222222]"} relative group py-1 px-3 cursor-pointer font-semibold text-[14px]`}>
                                     <span className={` ${isHomePage ? "bg-[#BA0000]" : "bg-[#eeeeee]"} absolute inset-0 h-[50px] my-auto rounded-full scale-0 origin-center transition-transform duration-500 ease-in-out group-hover:scale-100`}></span>
                                     <span className="relative z-10 flex items-center gap-1">
-                                    <span className="text-xl rounded-full">{countryInfo.flag}</span>
+                                        <span className="text-xl rounded-full">{countryInfo.flag}</span>
                                         {/* <Image className='w-4 h-4 rounded-full' src={Counrty} alt="country flag" /> */}
                                         {language === "ar" ? 'العربية' : 'English'}
                                     </span>
@@ -725,7 +736,7 @@ const Header = () => {
                                             <div className="pt-3">
                                                 <label className='text-[17px] font-normal'>Currency</label>
                                                 <div className="lang-radio pb-3 pt-2 border-b border-b-gray-200">
-                                                    <p className='flex items-center gap-2 text-[15px] font-normal'>PKR: <b>Rs.</b></p>
+                                                    <p className='flex items-center gap-2 text-[15px] font-normal'>{countryInfo.label}: <b>{currency || "AED"}.</b></p>
                                                 </div>
                                             </div>
 
@@ -736,7 +747,7 @@ const Header = () => {
                                                         src={Counrty}
                                                         alt="country flag"
                                                     /> */}
-                                    <span className="text-xl rounded-full">{countryInfo.flag}</span>
+                                                    <span className="text-xl rounded-full">{countryInfo.flag}</span>
                                                     <span>You are shopping on Dressfair  {countryInfo.label}.</span>
                                                 </p>
                                                 <Link href={withCountry("/user/country-region-language")}>

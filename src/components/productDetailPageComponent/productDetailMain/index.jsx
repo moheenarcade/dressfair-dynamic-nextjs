@@ -47,11 +47,22 @@ const ProductDetailMain = ({ productDetail }) => {
     const [selectedSizeObj, setSelectedSizeObj] = useState();
     const params = useParams();
     const { country, withCountry } = useCountry();
+    const [currency, setCurrency] = useState("");
+    const [configData, setConfigData] = useState(null);
 
     const [validationError, setValidationError] = useState({
         color: false,
         size: false
     });
+
+    useEffect(() => {
+        const data = localStorage.getItem("configData");
+        if (data) {
+            const parsed = JSON.parse(data);
+            setConfigData(parsed);
+            if (parsed.currency_code) setCurrency(parsed.currency_code);
+        }
+    }, []);
     // Find the color that matches the current product SKU
     const findMatchingColor = (product) => {
         if (!product?.colors || !product?.sku) return product?.colors?.[0]?.sku || null;
@@ -339,7 +350,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 <div className="flex items-center gap-3">
                                     <p className="text-white flex items-center gap-1 font-semibold text-[12px] lg:text-[16px]"><LuCheck /> Free shipping</p>
                                     <div className="bg-white h-4 w-px"></div>
-                                    <p className="text-white flex items-center gap-1 font-semibold text-[12px] lg:text-[16px]"><LuCheck /> Rs.280 Credit for delay</p>
+                                    <p className="text-white flex items-center gap-1 font-semibold text-[12px] lg:text-[16px]"><LuCheck />  {currency}.280 Credit for delay</p>
                                 </div>
                             </div>
                         </div>
@@ -386,7 +397,7 @@ const ProductDetailMain = ({ productDetail }) => {
                             ) : (
                                 // If sale_price does NOT exist, show price normally
                                 <p className="text-[#000000] text-[24px] font-semibold">
-                                    Rs. {currentProduct.price}
+                                    {currency}. {currentProduct.price}
                                 </p>
                             )}
 
@@ -395,7 +406,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 <div className="flex items-end text-[#FB7701]">
                                     <Image className="w-4 h-4" src={PriceSection} alt="promotional content" />
                                     <p className="text-[20px] font-semibold leading-[20px]">
-                                        Rs. <span className="text-[28px]">{currentProduct.sale_price}</span>
+                                    {currency}. <span className="text-[28px]">{currentProduct.sale_price}</span>
                                     </p>
                                 </div>
                             )}
@@ -421,7 +432,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 <div className="flex items-center gap-3 text-[12px] xl:text-[16px]">
                                     <p className="text-white flex items-center gap-1 font-semibold"><LuCheck /> Free shipping</p>
                                     <div className="bg-white h-4 w-px"></div>
-                                    <p className="text-white flex items-center gap-1 font-semibold"><LuCheck /> Rs.280 Credit for delay</p>
+                                    <p className="text-white flex items-center gap-1 font-semibold"><LuCheck />  {currency}.280 Credit for delay</p>
                                 </div>
                             </div>
                         </div>
@@ -594,7 +605,7 @@ ${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
                                 <p className="text-[14px] md:text-[16px] flex items-center gap-2 text-[#0A8800] font-semibold">
                                     <FaFreeCodeCamp className="text-xl" />
                                     Free Shipping</p>
-                                <p className="text-gray-600 text-[13px] md:text-[14px]">Free Shipping Over Shopping 150 AED.</p>
+                                <p className="text-gray-600 text-[13px] md:text-[14px]">Free Shipping Over Shopping 150 {currency}.</p>
                             </div>
                             <div className="py-1 lg:py-3 md:border-b border-b-gray-300">
                                 <p className="text-[14px] md:text-[16px] flex items-center gap-2 text-[#0A8800] font-semibold">

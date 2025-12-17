@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { LuChevronRight } from "react-icons/lu";
 import Product1 from "../../../../public/delas-prodcuct2.avif";
 import { RiStarFill } from "react-icons/ri";
@@ -141,7 +141,17 @@ const LightingDeals = () => {
     const swiperRef = useRef(null);
  const params = useParams();
  const { country, withCountry } = useCountry();
+    const [currency, setCurrency] = useState("");
+    const [configData, setConfigData] = useState(null);
 
+    useEffect(() => {
+        const data = localStorage.getItem("configData");
+        if (data) {
+            const parsed = JSON.parse(data);
+            setConfigData(parsed);
+            if (parsed.currency_code) setCurrency(parsed.currency_code);
+        }
+    }, []);
 
     return (
         <div className='lighting-deals container mx-auto px-2 2xl:px-22 pb-12 relative'>
@@ -200,7 +210,7 @@ const LightingDeals = () => {
                                 <div className="product-content">
                                     <div className="price-sec flex flex-wrap items-center gap-1 py-1">
                                         <p className='text-sm font-semibold text-[#fb7701]'>
-                                            Rs <span className='text-[16px]'>{product.price.toLocaleString()}</span>
+                                            {currency || "AED"} <span className='text-[16px]'>{product.price.toLocaleString()}</span>
                                         </p>
                                         <p className='text-[12px] font-semibold text-[#555]'>
                                             <span className='line-through'>{product.originalPrice.toLocaleString()}</span> {product.sold}  sold

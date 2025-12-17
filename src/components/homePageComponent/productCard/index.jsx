@@ -98,7 +98,7 @@ const SingleProduct = ({ product }) => {
 
             <div className="flex justify-between items-center">
               <p className="text-black font-medium text-[15px] flex items-center gap-1">
-                Rs. <span className="text-lg font-bold">{product.sale_price}</span>
+                {product?.currency_code || "AED"}. <span className="text-lg font-bold">{product.sale_price}</span>
                 {product.price && (
                   <span className="line-through text-[13px] text-[#555] font-medium">
                     {product.price}

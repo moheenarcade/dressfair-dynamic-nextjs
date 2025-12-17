@@ -36,7 +36,19 @@ export default function CartSidebar() {
 
   // Local state to manage which dropdown is open
   const [openQtyId, setOpenQtyId] = useState(null);
+  const [currency, setCurrency] = useState("");
+  const [configData, setConfigData] = useState(null);
+  // console.log(productDetail, "productDetailproductDetailproductDetailproductDetailproductDetail")
 
+
+  useEffect(() => {
+      const data = localStorage.getItem("configData");
+      if (data) {
+          const parsed = JSON.parse(data);
+          setConfigData(parsed);
+          if (parsed.currency_code) setCurrency(parsed.currency_code);
+      }
+  }, []);
   useEffect(() => {
     if (cartItems.length === 0) {
       closeCart();
@@ -94,7 +106,7 @@ export default function CartSidebar() {
           </div>
 
           <div className="total-price-cart text-center py-2">
-            <p className="text-lg text-[#222] font-semibold">RS. {subtotal}</p>
+            <p className="text-lg text-[#222] font-semibold">{currency || "AED"}. {subtotal}</p>
           </div>
 
           <div className="free-shipping-tag bg-[#fff3e7] flex items-center p-2 rounded-sm gap-2">
@@ -166,7 +178,7 @@ export default function CartSidebar() {
                       </div>
 
                       <p className="text-center text-[#222] text-[14px] font-semibold py-2">
-                        <span className="text-[12px]">RS.</span> {item.sale_price}
+                        <span className="text-[12px]">{currency || "AED"}.</span> {item.sale_price}
                       </p>
                       <div className="select-qty-option relative w-[100px] mx-auto">
                         <div

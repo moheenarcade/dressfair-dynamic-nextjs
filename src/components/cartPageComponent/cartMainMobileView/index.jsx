@@ -25,7 +25,7 @@ import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
 import { useCountry } from "@/context/CountryContext";
 
-const CartMainMobileView = () => {
+const CartMainMobileView = ({currency}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [openQty, setOpenQty] = useState(false);
     const [selectedQty, setSelectedQty] = useState(1);
@@ -204,7 +204,7 @@ const CartMainMobileView = () => {
                                         </div>
                                         <div className="flex justify-between w-full items-center border-b border-b-gray-200">
                                             <div className="text-center text-[#222222] text-[16px] lg:text-xl font-semibold py-2 flex items-center gap-1">
-                                                <span className="text-[12px] lg:text-lg">Rs.</span>{item.sale_price}
+                                                <span className="text-[12px] lg:text-lg">{currency || "AED"}.</span>{item.sale_price}
                                                 <p className="text-[#757575] text-[11px] lg:text-lg font-normal relative"><span className="absolute top-[8px] lg:top-[13px] bg-[#FB7701] w-full h-[2px]"></span>Rs.{item.price}</p>
                                                 <p className="text-[#fb7701] border border-[#fb7701] px-1 p-px rounded-sm text-[10px] lg:text-lg">
                                                     -47%
@@ -350,7 +350,7 @@ const CartMainMobileView = () => {
                         </span> */}
                         <div className="flex gap-1 items-center mx-auto">
                             <span className="text-[14px] font-[600] text-[#FB7701]">
-                                Rs. <span className="text-[18px] md:text-2xl">{subtotal}</span>
+                            {currency || "AED"}. <span className="text-[18px] md:text-2xl">{subtotal}</span>
                             </span>
                             <FaChevronUp className="text-md dark:text-[#222]" />
                         </div>
@@ -372,16 +372,19 @@ const CartMainMobileView = () => {
                 updateQty={updateQty}
                 qtyOptions={qtyOptions}
                 setIsModalOpen={setIsModalOpen}
+                currency={currency}
             />
 
             <ManageCartBottomModal
                 isOpen={isManageModalOpen}
                 onClose={() => setIsManageModalOpen(false)}
+                currency={currency}
             />
 
             <ShareCartBottomModal
                 isOpen={isShareModalOpen}
                 onClose={() => setIsShareModalOpen(false)}
+                currency={currency}
             />
         </>
     )

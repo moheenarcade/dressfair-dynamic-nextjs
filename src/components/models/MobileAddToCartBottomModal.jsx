@@ -31,7 +31,18 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
   const [openQty, setOpenQty] = useState(false);
   const [hoveredSizeId, setHoveredSizeId] = useState(null);
   const qtyOptions = [1, 2, 3, 4, 5];
+  const [currency, setCurrency] = useState("");
+  const [configData, setConfigData] = useState(null);
+  // console.log(productDetail, "productDetailproductDetailproductDetailproductDetailproductDetail")
 
+  useEffect(() => {
+      const data = localStorage.getItem("configData");
+      if (data) {
+          const parsed = JSON.parse(data);
+          setConfigData(parsed);
+          if (parsed.currency_code) setCurrency(parsed.currency_code);
+      }
+  }, []);
   // Helper functions
   const findMatchingColor = (product) => {
     if (!product?.colors || !product?.sku) return product?.colors?.[0]?.sku || null;
@@ -237,7 +248,7 @@ const MobileAddToCartBottomModal = ({ isOpen, onClose, productSku }) => {
                                 {productDetail?.price}
                               </p>
                             )}
-                            <p className="text-[#222] text-[14px] font-semibold">Rs.
+                            <p className="text-[#222] text-[14px] font-semibold">{currency || "AED"}.
                               <span className="text-xl">
                                 {productDetail?.sale_price || productDetail?.price}
                               </span>

@@ -23,7 +23,7 @@ import { useParams } from "next/navigation";
 import { useCountry } from "@/context/CountryContext";
 
 
-const CartMain = () => {
+const CartMain = ({currency}) => {
     const {
         cartItems,
         updateQty,
@@ -167,7 +167,7 @@ const CartMain = () => {
                                             </div>
                                             <div className="flex justify-between w-full items-center border-b border-b-gray-200 pb-2">
                                                 <div className="text-center text-[#222222] text-[18px] font-semibold py-2 flex items-center gap-1">
-                                                    <span className="text-[14px]">Rs.</span>{item.sale_price}
+                                                    <span className="text-[14px]">{currency || "AED"}.</span>{item.sale_price}
                                                     <p className="text-[#757575] text-[14px] font-normal relative"><span className="absolute top-[10px] bg-[#FB7701] w-full h-[2px]"></span>Rs. {item.price}</p>
                                                     {item.discount_percent > 0 && (
                                                         <span className="text-[#fb7701] border border-[#fb7701] px-1 p-px rounded-sm text-[12px]">
@@ -239,22 +239,22 @@ const CartMain = () => {
                     <div className="border-b border-b-gray-200 pt-6 pb-4">
                         <div className="flex items-center justify-between mb-3">
                             <p className="text-[15px] text-[#222]">Item(s) total:</p>
-                            <p className="text-[15px] text-[#555] line-through">Rs. {originalTotal}</p>
+                            <p className="text-[15px] text-[#555] line-through">{currency || "AED"}. {originalTotal}</p>
                         </div>
                         <div className="flex items-center justify-between mb-3">
                             <p className="text-[15px] text-[#222]">Shipping Charges:</p>
-                            <p className="text-[15px] text-[#555]">Rs. 0</p>
+                            <p className="text-[15px] text-[#555]">{currency || "AED"}. 0</p>
                         </div>
                         <div className="flex items-center justify-between">
                             <p className="text-[15px] text-[#222]">Item(s) discount:</p>
-                            <p className="text-[15px] font-semibold text-[#fb7701]">-Rs. {totalDiscount}</p>
+                            <p className="text-[15px] font-semibold text-[#fb7701]">-{currency || "AED"}. {totalDiscount}</p>
                         </div>
                     </div>
 
                     <div className="pt-4 pb-8">
                         <div className="flex justify-between items-center">
                             <p className="text-[16px] text-[#222] font-semibold">Total</p>
-                            <p className="text-[#0a8800] text-[20px] font-semibold">Rs.{subtotal}</p>
+                            <p className="text-[#0a8800] text-[20px] font-semibold">{currency || "AED"}.{subtotal}</p>
                         </div>
                     </div>
 

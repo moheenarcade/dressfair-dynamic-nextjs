@@ -43,8 +43,19 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
     const [openQty, setOpenQty] = useState(false);
     const [hoveredSizeId, setHoveredSizeId] = useState(null);
     const qtyOptions = [1, 2, 3, 4, 5];
-
+    const [currency, setCurrency] = useState("");
+    const [configData, setConfigData] = useState(null);
     // console.log(productDetail, "productDetailproductDetailproductDetailproductDetailproductDetail")
+
+
+    useEffect(() => {
+        const data = localStorage.getItem("configData");
+        if (data) {
+            const parsed = JSON.parse(data);
+            setConfigData(parsed);
+            if (parsed.currency_code) setCurrency(parsed.currency_code);
+        }
+    }, []);
 
     // Helper functions
     const findMatchingColor = (product) => {
@@ -300,13 +311,13 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                         <div className="prices-sec flex items-center flex-wrap gap-2 pb-3 px-2 lg:px-0">
                                             {productDetail?.sale_price && (
                                                 <p className="text-[#000000] text-[20px] font-semibold relative line-through">
-                                                    Rs. {productDetail?.price}
+                                                   {currency || "AED"}. {productDetail?.price}
                                                 </p>
                                             )}
 
                                             <div className="flex items-end text-[#FB7701]">
                                                 <p className="text-[20px] font-semibold leading-[20px]">
-                                                    Rs. <span className="text-[28px]">
+                                                {currency || "AED"}. <span className="text-[28px]">
                                                         {productDetail?.sale_price || productDetail?.price}
                                                     </span>
                                                 </p>

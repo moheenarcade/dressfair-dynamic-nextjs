@@ -1,8 +1,10 @@
+"use client";
 import DressfairFriday from "@/components/homePageComponent/DressFairFriday";
 import HeroSection from "@/components/homePageComponent/heroSection";
 import LightingDeals from "@/components/homePageComponent/lightingDeals";
 import WhyChooseDressfair from "@/components/homePageComponent/whyChooseDressfair";
 import TopTabsSection from "@/components/homePageMobile/topTabSection";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   return (

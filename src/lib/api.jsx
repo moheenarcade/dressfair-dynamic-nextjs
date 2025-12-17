@@ -21,6 +21,28 @@ const getStoreId = () => {
   return "2";
 };
 
+// Get category list
+export const getConfig = async () => {
+  try {
+    const storeId = getStoreId();
+    const res = await axios.get(`${API}/config`, {
+      headers: {
+        "spa-merchant-id": "v6eJxZKeRs8RmL0AfgtDwnQ",
+        "spa-store-id": storeId,
+      },
+    });
+
+    // if success then replace localStorage
+    if (res.data?.success && res.data?.data) {
+      localStorage.setItem("configData", JSON.stringify(res.data.data));
+    }
+    return res.data;
+  } catch (error) {
+    console.log("config API Error:", error);
+    return { success: false, data: [] };
+  }
+};
+
 // Get catalogue list
 export const getCatalogue = async (page = 1, categorySlug = '') => {
   try {

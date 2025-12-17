@@ -45,8 +45,8 @@ const ProductDetailMain = ({ productDetail }) => {
     const [selectedProductSku, setSelectedProductSku] = useState(null);
     // const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSizeObj, setSelectedSizeObj] = useState();
-            const params = useParams();
-            const { country, withCountry } = useCountry();
+    const params = useParams();
+    const { country, withCountry } = useCountry();
 
     const [validationError, setValidationError] = useState({
         color: false,
@@ -70,9 +70,6 @@ const ProductDetailMain = ({ productDetail }) => {
         return sizes.find(size => Number(size.available_quantity) > 0) || null;
     };
 
-    // const [selectedSizeObj, setSelectedSizeObj] = useState(
-    //     findFirstAvailableSize(productDetail?.sizes) || productDetail?.sizes?.[0] || null
-    // );
     const [quantity, setQuantity] = useState(1);
 
     // ProductColorSize states moved to parent
@@ -294,6 +291,23 @@ const ProductDetailMain = ({ productDetail }) => {
         handleAddToCartMobile();
     };
 
+    const getSelectedProductForBuyNow = () => {
+        if (!currentProduct || !selectedColor || !selectedSizeObj) return null;
+
+        return {
+            id: currentProduct.id || currentProduct.sku, // product id or SKU
+            name: currentProduct.name,
+            images: currentProduct.images || currentProduct.colors?.find(c => c.sku === selectedColor)?.image,
+            selectedColor: getSelectedColorName(),
+            selectedColorSku: selectedColor,
+            selectedSize: selectedSizeObj.value,
+            sizeId: selectedSizeObj.product_option_id,
+            quantity: quantity,
+            price: currentProduct.price,
+            salePrice: currentProduct.sale_price || null
+        };
+    };
+
     return (
         <>
             {loading && (
@@ -459,7 +473,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                     className={`font-semibold ${validationError.size ? "text-red-500" : "text-[#222]"
                                         }`}
                                 >
-                                    Size: <span>{validationError.size ? <span className="text-[14px]">Please select a size </span>: selectedSizeObj?.value || ""} {}</span>
+                                    Size: <span>{validationError.size ? <span className="text-[14px]">Please select a size </span> : selectedSizeObj?.value || ""} { }</span>
                                     {selectedSizeObj && isSelectedSizeOutOfStock() && (
                                         <span className="text-red-500 text-sm ml-2">(Out of Stock)</span>
                                     )}
@@ -653,7 +667,7 @@ ${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
             <BuyNowModel
                 isOpen={isBuyNowOpen}
                 onClose={() => setIsBuyNowOpen(false)}
-                product={product}
+                product={getSelectedProductForBuyNow()}
             />
 
         </>

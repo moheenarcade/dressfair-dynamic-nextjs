@@ -35,6 +35,7 @@ const BuyNowModel = ({ isOpen, onClose, product }) => {
         address: ""
     });
     const [errors, setErrors] = useState({});
+    const allowedDigits = mobileLenght - (phoneCode?.toString().length || 0);
 
     useEffect(() => {
         document.body.style.overflow = isOpen ? "hidden" : "";
@@ -57,13 +58,12 @@ const BuyNowModel = ({ isOpen, onClose, product }) => {
         setErrors(prev => ({ ...prev, [name]: "" })); 
     };
 
+
     const handleMobileChange = (e) => {
         let val = e.target.value.replace(/\D/g, ""); // only digits
-
-        const effectiveLength = val.startsWith("0") ? val.length - 1 : val.length;
-
-        if (effectiveLength > mobileLenght) return;
-
+    
+        if (val.length > allowedDigits) return; // enforce max length
+    
         setFormData(prev => ({ ...prev, mobile: val }));
         setErrors(prev => ({ ...prev, mobile: "" }));
     };
@@ -75,14 +75,17 @@ const BuyNowModel = ({ isOpen, onClose, product }) => {
         if (!formData.email.trim()) newErrors.email = "Email is required";
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
             newErrors.email = "Invalid email";
-
-        if (!formData.mobile.trim()) newErrors.mobile = "Mobile number is required";
-        else {
+        if (!formData.mobile.trim()) {
+            newErrors.mobile = "Mobile number is required";
+        } else if (!/^\d+$/.test(formData.mobile)) {
+            newErrors.mobile = "Only numbers are allowed";
+        } else {
             const effectiveLength = formData.mobile.startsWith("0")
                 ? formData.mobile.length - 1
                 : formData.mobile.length;
-            if (effectiveLength !== Number(mobileLenght))
-                newErrors.mobile = `Mobile number must be exactly ${mobileLenght} digits (excluding leading 0)`;
+            if (effectiveLength !== allowedDigits) {
+                newErrors.mobile = `Mobile number must be exactly ${allowedDigits} digits`;
+            }
         }
 
         if (!selectedCity) newErrors.city = "City is required";
@@ -375,7 +378,7 @@ const BuyNowModel = ({ isOpen, onClose, product }) => {
                                         type="tel"
                                         value={formData.mobile}
                                         onChange={handleMobileChange}
-                                        placeholder={`Enter mobile number (${mobileLenght} digits)`}
+                                        placeholder={`Enter ${allowedDigits} digits`}
                                         className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:ring-1 focus:ring-[#fb5d01] focus:border-[#fb5d01] outline-none text-sm"
                                     />
                                     {errors.mobile && <p className="text-red-500 text-[12px] absolute bottom-[-16px]">{errors.mobile}</p>}

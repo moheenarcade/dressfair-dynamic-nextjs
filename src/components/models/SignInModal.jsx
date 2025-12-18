@@ -152,7 +152,7 @@ const SignInModal = ({ isOpen, onClose }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
           >
-            <div className="bg-white rounded-xl w-full max-w-md p-6 relative shadow-lg">
+            <div className="bg-white rounded-xl w-full max-w-md p-4 md:p-6 relative shadow-lg">
               <button
                 className="absolute top-4 right-4 text-gray-500 hover:text-black"
                 onClick={onClose}
@@ -198,12 +198,12 @@ const SignInModal = ({ isOpen, onClose }) => {
 
               {/* Tab Content */}
               {activeTab === "whatsapp" ? (
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col">
                   {step === "phone" && (
                     <>
-                      <label className="font-semibold">Whatsapp number</label>
-                      <div className="flex gap-2 relative pb-3">
-                        <span className="border border-gray-300 rounded w-14 flex items-center justify-center font-semibold">
+                      <label className="font-semibold mb-1">Whatsapp number</label>
+                      <div className="flex gap-1 relative pb-3">
+                        <span className="border border-gray-300 rounded w-15 flex items-center justify-center font-semibold">
                           +{phoneCode}
                         </span>
                         <input
@@ -224,7 +224,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                       <button
                         onClick={sendWhatsAppOtp}
                         disabled={loading}
-                        className="bg-orange-500 text-white rounded-full py-2 font-semibold"
+                        className="bg-orange-500 text-white rounded-full py-2 font-semibold mt-6"
                       >
                         {loading ? "Sending OTP..." : "Send OTP"}
                       </button>
@@ -310,11 +310,11 @@ const SignInModal = ({ isOpen, onClose }) => {
                         Change number
                       </button>
                     </>
-                  )}
+                 )} 
                 </div>
               ) : (
-                <div className="flex flex-col gap-4">
-                  <label htmlFor="email" className="font-semibold">Email</label>
+                <div className="flex flex-col">
+                  <label htmlFor="email" className="font-semibold mb-1">Email</label>
                   <input
                     type="email"
                     placeholder="Enter your email"
@@ -326,7 +326,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                   <button
                     onClick={() => { /* handle email login */ }}
                     disabled={loading}
-                    className="bg-orange-500 text-white rounded-full py-2 font-semibold w-full hover:bg-orange-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-orange-500 mt-6 text-white rounded-full py-2 font-semibold w-full hover:bg-orange-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? "Logging in..." : "Continue with Email"}
                   </button>

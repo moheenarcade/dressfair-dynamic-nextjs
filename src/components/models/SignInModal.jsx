@@ -9,39 +9,26 @@ import FreeReturnimg from "../../../public/loginapidadjustment.avif";
 import { signIn } from "next-auth/react";
 import { useUser } from "../../context/UserContext";
 import axios from "axios";
-
+import { useConfig } from "@/context/ConfigContext";
 
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-
 const SignInModal = ({ isOpen, onClose }) => {
+  const { configData, isReady } = useConfig();
   const [activeTab, setActiveTab] = useState("whatsapp");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = useUser();
-  const [configData, setConfigData] = useState(null);
-  const [phoneCode, setPhoneCode] = useState("");
-  const [mobileLength, setMobileLength] = useState(0);
-  const [currency, setCurrency] = useState("");
-
-  const [step, setStep] = useState("phone"); // phone | otp
+  const phoneCode = configData?.phone_code || "";
+  const mobileLength = configData?.mobile_lenght;
+  const currency = configData?.currency_code || "";
+  const [step, setStep] = useState("phone");
   const [otp, setOtp] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
   const [error, setError] = useState("");
   const phoneCodeLength = phoneCode?.toString().length || 0;
   const allowedDigits = mobileLength - phoneCodeLength;
-
-  useEffect(() => {
-    const data = localStorage.getItem("configData");
-    if (data) {
-      const parsed = JSON.parse(data);
-      setConfigData(parsed);
-      if (parsed.phone_code) setPhoneCode(parsed.phone_code);
-      if (parsed.mobile_lenght) setMobileLength(parsed.mobile_lenght);
-      if (parsed.currency_code) setCurrency(parsed.currency_code);
-    }
-  }, []);
 
   // Validate phone number
   const validatePhone = () => {

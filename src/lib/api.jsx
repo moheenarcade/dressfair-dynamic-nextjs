@@ -139,3 +139,4 @@ export const getSubCategories = async (categorySlug = "") => {
     return { success: false, data: [] };
   }
 };
+

@@ -5,6 +5,9 @@ import { CgClose } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { toast } from "react-hot-toast";
+import axios from "axios";
+
+const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 
 const cities = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman"];
@@ -51,7 +54,7 @@ const BuyNowModel = ({ isOpen, onClose, product }) => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
-        setErrors(prev => ({ ...prev, [name]: "" })); // clear error on change
+        setErrors(prev => ({ ...prev, [name]: "" })); 
     };
 
     const handleMobileChange = (e) => {
@@ -183,34 +186,55 @@ const BuyNowModel = ({ isOpen, onClose, product }) => {
           }
         };
       };
-
-      const handleSubmit = async (e) => {
+      
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
-      
-        const payload = buildOrderPayload();
+        const payload = {
+          customer_name: formData.name,
+          customer_email: formData.email,
+          customer_mobile: `${phoneCode}${formData.mobile}`,
+          customer_city_id: selectedCity,
+          customer_city_name: selectedCity,
+          customer_area_name: selectedArea,
+          customer_address: formData.address,
+          product_id: product?.id,
+          product_option_id: product?.sizeId,
+          product_color: product?.selectedColor,
+          product_quantity: Number(product?.quantity) || 1,
+          shipping_charges: 0,
+          total_price: grandTotal,
+          product_price : unitPrice,
+        };
       
         try {
-          console.log("ORDER PAYLOAD:", payload);
-          toast.success("Order placed successfully 🎉");
+          const storeId = localStorage.getItem("store_id"); // optional headers
+          const { data } = await axios.post(
+            `${API}/checkout/buy/now/order`,
+            payload,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "spa-merchant-id": "v6eJxZKeRs8RmL0AfgtDwnQ",
+                "spa-store-id": storeId,
+              },
+            }
+          );
       
-          // Optional: reset + close
-          setFormData({
-            name: "",
-            email: "",
-            mobile: "",
-            address: ""
-          });
-          setSelectedCity("");
-          setSelectedArea("");
-      
-          onClose();
+          if (data.success) {
+            toast.success("Order placed successfully 🎉");
+            setFormData({ name: "", email: "", mobile: "", address: "" });
+            setSelectedCity("");
+            setSelectedArea("");
+            onClose();
+          } else {
+            throw new Error(data.message || "Failed to place order");
+          }
         } catch (error) {
           console.error(error);
-          toast.error("Failed to place order. Please try again.");
+          toast.error(error.response?.data?.message || error.message || "Failed to place order. Please try again.");
         }
       };
-      
 
     return (
         <AnimatePresence>

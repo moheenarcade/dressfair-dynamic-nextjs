@@ -773,11 +773,7 @@ const Header = () => {
 
                                             <div className="pt-3">
                                                 <p className="text-gray-600 font-normal flex gap-2">
-                                                    {/* <Image
-                                                        className="w-4 h-4 rounded-full inline-block"
-                                                        src={Counrty}
-                                                        alt="country flag"
-                                                    /> */}
+                                                   
                                                     <span className="text-xl rounded-full">{countryInfo.flag}</span>
                                                     <span>You are shopping on Dressfair  {countryInfo.label}.</span>
                                                 </p>

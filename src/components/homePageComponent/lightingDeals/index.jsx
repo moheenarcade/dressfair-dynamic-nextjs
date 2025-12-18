@@ -152,7 +152,7 @@ const LightingDeals = () => {
             if (parsed.currency_code) setCurrency(parsed.currency_code);
         }
     }, []);
-    
+
 
     return (
         <div className='lighting-deals container mx-auto px-2 2xl:px-22 pb-12 relative'>

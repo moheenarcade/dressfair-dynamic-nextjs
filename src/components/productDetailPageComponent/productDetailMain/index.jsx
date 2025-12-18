@@ -306,7 +306,7 @@ const ProductDetailMain = ({ productDetail }) => {
         if (!currentProduct || !selectedColor || !selectedSizeObj) return null;
 
         return {
-            id: currentProduct.id || currentProduct.sku, // product id or SKU
+            id: currentProduct.product_id || currentProduct.sku,
             name: currentProduct.name,
             images: currentProduct.images || currentProduct.colors?.find(c => c.sku === selectedColor)?.image,
             selectedColor: getSelectedColorName(),
@@ -406,7 +406,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 <div className="flex items-end text-[#FB7701]">
                                     <Image className="w-4 h-4" src={PriceSection} alt="promotional content" />
                                     <p className="text-[20px] font-semibold leading-[20px]">
-                                    {currency}. <span className="text-[28px]">{currentProduct.sale_price}</span>
+                                        {currency}. <span className="text-[28px]">{currentProduct.sale_price}</span>
                                     </p>
                                 </div>
                             )}
@@ -449,7 +449,7 @@ const ProductDetailMain = ({ productDetail }) => {
                                 </p>
 
                                 <div className="colors flex gap-2 flex-wrap pt-2">
-                                    {(currentProduct?.colors || []).map((color, index) => (
+                                    {/* {(currentProduct?.colors || []).map((color, index) => (
                                         <div
                                             key={index}
                                             onClick={() => handleColorSelect(color.sku)}
@@ -468,27 +468,47 @@ const ProductDetailMain = ({ productDetail }) => {
                                                 {color.name}
                                             </p>
                                         </div>
-                                    ))}
+                                    ))} */}
+
+                                    {(currentProduct?.colors || [])
+                                        .filter((color) => color.quantity > 0) // Only colors with quantity > 0
+                                        .map((color, index) => (
+                                            <div
+                                                key={index}
+                                                onClick={() => handleColorSelect(color.sku)}
+                                                className={`single-color cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col justify-center items-center w-fit border-2 rounded-md overflow-hidden
+                ${selectedColor === color.sku ? "border-black" : "border-[#aaa]"}
+            `}
+                                            >
+                                                <Image
+                                                    className="w-18 xl:w-22 h-auto"
+                                                    width={50}
+                                                    height={50}
+                                                    src={color.image}
+                                                    alt={color.sku}
+                                                />
+                                                <p className="px-1 py-1 xl:py-2 text-[#222] text-[12px] font-bold">
+                                                    {color.name}
+                                                </p>
+                                            </div>
+                                        ))}
+
                                 </div>
                             </div>
 
                             {/* Size Section */}
                             <div className="size-sec pb-4">
-                                {/* <p className="text-[#222] font-semibold">
-                                    Size: <span>{selectedSizeObj?.value || ""}</span>
-                                    {selectedSizeObj && isSelectedSizeOutOfStock() && (
-                                        <span className="text-red-500 text-sm ml-2">(Out of Stock)</span>
-                                    )}
-                                </p> */}
-                                <p
-                                    className={`font-semibold ${validationError.size ? "text-red-500" : "text-[#222]"
-                                        }`}
-                                >
-                                    Size: <span>{validationError.size ? <span className="text-[14px]">Please select a size </span> : selectedSizeObj?.value || ""} { }</span>
-                                    {selectedSizeObj && isSelectedSizeOutOfStock() && (
-                                        <span className="text-red-500 text-sm ml-2">(Out of Stock)</span>
-                                    )}
-                                </p>
+                                {availableSizes.length > 0 && (
+                                    <p
+                                        className={`font-semibold ${validationError.size ? "text-red-500" : "text-[#222]"
+                                            }`}
+                                    >
+                                        Size: <span>{validationError.size ? <span className="text-[14px]">Please select a size </span> : selectedSizeObj?.value || ""} { }</span>
+                                        {selectedSizeObj && isSelectedSizeOutOfStock() && (
+                                            <span className="text-red-500 text-sm ml-2">(Out of Stock)</span>
+                                        )}
+                                    </p>
+                                )}
 
                                 <div className="sizes pt-2 flex items-center gap-2 flex-wrap">
                                     {availableSizes.length > 0 ? (
@@ -542,6 +562,7 @@ ${validationError.size && !selectedSizeObj ? "border-red-500" : ""}
                             </div>
 
                             {/* Quantity Section */}
+                            
                             <div className="qty-sect relative flex items-center gap-2 pt-1">
                                 <p className="text-[#222] font-semibold pb-1">Qty</p>
 

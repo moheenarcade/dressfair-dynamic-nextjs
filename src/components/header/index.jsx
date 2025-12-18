@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
 import { usePathname, useParams } from 'next/navigation';
-
+import { useConfig } from "@/context/ConfigContext";
 import Image from 'next/image';
 import { FiSearch } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa6";
@@ -61,7 +61,6 @@ const Header = () => {
     const [showMobileUser, setShowMobileUser] = useState(false);
     const popupRef = useRef(null);
     const buttonRef = useRef(null);
-
     const [showMegaMenu, setShowMegaMenu] = useState(false);
     const [showSignInModal, setShowSignInModal] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -76,60 +75,16 @@ const Header = () => {
     const secondSegment = segments[1]; // in case of /ae/home
 
     const countryPrefixes = ["ae", "pk", "om", "sa"];
-
     // Check for home page with optional country
     const isHomePage =
         (firstSegment === undefined) ||                 // '/'
         (firstSegment === "home") ||                    // '/home'
         (countryPrefixes.includes(firstSegment) && !secondSegment) || // '/ae'
         (countryPrefixes.includes(firstSegment) && secondSegment === "home");
-    const [currency, setCurrency] = useState("");
-    const [configData, setConfigData] = useState(null);
-    console.log(countryInfo, "countryInfocountryInfocountryInfo")
-    const [isReady, setIsReady] = useState(false);
-
-    useEffect(() => {
-        const loadConfig = async () => {
-            try {
-                const res = await getConfig();
-
-                if (res?.success && res?.data) {
-                    // ✅ Save latest config to localStorage
-                    localStorage.setItem("configData", JSON.stringify(res.data));
-
-                    // ✅ Update state from fresh API data
-                    setConfigData(res.data);
-
-                    if (res.data.currency_code) {
-                        setCurrency(res.data.currency_code);
-                    }
-
-                    console.log("Config loaded & saved:", res.data);
-                }
-            } catch (error) {
-                console.error("Error loading config:", error);
-
-                // ⚠️ Fallback to localStorage if API fails
-                const cached = localStorage.getItem("configData");
-                if (cached) {
-                    const parsed = JSON.parse(cached);
-                    setConfigData(parsed);
-                    if (parsed.currency_code) {
-                        setCurrency(parsed.currency_code);
-                    }
-                }
-            } finally {
-                setIsReady(true);
-            }
-        };
-
-        loadConfig();
-    }, []);
-
-    const handleLogout = () => {
-        logout();
-        setShowUserDropdown(false);
-    };
+    const { configData, isReady } = useConfig();
+    const currency = configData?.currency_code || "";
+    const phoneCode = configData?.phone_code || "";
+    const mobileLength = configData?.mobile_length || 8;
 
     // Fetch categories from API and save in localStorage
     useEffect(() => {
@@ -773,7 +728,7 @@ const Header = () => {
 
                                             <div className="pt-3">
                                                 <p className="text-gray-600 font-normal flex gap-2">
-                                                   
+
                                                     <span className="text-xl rounded-full">{countryInfo.flag}</span>
                                                     <span>You are shopping on Dressfair  {countryInfo.label}.</span>
                                                 </p>

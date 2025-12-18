@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { Toaster } from "react-hot-toast";
 import FaviconLoader from "@/components/FaviconLoader";
 import { CountryProvider } from "@/context/CountryContext";
+import { ConfigProvider } from "@/context/ConfigContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,18 +58,20 @@ export default function RootLayout({ children }) {
         <CountryProvider>
           <LanguageProvider>
             <FaviconLoader />
-            <UserProvider>
-              <CartProvider>
-                <Toaster
-                  position="top-center"
-                  containerStyle={{
-                    zIndex: 999999999999999,
-                  }}
-                />
-                <LayoutContent>{children}</LayoutContent>
-                <CartSidebar />
-              </CartProvider>
-            </UserProvider>
+            <ConfigProvider>
+              <UserProvider>
+                <CartProvider>
+                  <Toaster
+                    position="top-center"
+                    containerStyle={{
+                      zIndex: 999999999999999,
+                    }}
+                  />
+                  <LayoutContent>{children}</LayoutContent>
+                  <CartSidebar />
+                </CartProvider>
+              </UserProvider>
+            </ConfigProvider>
           </LanguageProvider>
         </CountryProvider>
       </body>

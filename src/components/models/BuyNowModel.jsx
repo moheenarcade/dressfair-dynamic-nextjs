@@ -344,7 +344,6 @@ const BuyNowModel = ({ isOpen, onClose, product }) => {
                                 </div>
                             </div>
 
-
                             <form className="pt-4 space-y-2" onSubmit={handleSubmit}>
                                 <div className="relative mb-4">
                                     <input

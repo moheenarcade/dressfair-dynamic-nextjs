@@ -9,7 +9,7 @@ function FaviconLoader() {
   useEffect(() => {
 
     // Retrieve storeSettings from localStorage
-    const storeSettings = localStorage.getItem("storeSettings");
+    const storeSettings = localStorage.getItem("configData");
 
     if (storeSettings) {
       try {

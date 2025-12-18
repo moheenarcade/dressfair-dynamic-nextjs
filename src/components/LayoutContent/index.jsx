@@ -9,26 +9,24 @@ import { getConfig } from "@/lib/api";
 
 export default function LayoutContent({ children }) {
   const { isCartOpen } = useCart();
-  const [isReady, setIsReady] = useState(false);
+//   const [isReady, setIsReady] = useState(false);
+//   const loadConfig = async () => {
+//    try {
+//      const res = await getConfig();
+//      if (res.success) {
+//        console.log("Config loaded:", res.data);
+//      }
+//    } catch (error) {
+//      console.error("Error loading config:", error);
+//    } finally {
+//      setIsReady(true);
+//    }
+//  };
 
-  // Async function to load config once
-  const loadConfig = async () => {
-   try {
-     const res = await getConfig();
-     if (res.success) {
-       console.log("Config loaded:", res.data);
-     }
-   } catch (error) {
-     console.error("Error loading config:", error);
-   } finally {
-     setIsReady(true);
-   }
- };
-
- // Run once on mount
- useEffect(() => {
-   loadConfig();
- }, []);
+//  // Run once on mount
+//  useEffect(() => {
+//    loadConfig();
+//  }, []);
  
   return (
     <motion.div

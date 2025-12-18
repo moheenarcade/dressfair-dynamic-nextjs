@@ -21,126 +21,126 @@ import { useCountry } from '@/context/CountryContext';
 
 // Generate random dates for different timer states
 const getRandomDate = (hoursFromNow) => {
-  const date = new Date();
-  date.setHours(date.getHours() + hoursFromNow);
-  return date;
+    const date = new Date();
+    date.setHours(date.getHours() + hoursFromNow);
+    return date;
 };
 
 const products = [
-  {
-    id: 1,
-    name: "Wireless Bluetooth Headphones - Ending Soon",
-    image: Product1,
-    price: 9093,
-    originalPrice: 33725,
-    discount: 65,
-    sold: 758,
-    rating: 4.5,
-    reviewCount: 323,
-    endDate: getRandomDate(2), // Ends in 2 hours (near end)
-  },
-  {
-    id: 2,
-    name: "Smart Watch Series 5 - Half Time",
-    image: Product2,
-    price: 12000,
-    originalPrice: 25000,
-    discount: 52,
-    sold: 432,
-    rating: 4.2,
-    reviewCount: 156,
-    endDate: getRandomDate(12), // Ends in 12 hours (half time)
-  },
-  {
-    id: 3,
-    name: "Portable Speaker - Just Started",
-    image: Product3,
-    price: 7500,
-    originalPrice: 15000,
-    discount: 50,
-    sold: 289,
-    rating: 4.7,
-    reviewCount: 89,
-    endDate: getRandomDate(14), // Ends in 24 hours (just started)
-  },
-  {
-    id: 4,
-    name: "Gaming Mouse - Almost Over",
-    image: Product4,
-    price: 15999,
-    originalPrice: 32000,
-    discount: 50,
-    sold: 621,
-    rating: 4.0,
-    reviewCount: 245,
-    endDate: getRandomDate(1.5), // Ends in 1 hour (almost over)
-  },
-  {
-    id: 5,
-    name: "Mechanical Keyboard - Half Time",
-    image: Product5,
-    price: 11250,
-    originalPrice: 22500,
-    discount: 50,
-    sold: 387,
-    rating: 4.3,
-    reviewCount: 178,
-    endDate: getRandomDate(18), // Ends in 18 hours (half time)
-  },
-  {
-    id: 6,
-    name: "USB-C Hub - Just Started",
-    image: Product1,
-    price: 11250,
-    originalPrice: 25000,
-    discount: 55,
-    sold: 387,
-    rating: 4.3,
-    reviewCount: 178,
-    endDate: getRandomDate(16),
-  },
-  {
-    id: 7,
-    name: "Power Bank - Ending Soon",
-    image: Product2,
-    price: 11250,
-    originalPrice: 25000,
-    discount: 55,
-    sold: 387,
-    rating: 4.3,
-    reviewCount: 178,
-    endDate: getRandomDate(3), // Ends in 3 hours (ending soon)
-  },
-  {
-    id: 8,
-    name: "Webcam - Almost Over",
-    image: Product3,
-    price: 11250,
-    originalPrice: 25000,
-    discount: 55,
-    sold: 387,
-    rating: 4.3,
-    reviewCount: 178,
-    endDate: getRandomDate(5), // Ends in 30 minutes (almost over)
-  },
-  {
-    id: 9,
-    name: "Tablet Stand - Half Time",
-    image: Product4,
-    price: 11250,
-    originalPrice: 25000,
-    discount: 55,
-    sold: 387,
-    rating: 4.3,
-    reviewCount: 178,
-    endDate: getRandomDate(15), // Ends in 15 hours (half time)
-  },
+    {
+        id: 1,
+        name: "Wireless Bluetooth Headphones - Ending Soon",
+        image: Product1,
+        price: 9093,
+        originalPrice: 33725,
+        discount: 65,
+        sold: 758,
+        rating: 4.5,
+        reviewCount: 323,
+        endDate: getRandomDate(2), // Ends in 2 hours (near end)
+    },
+    {
+        id: 2,
+        name: "Smart Watch Series 5 - Half Time",
+        image: Product2,
+        price: 12000,
+        originalPrice: 25000,
+        discount: 52,
+        sold: 432,
+        rating: 4.2,
+        reviewCount: 156,
+        endDate: getRandomDate(12), // Ends in 12 hours (half time)
+    },
+    {
+        id: 3,
+        name: "Portable Speaker - Just Started",
+        image: Product3,
+        price: 7500,
+        originalPrice: 15000,
+        discount: 50,
+        sold: 289,
+        rating: 4.7,
+        reviewCount: 89,
+        endDate: getRandomDate(14), // Ends in 24 hours (just started)
+    },
+    {
+        id: 4,
+        name: "Gaming Mouse - Almost Over",
+        image: Product4,
+        price: 15999,
+        originalPrice: 32000,
+        discount: 50,
+        sold: 621,
+        rating: 4.0,
+        reviewCount: 245,
+        endDate: getRandomDate(1.5), // Ends in 1 hour (almost over)
+    },
+    {
+        id: 5,
+        name: "Mechanical Keyboard - Half Time",
+        image: Product5,
+        price: 11250,
+        originalPrice: 22500,
+        discount: 50,
+        sold: 387,
+        rating: 4.3,
+        reviewCount: 178,
+        endDate: getRandomDate(18), // Ends in 18 hours (half time)
+    },
+    {
+        id: 6,
+        name: "USB-C Hub - Just Started",
+        image: Product1,
+        price: 11250,
+        originalPrice: 25000,
+        discount: 55,
+        sold: 387,
+        rating: 4.3,
+        reviewCount: 178,
+        endDate: getRandomDate(16),
+    },
+    {
+        id: 7,
+        name: "Power Bank - Ending Soon",
+        image: Product2,
+        price: 11250,
+        originalPrice: 25000,
+        discount: 55,
+        sold: 387,
+        rating: 4.3,
+        reviewCount: 178,
+        endDate: getRandomDate(3), // Ends in 3 hours (ending soon)
+    },
+    {
+        id: 8,
+        name: "Webcam - Almost Over",
+        image: Product3,
+        price: 11250,
+        originalPrice: 25000,
+        discount: 55,
+        sold: 387,
+        rating: 4.3,
+        reviewCount: 178,
+        endDate: getRandomDate(5), // Ends in 30 minutes (almost over)
+    },
+    {
+        id: 9,
+        name: "Tablet Stand - Half Time",
+        image: Product4,
+        price: 11250,
+        originalPrice: 25000,
+        discount: 55,
+        sold: 387,
+        rating: 4.3,
+        reviewCount: 178,
+        endDate: getRandomDate(15), // Ends in 15 hours (half time)
+    },
 ];
 
 const LightingDeals = () => {
     const swiperRef = useRef(null);
- const params = useParams();
- const { country, withCountry } = useCountry();
+    const params = useParams();
+    const { country, withCountry } = useCountry();
     const [currency, setCurrency] = useState("");
     const [configData, setConfigData] = useState(null);
 
@@ -152,6 +152,7 @@ const LightingDeals = () => {
             if (parsed.currency_code) setCurrency(parsed.currency_code);
         }
     }, []);
+    
 
     return (
         <div className='lighting-deals container mx-auto px-2 2xl:px-22 pb-12 relative'>
@@ -199,45 +200,45 @@ const LightingDeals = () => {
                     {products.map((product) => (
                         <SwiperSlide key={product.id}>
                             <Link href={withCountry("/lightning-deals")}>
-                            <div className="single-lighting-deals-card group">
-                                <div className="product-img overflow-hidden w-full md:w-[250px] h-[250px] bg-[#00000008] flex items-center justify-center">
-                                    <Image
-                                        className='w-full h-full object-contain group-hover:scale-[1.2] transition-all duration-500 ease-in-out'
-                                        src={product.image}
-                                        alt={product.name}
-                                    />
-                                </div>
-                                <div className="product-content">
-                                    <div className="price-sec flex flex-wrap items-center gap-1 py-1">
-                                        <p className='text-sm font-semibold text-[#fb7701]'>
-                                            {currency || "AED"} <span className='text-[16px]'>{product.price.toLocaleString()}</span>
-                                        </p>
-                                        <p className='text-[12px] font-semibold text-[#555]'>
-                                            <span className='line-through'>{product.originalPrice.toLocaleString()}</span> {product.sold}  sold
-                                        </p>
+                                <div className="single-lighting-deals-card group">
+                                    <div className="product-img overflow-hidden w-full md:w-[250px] h-[250px] bg-[#00000008] flex items-center justify-center">
+                                        <Image
+                                            className='w-full h-full object-contain group-hover:scale-[1.2] transition-all duration-500 ease-in-out'
+                                            src={product.image}
+                                            alt={product.name}
+                                        />
+                                    </div>
+                                    <div className="product-content">
+                                        <div className="price-sec flex flex-wrap items-center gap-1 py-1">
+                                            <p className='text-sm font-semibold text-[#fb7701]'>
+                                                {currency || "AED"} <span className='text-[16px]'>{product.price.toLocaleString()}</span>
+                                            </p>
+                                            <p className='text-[12px] font-semibold text-[#555]'>
+                                                <span className='line-through'>{product.originalPrice.toLocaleString()}</span> {product.sold}  sold
+                                            </p>
 
-                                        <p className='text-[#fb7701] border-[#fb7701] border rounded-sm text-[13px] flex items-center justify-center px-1 h-5 font-semibold text-center'>
-                                            -{product.discount}%
-                                        </p>
+                                            <p className='text-[#fb7701] border-[#fb7701] border rounded-sm text-[13px] flex items-center justify-center px-1 h-5 font-semibold text-center'>
+                                                -{product.discount}%
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                {/* Pass different endDate for each product */}
-                                <DealTimer endDate={product.endDate} />
-                                <div className="deals-rating flex items-center gap-1">
-                                    <div className="flex items-center text-[13px] gap-1">
-                                        {[...Array(5)].map((_, index) => (
-                                            <RiStarFill
-                                                key={index}
-                                                className={index < Math.floor(product.rating) ? 'text-black' : 'text-gray-300'}
-                                            />
-                                        ))}
+                                    {/* Pass different endDate for each product */}
+                                    <DealTimer endDate={product.endDate} />
+                                    <div className="deals-rating flex items-center gap-1">
+                                        <div className="flex items-center text-[13px] gap-1">
+                                            {[...Array(5)].map((_, index) => (
+                                                <RiStarFill
+                                                    key={index}
+                                                    className={index < Math.floor(product.rating) ? 'text-black' : 'text-gray-300'}
+                                                />
+                                            ))}
+                                        </div>
+                                        <p className='text-[13px] dark:text-gray-600'>{product.reviewCount}</p>
                                     </div>
-                                    <p className='text-[13px] dark:text-gray-600'>{product.reviewCount}</p>
-                                </div>
-                                {/* <h3 className="product-name text-sm font-medium mt-1 line-clamp-2 min-h-[2.5rem]">
+                                    {/* <h3 className="product-name text-sm font-medium mt-1 line-clamp-2 min-h-[2.5rem]">
                                     {product.name}
                                 </h3> */}
-                            </div>
+                                </div>
                             </Link>
                         </SwiperSlide>
                     ))}

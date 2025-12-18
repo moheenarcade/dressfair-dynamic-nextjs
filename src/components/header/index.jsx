@@ -29,7 +29,7 @@ import { PiBookBookmarkLight } from "react-icons/pi";
 import ProductBanner from "../../../public/Solid_gray.png";
 import ProductBanner2 from "../../../public/deals-product3.avif";
 import { MdAddShoppingCart } from 'react-icons/md';
-import { fetchAndSaveCategories, getLocalCategories } from '../../lib/api';
+import { fetchAndSaveCategories, getConfig, getLocalCategories } from '../../lib/api';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { useTranslation } from "@/hooks/useTranslation";
@@ -86,15 +86,46 @@ const Header = () => {
     const [currency, setCurrency] = useState("");
     const [configData, setConfigData] = useState(null);
     console.log(countryInfo, "countryInfocountryInfocountryInfo")
+    const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        const data = localStorage.getItem("configData");
-        if (data) {
-            const parsed = JSON.parse(data);
-            setConfigData(parsed);
-            if (parsed.currency_code) setCurrency(parsed.currency_code);
-        }
+        const loadConfig = async () => {
+            try {
+                const res = await getConfig();
+
+                if (res?.success && res?.data) {
+                    // ✅ Save latest config to localStorage
+                    localStorage.setItem("configData", JSON.stringify(res.data));
+
+                    // ✅ Update state from fresh API data
+                    setConfigData(res.data);
+
+                    if (res.data.currency_code) {
+                        setCurrency(res.data.currency_code);
+                    }
+
+                    console.log("Config loaded & saved:", res.data);
+                }
+            } catch (error) {
+                console.error("Error loading config:", error);
+
+                // ⚠️ Fallback to localStorage if API fails
+                const cached = localStorage.getItem("configData");
+                if (cached) {
+                    const parsed = JSON.parse(cached);
+                    setConfigData(parsed);
+                    if (parsed.currency_code) {
+                        setCurrency(parsed.currency_code);
+                    }
+                }
+            } finally {
+                setIsReady(true);
+            }
+        };
+
+        loadConfig();
     }, []);
+
     const handleLogout = () => {
         logout();
         setShowUserDropdown(false);

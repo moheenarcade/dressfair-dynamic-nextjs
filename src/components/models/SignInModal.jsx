@@ -47,8 +47,8 @@ const SignInModal = ({ isOpen, onClose }) => {
   const validatePhone = () => {
     if (!phone) return "Phone number is required";
     if (!/^\d+$/.test(phone)) return "Only numbers are allowed";
-    if (phone.length !== Number(mobileLength))
-      return `Phone number must be ${mobileLength} digits`;
+    if (phone.length !== allowedDigits)
+      return `Phone number must be ${allowedDigits} digits`;
     return null;
   };
 
@@ -235,16 +235,9 @@ const SignInModal = ({ isOpen, onClose }) => {
                       </div>
 
                       <button
-                        onClick={() => {
-                          if (phone.length !== allowedDigits) {
-                            setError(`Please enter exactly ${allowedDigits} digits`);
-                            return;
-                          }
-
-                          sendWhatsAppOtp();
-                        }}
+                        onClick={sendWhatsAppOtp}
                         disabled={loading}
-                        className="bg-orange-500 text-white rounded-full py-2 font-semibold w-full"
+                        className="bg-orange-500 text-white rounded-full py-2 font-semibold"
                       >
                         {loading ? "Sending OTP..." : "Send OTP"}
                       </button>

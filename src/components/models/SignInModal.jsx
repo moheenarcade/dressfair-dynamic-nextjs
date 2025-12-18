@@ -29,6 +29,8 @@ const SignInModal = ({ isOpen, onClose }) => {
   const [otp, setOtp] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
   const [error, setError] = useState("");
+  const phoneCodeLength = phoneCode?.toString().length || 0;
+  const allowedDigits = mobileLength - phoneCodeLength;
 
   useEffect(() => {
     const data = localStorage.getItem("configData");
@@ -221,11 +223,11 @@ const SignInModal = ({ isOpen, onClose }) => {
                           type="tel"
                           value={phone}
                           onChange={(e) => {
-                            if (e.target.value.length <= mobileLength) {
+                            if (e.target.value.length <= allowedDigits) {
                               setPhone(e.target.value.replace(/\D/g, ""));
                             }
                           }}
-                          placeholder={`Enter ${mobileLength} digits`}
+                          placeholder={`Enter ${allowedDigits} digits`}
                           className="border border-gray-300 focus:border-[#E67E22] focus:outline-none rounded px-3 py-2 flex-1"
                         />
                         {error && <p className="text-red-500 text-sm absolute -bottom-2">{error}</p>}
@@ -233,9 +235,16 @@ const SignInModal = ({ isOpen, onClose }) => {
                       </div>
 
                       <button
-                        onClick={sendWhatsAppOtp}
+                        onClick={() => {
+                          if (phone.length !== allowedDigits) {
+                            setError(`Please enter exactly ${allowedDigits} digits`);
+                            return;
+                          }
+
+                          sendWhatsAppOtp();
+                        }}
                         disabled={loading}
-                        className="bg-orange-500 text-white rounded-full py-2 font-semibold"
+                        className="bg-orange-500 text-white rounded-full py-2 font-semibold w-full"
                       >
                         {loading ? "Sending OTP..." : "Send OTP"}
                       </button>
@@ -245,22 +254,27 @@ const SignInModal = ({ isOpen, onClose }) => {
                   {step === "otp" && (
                     <>
                       <label className="font-semibold">Enter OTP</label>
-                     
+
                       <div className="flex justify-center gap-2">
+
                         {Array(5)
                           .fill(0)
                           .map((_, index) => (
                             <input
                               key={index}
+                              id={`otp-${index}`}
                               type="text"
+                              inputMode="numeric"
                               maxLength={1}
                               value={otp[index] || ""}
                               onChange={(e) => {
                                 const val = e.target.value.replace(/\D/g, "");
                                 if (!val) return;
+
                                 const otpArr = otp.split("");
                                 otpArr[index] = val;
                                 setOtp(otpArr.join(""));
+
                                 const nextInput = document.getElementById(`otp-${index + 1}`);
                                 if (nextInput) nextInput.focus();
                               }}
@@ -269,14 +283,36 @@ const SignInModal = ({ isOpen, onClose }) => {
                                   const otpArr = otp.split("");
                                   otpArr[index] = "";
                                   setOtp(otpArr.join(""));
+
                                   const prevInput = document.getElementById(`otp-${index - 1}`);
                                   if (prevInput) prevInput.focus();
                                 }
                               }}
-                              id={`otp-${index}`}
+                              onPaste={(e) => {
+                                e.preventDefault();
+
+                                const pastedData = e.clipboardData
+                                  .getData("text")
+                                  .replace(/\D/g, "")
+                                  .slice(0, 5);
+
+                                if (!pastedData) return;
+
+                                const otpArr = Array(5).fill("");
+                                pastedData.split("").forEach((char, i) => {
+                                  otpArr[i] = char;
+                                });
+
+                                setOtp(otpArr.join(""));
+
+                                const focusIndex = pastedData.length - 1;
+                                const focusInput = document.getElementById(`otp-${focusIndex}`);
+                                if (focusInput) focusInput.focus();
+                              }}
                               className="w-12 h-12 border border-gray-300 rounded text-center text-lg focus:border-orange-500 focus:outline-none sm:w-14 sm:h-14"
                             />
                           ))}
+
                       </div>
                       {error && <p className="text-red-500 text-sm">{error}</p>}
                       <button

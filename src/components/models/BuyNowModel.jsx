@@ -259,7 +259,7 @@ const BuyNowModel = ({ isOpen, onClose, product }) => {
                         transition={{ duration: 0.2 }}
                     >
                         <motion.div
-                            className="relative bg-white rounded-2xl shadow-lg w-full max-w-md pt-4 pb-6 px-6 my-3"
+                            className="relative bg-white rounded-2xl shadow-lg w-full max-w-lg pt-4 pb-6 px-6 my-3"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}

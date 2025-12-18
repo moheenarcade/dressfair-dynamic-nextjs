@@ -203,7 +203,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                     <>
                       <label className="font-semibold mb-1">Whatsapp number</label>
                       <div className="flex gap-1 relative pb-3">
-                        <span className="border border-gray-300 rounded w-15 flex items-center justify-center font-semibold">
+                        <span className="border border-gray-300 rounded w-15 flex items-center justify-center font-[500]">
                           +{phoneCode}
                         </span>
                         <input
@@ -215,7 +215,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                             }
                           }}
                           placeholder={`Enter ${allowedDigits} digits`}
-                          className="border border-gray-300 focus:border-[#E67E22] focus:outline-none rounded px-3 py-2 flex-1"
+                          className="font-[500] border border-gray-300 focus:border-[#E67E22] focus:outline-none rounded px-3 py-2 flex-1"
                         />
                         {error && <p className="text-red-500 text-sm absolute -bottom-2">{error}</p>}
 
@@ -289,7 +289,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                                 const focusInput = document.getElementById(`otp-${focusIndex}`);
                                 if (focusInput) focusInput.focus();
                               }}
-                              className="w-12 h-12 border border-gray-300 rounded text-center text-lg focus:border-orange-500 focus:outline-none sm:w-14 sm:h-14"
+                              className="w-12 h-12 font-[500] border border-gray-300 rounded text-center text-lg focus:border-orange-500 focus:outline-none sm:w-14 sm:h-14"
                             />
                           ))}
 
@@ -321,7 +321,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={loading}
-                    className="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none focus:border-[#E67E22] disabled:opacity-50"
+                    className="font-[500] border border-gray-300 rounded px-3 py-2 w-full focus:outline-none focus:border-[#E67E22] disabled:opacity-50"
                   />
                   <button
                     onClick={() => { /* handle email login */ }}

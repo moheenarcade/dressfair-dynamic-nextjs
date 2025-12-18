@@ -80,7 +80,7 @@ const SignInModal = ({ isOpen, onClose }) => {
             "spa-language-id": configData?.language_id || "1",
             "spa-store-id": storeId,
           },
-          // withCredentials: true, // equivalent to fetch credentials: "include"
+          withCredentials: true, // equivalent to fetch credentials: "include"
         }
       );
       if (!data.success) throw new Error(data.message || "Failed to send OTP");
@@ -244,17 +244,9 @@ const SignInModal = ({ isOpen, onClose }) => {
                   {step === "otp" && (
                     <>
                       <label className="font-semibold">Enter OTP</label>
-                      {/* <input
-                        type="text"
-                        value={otp}
-                        onChange={(e) => {
-                          if (e.target.value.length <= 6) setOtp(e.target.value.replace(/\D/g, ""));
-                        }}
-                        placeholder="Enter OTP"
-                        className="border border-gray-300 focus:border-[#E67E22] focus:outline-none rounded px-3 py-2"
-                      /> */}
+                     
                       <div className="flex justify-center gap-2">
-                        {Array(6)
+                        {Array(5)
                           .fill(0)
                           .map((_, index) => (
                             <input

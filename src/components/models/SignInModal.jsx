@@ -120,7 +120,6 @@ const SignInModal = ({ isOpen, onClose }) => {
             "spa-language-id": configData?.language_id || "1",
             "spa-store-id": storeId,
           },
-
         }
       );
 
@@ -257,14 +256,11 @@ const SignInModal = ({ isOpen, onClose }) => {
                               maxLength={1}
                               value={otp[index] || ""}
                               onChange={(e) => {
-                                const val = e.target.value.replace(/\D/g, ""); // only numbers
+                                const val = e.target.value.replace(/\D/g, "");
                                 if (!val) return;
-
                                 const otpArr = otp.split("");
                                 otpArr[index] = val;
                                 setOtp(otpArr.join(""));
-
-                                // focus next input
                                 const nextInput = document.getElementById(`otp-${index + 1}`);
                                 if (nextInput) nextInput.focus();
                               }}
@@ -273,7 +269,6 @@ const SignInModal = ({ isOpen, onClose }) => {
                                   const otpArr = otp.split("");
                                   otpArr[index] = "";
                                   setOtp(otpArr.join(""));
-                                  // focus previous input
                                   const prevInput = document.getElementById(`otp-${index - 1}`);
                                   if (prevInput) prevInput.focus();
                                 }
@@ -283,9 +278,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                             />
                           ))}
                       </div>
-
                       {error && <p className="text-red-500 text-sm">{error}</p>}
-
                       <button
                         onClick={verifyOtpAndLogin}
                         disabled={otpLoading}

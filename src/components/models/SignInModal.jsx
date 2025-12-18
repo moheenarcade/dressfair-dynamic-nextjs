@@ -80,7 +80,7 @@ const SignInModal = ({ isOpen, onClose }) => {
             "spa-language-id": configData?.language_id || "1",
             "spa-store-id": storeId,
           },
-          withCredentials: true, // equivalent to fetch credentials: "include"
+          withCredentials: true,
         }
       );
       if (!data.success) throw new Error(data.message || "Failed to send OTP");
@@ -125,7 +125,9 @@ const SignInModal = ({ isOpen, onClose }) => {
       );
 
       if (!data.success) throw new Error(data.message || "Invalid OTP");
-
+      if (data.token) {
+        localStorage.setItem("auth_token", data.token);
+      }
       // Login success
       login({
         id: data.user_id,

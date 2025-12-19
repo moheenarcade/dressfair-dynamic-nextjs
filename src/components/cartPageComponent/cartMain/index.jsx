@@ -247,7 +247,7 @@ const CartMain = ({currency}) => {
                         </div>
                         <div className="flex items-center justify-between">
                             <p className="text-[15px] text-[#222]">Item(s) discount:</p>
-                            <p className="text-[15px] font-semibold text-[#fb7701]">-{currency || "AED"}. {totalDiscount}</p>
+                            <p className="text-[15px] font-semibold text-[#fb7701]">-{currency || "AED"}. {totalDiscount.toFixed(2)}</p>
                         </div>
                     </div>
 
@@ -258,7 +258,7 @@ const CartMain = ({currency}) => {
                         </div>
                     </div>
 
-                    <Link href={withCountry("/checkout")} className="hover:bg-[#fb7701] hover:scale-[1.03] text-md transition-all duration-300 ease-in-out w-full py-[10px] px-4 rounded-full border border-transparent text-white bg-[#fb5d01] text-md font-semibold">
+                    <Link href={withCountry("/checkout")} className="flex hover:bg-[#fb7701] hover:scale-[1.03] text-md transition-all duration-300 ease-in-out w-full py-[10px] px-4 rounded-full border border-transparent text-white bg-[#fb5d01] text-md font-semibold">
                         <button className="w-full">  Checkout ({totalQty})</button>
                     </Link>
                     <p className="text-[13px] text-[#555555] flex items-start pt-3">

@@ -1,5 +1,4 @@
 "use client";
-
 import { useCart } from "@/context/CartContext";
 import { motion } from "framer-motion";
 import Header from "@/components/header";

@@ -1,14 +1,16 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer1 from "../../../public/temofooter1.avif";
 import Image from 'next/image';
 import { FaInstagram } from "react-icons/fa";
-import { FaFacebook, FaSnapchat } from 'react-icons/fa6';
+import { FaChevronUp, FaFacebook, FaSnapchat } from 'react-icons/fa6';
 import { AiFillTikTok } from "react-icons/ai";
 import { IoLogoWhatsapp } from "react-icons/io";
 import FooterBnak1 from "../../../public/footer-banke1.png";
 import FooterBnak2 from "../../../public/footer-2.png";
 import { FaChevronDown } from "react-icons/fa6";
+import { MdEditNote } from "react-icons/md";
+import { TbMessageDots } from "react-icons/tb";
 
 
 const faqsData = [
@@ -46,15 +48,55 @@ const faqsData = [
 
 const Footer = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [showTop, setShowTop] = useState(false);
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
 
+useEffect(() => {
+  const handleScroll = () => {
+    setShowTop(window.scrollY > 100);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
+
   return (
 
-    <footer>
+    <footer className="">
+      <div className="hidden xl:block">
+      <div className="fixed bottom-[60px] right-0 bg-white shadow-lg py-2 px-2 border border-gray-100 rounded-l-xl gap-4 z-[999999] flex flex-col items-center justify-center">
+        <button className="flex flex-col justify-center items-center text-[11px]">
+          <TbMessageDots className="text-2xl"/>
+          Messages
+        </button>
+        <button className="flex flex-col justify-center items-center text-[11px]">
+          <MdEditNote className="text-2xl"/>
+          Feedback
+        </button>
+        {showTop && (
+  <button
+    onClick={scrollToTop}
+    className="flex flex-col justify-center items-center text-[11px] transition-opacity duration-300"
+  >
+    <FaChevronUp className="text-lg" />
+    Top
+  </button>
+)}
+      </div>
+      </div>
       <div className='bg-[#1e1e1e] hidden xl:block'>
         <div className="container mx-auto px-2 2xl:px-22 py-8">
           <div className="flex justify-between pb-8">

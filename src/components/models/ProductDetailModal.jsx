@@ -311,13 +311,13 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                         <div className="prices-sec flex items-center flex-wrap gap-2 pb-3 px-2 lg:px-0">
                                             {productDetail?.sale_price && (
                                                 <p className="text-[#000000] text-[20px] font-semibold relative line-through">
-                                                   {currency || "AED"}. {productDetail?.price}
+                                                    {currency || "AED"}. {productDetail?.price}
                                                 </p>
                                             )}
 
                                             <div className="flex items-end text-[#FB7701]">
                                                 <p className="text-[20px] font-semibold leading-[20px]">
-                                                {currency || "AED"}. <span className="text-[28px]">
+                                                    {currency || "AED"}. <span className="text-[28px]">
                                                         {productDetail?.sale_price || productDetail?.price}
                                                     </span>
                                                 </p>
@@ -341,27 +341,30 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                                     </span>
                                                 </p>
                                                 <div className="colors flex gap-2 flex-wrap pt-2">
-                                                    {(productDetail?.colors || []).map((color, index) => (
-                                                        <div
-                                                            key={index}
-                                                            onClick={() => handleColorSelect(color.sku)}
-                                                            className={`single-color cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col justify-center items-center w-fit border-2 rounded-md overflow-hidden
+                                                    {/* {(productDetail?.colors || []).map((color, index) => ( */}
+                                                    {(productDetail?.colors || [])
+                                                        .filter((color) => color.quantity > 0) // Only colors with quantity > 0
+                                                        .map((color, index) => (
+                                                            <div
+                                                                key={index}
+                                                                onClick={() => handleColorSelect(color.sku)}
+                                                                className={`single-color cursor-pointer hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col justify-center items-center w-fit border-2 rounded-md overflow-hidden
                                                     ${selectedColor === color.sku ? "border-black" : "border-[#aaa]"}
                                                     ${validationError.color && !selectedColor ? "border-red-500" : ""}
                                                 `}
-                                                        >
-                                                            <Image
-                                                                className="w-16 h-16 object-cover"
-                                                                width={50}
-                                                                height={50}
-                                                                src={color.image}
-                                                                alt={color.sku}
-                                                            />
-                                                            <p className="px-1 py-1 text-[#222] text-[12px] font-bold">
-                                                                {color.name}
-                                                            </p>
-                                                        </div>
-                                                    ))}
+                                                            >
+                                                                <Image
+                                                                    className="w-16 h-16 object-cover"
+                                                                    width={50}
+                                                                    height={50}
+                                                                    src={color.image}
+                                                                    alt={color.sku}
+                                                                />
+                                                                <p className="px-1 py-1 text-[#222] text-[12px] font-bold">
+                                                                    {color.name}
+                                                                </p>
+                                                            </div>
+                                                        ))}
                                                 </div>
                                             </div>
 
@@ -404,7 +407,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                                             </div>
                                                         ))
                                                     ) : (
-                                                        <p className="text-red-500 text-sm">Out of stock — unable to add to cart</p>
+                                                        <p className="text-red-500 text-lg">Out of stock — unable to add to cart</p>
                                                     )}
                                                 </div>
 
@@ -468,7 +471,7 @@ export default function ProductDetailModal({ isOpen, onClose, productSku }) {
                                         </div>
 
                                         <div className="bg-white px-3 w-[50%] right-4 py-4 fixed bottom-[0px]">
-                                            <button onClick={handleAddToCart} className="bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out">
+                                            <button onClick={handleAddToCart} className={`bg-[#fb5d01] hover:bg-[#fb7701] hover:scale-[1.03] text-white font-semibold text-md lg:text-lg py-3 px-3 lg:px-6 rounded-full w-full transition-all duration-300 ease-in-out `}>
                                                 Add to cart!
                                             </button>
 

@@ -12,7 +12,6 @@ import { FaChevronDown } from "react-icons/fa6";
 import { MdEditNote } from "react-icons/md";
 import { TbMessageDots } from "react-icons/tb";
 
-
 const faqsData = [
   {
     title: "Company info",
@@ -45,57 +44,51 @@ const faqsData = [
   },
 ];
 
-
 const Footer = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const [showTop, setShowTop] = useState(false);
-
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowTop(window.scrollY > 100);
+    };
 
-useEffect(() => {
-  const handleScroll = () => {
-    setShowTop(window.scrollY > 100);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
-
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
-
-
-const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-};
-
-
+  
   return (
-
     <footer className="">
       <div className="hidden xl:block">
-      <div className="fixed bottom-[60px] right-0 bg-white shadow-lg py-2 px-2 border border-gray-100 rounded-l-xl gap-4 z-[999999] flex flex-col items-center justify-center">
-        <button className="flex flex-col justify-center items-center text-[11px]">
-          <TbMessageDots className="text-2xl"/>
-          Messages
-        </button>
-        <button className="flex flex-col justify-center items-center text-[11px]">
-          <MdEditNote className="text-2xl"/>
-          Feedback
-        </button>
-        {showTop && (
-  <button
-    onClick={scrollToTop}
-    className="flex flex-col justify-center items-center text-[11px] transition-opacity duration-300"
-  >
-    <FaChevronUp className="text-lg" />
-    Top
-  </button>
-)}
-      </div>
+        <div className="fixed bottom-[60px] right-0 bg-white shadow-lg py-2 px-2 border border-gray-100 rounded-l-xl gap-4 z-[999999] flex flex-col items-center justify-center">
+          <button className="flex flex-col justify-center items-center text-[11px]">
+            <TbMessageDots className="text-2xl" />
+            Messages
+          </button>
+          <button className="flex flex-col justify-center items-center text-[11px]">
+            <MdEditNote className="text-2xl" />
+            Feedback
+          </button>
+          {showTop && (
+            <button
+              onClick={scrollToTop}
+              className="flex flex-col justify-center items-center text-[11px] transition-opacity duration-300"
+            >
+              <FaChevronUp className="text-lg" />
+              Top
+            </button>
+          )}
+        </div>
       </div>
       <div className='bg-[#1e1e1e] hidden xl:block'>
         <div className="container mx-auto px-2 2xl:px-22 py-8">
@@ -303,7 +296,6 @@ const scrollToTop = () => {
           </div>
         </div>
       </div>
-
       <div className="mobile-footer block xl:hidden bg-[#f5f5f5] py-3 lg:px-16">
         <div className="footer-faqs">
 
@@ -395,7 +387,6 @@ const scrollToTop = () => {
           </ul>
         </div>
       </div>
-
     </footer>
   )
 }

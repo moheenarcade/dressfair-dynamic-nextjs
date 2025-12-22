@@ -153,6 +153,13 @@ const Header = () => {
     };
 
 
+    
+    const handleLogout = () => {
+        logout();
+        setShowUserDropdown(false);
+        if (onClose) onClose();
+    };
+
     return (
         <>
             <header>
@@ -631,7 +638,7 @@ const Header = () => {
                                                                 <li className='cursor-pointer flex items-center gap-1 text-[15px] font-normal px-3 py-2 rounded-sm hover:bg-gray-200'>
                                                                     <AiOutlineUserSwitch className="text-2xl" />
                                                                     Switch accounts</li>
-                                                                <li className='cursor-pointer px-3 flex items-center gap-1 text-[15px] font-normal py-2 rounded-sm hover:bg-gray-200'>
+                                                                <li onClick={handleLogout} className='cursor-pointer px-3 flex items-center gap-1 text-[15px] font-normal py-2 rounded-sm hover:bg-gray-200'>
                                                                     <TbLogout2 className='text-2xl' />
                                                                     Sign out</li>
                                                             </div>

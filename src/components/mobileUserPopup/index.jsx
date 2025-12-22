@@ -15,7 +15,7 @@ const MobileUserPopup = ({ onOpenSignIn, onClose }) => {
     const { country, withCountry } = useCountry();
 
     const handleLogout = () => {
-        logout();
+        // logout();
         setShowUserDropdown(false);
         if (onClose) onClose();
     };

@@ -14,11 +14,11 @@ const MobileUserPopup = ({ onOpenSignIn, onClose }) => {
     const params = useParams();
     const { country, withCountry } = useCountry();
 
-    const handleLogout = () => {
-        // logout();
-        setShowUserDropdown(false);
-        if (onClose) onClose();
-    };
+    // const handleLogout = () => {
+    //     // logout();
+    //     setShowUserDropdown(false);
+    //     if (onClose) onClose();
+    // };
     return (
         <>
             <div className='bg-white rounded-[5px] shadow-lg z-[999999999999999999] left-0 right-0 md:right-4 -mt-2 absolute w-[90%] md:w-[400px] mx-auto md:mr-0 border-[1px] border-[#dfdfdf]'>
